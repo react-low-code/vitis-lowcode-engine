@@ -1,0 +1,22 @@
+{
+  "entry": {
+    "engine-core": "../engine/src/index.ts"
+  },
+  "vendor": false,
+  "devServer": {
+    "liveReload": false,
+    "hot": false
+  },
+  "library": "VitisLowCodeEngine",
+  "publicPath": "/",
+  "externals": {
+    "react": "var window.React",
+    "react-dom": "var window.ReactDOM"
+  },
+  "plugins": [
+    [
+      "build-plugin-react-app"
+    ],
+    "./build.plugin.js"
+  ]
+}

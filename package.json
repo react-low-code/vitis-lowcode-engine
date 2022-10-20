@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/css-modules-typescript-loader"
+    ]
+  },
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "build:npm": "lerna run build --stream",
+    "build:umd": "lerna run build:umd --stream",
+    "clean": "rm -rf ./packages/*/lib ./packages/*/es ./packages/*/dist ./packages/*/build",
+    "setup": "node ./scripts/setup.js",
+    "start": "node ./scripts/start.js"
+  },
+  "devDependencies": {
+    "del": "^6.1.1",
+    "execa": "^5.1.1",
+    "f2elint": "^2.0.1",
+    "gulp": "^4.0.2",
+    "lerna": "^4.0.0",
+    "typescript": "^4.6.2",
+    "yarn": "^1.22.17"
+  },
+  "engines": {
+    "node": ">=14.17.0 <16"
+  },
+  "resolutions": {
+    "@builder/babel-preset-ice": "1.0.1"
+  }
+}

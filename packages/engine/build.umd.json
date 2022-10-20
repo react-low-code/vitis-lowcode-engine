@@ -1,0 +1,20 @@
+{
+  "entry": {
+    "engine-core": "src/index"
+  },
+  "sourceMap": true,
+  "library": "VitisLowCodeEngine",
+  "libraryTarget": "umd",
+  "externals": {
+    "react": "var window.React",
+    "react-dom": "var window.ReactDOM"
+  },
+  "polyfill": false,
+  "outputDir": "dist",
+  "vendor": false,
+  "ignoreHtmlTemplate": true,
+  "plugins": [
+    "build-plugin-react-app",
+    "./build.plugin.js"
+  ]
+}
