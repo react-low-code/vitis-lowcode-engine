@@ -1,0 +1,28 @@
+{
+  "name": "vitis-lowcode-types",
+  "version": "1.0.0",
+  "description": "Types for Vitis lowCode engine",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "build": "build-scripts build --skip-demo"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "strict-event-emitter-types": "^2.0.0"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.1",
+    "@types/node": "^13.7.1",
+    "@types/react": "^17.0.14",
+    "build-plugin-component": "^0.2.10"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
