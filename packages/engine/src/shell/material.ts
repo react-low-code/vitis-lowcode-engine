@@ -12,10 +12,14 @@ export default class Material implements MaterialSpec {
      * @param infos 
      */
     load(infos: NpmInfo[]): Promise<boolean[]> {
-      return this.material.load(infos)
+      return this.material.loadComponentSpec(infos)
     }
 
     has(packageName: string) {
-      return this.material.getComponentSpecMetaMap().has(packageName)
+      return this.material.innerGetComponentSpecRawMap().has(packageName)
+    }
+
+    get(packageName: string) {
+      return this.material.getComponentSpecRawMap().get(packageName)
     }
 }

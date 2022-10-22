@@ -1,13 +1,42 @@
-import { NpmInfo, ComponentSpecMeta } from 'vitis-lowcode-types'
+import { NpmInfo, ComponentSpecRaw } from 'vitis-lowcode-types'
 
 export default class Material {
-    private componentSpecMetaMap: Map<string, ComponentSpecMeta> = new Map()
+    private componentSpecRawMap: Map<string, ComponentSpecRaw> = new Map()
 
-    load(infos: NpmInfo[]): Promise<boolean[]> {
-       return Promise.resolve([])
+    async loadComponentSpec(infos: NpmInfo[]): Promise<boolean[]> {
+        const promiseSettledResult = await Promise.allSettled(infos.map(async info => {
+            if (this.componentSpecRawMap.has(info.npm)) {
+                console.warn(`已经加载过${info.npm}，现在开始重新加载并替换原来的`)
+            }
+            const response =  await fetch(`https://unpkg.com/${info.npm}@${info.version}/asset/index.json`)
+            return {
+                info,
+                text: await response.text()
+            }
+        }))
+        const result: boolean[] = []
+
+        for (const item of promiseSettledResult) {
+            if (item.status === 'rejected') {
+                result.push(false)
+            } else {
+                try {
+                    this.componentSpecRawMap.set(item.value.info.npm, JSON.parse(item.value.text))
+                    result.push(true)
+                } catch (error) {
+                    result.push(false)
+                }
+            }
+            
+        }
+        return result
     }
 
-    getComponentSpecMetaMap() {
-        return new Map(this.componentSpecMetaMap)
+    innerGetComponentSpecRawMap() {
+        return this.componentSpecRawMap
+    }
+
+    getComponentSpecRawMap() {
+        return new Map(this.componentSpecRawMap)
     }
 }
