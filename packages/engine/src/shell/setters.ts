@@ -13,7 +13,20 @@ export default class Setters implements SettersSpec{
      * @param name 
      */
     getSetter(name: string): RegisteredSetter | undefined {
-        return undefined
+        if (this.hasSetter(name)) {
+            return this.getAll().get(name)
+        } else {
+            return undefined
+        }
+    }
+
+    /**
+     * 是否有指定的 setter
+     * @param name 
+     * @returns 
+     */
+    hasSetter(name: string) {
+        return this.setters.innerGetSetterMap().has(name)
     }
 
     /**
@@ -25,11 +38,14 @@ export default class Setters implements SettersSpec{
 
     /**
      * 注册 setter
-     * @param name 
      * @param setter 
      */
-    register(name: string, setter: RegisteredSetter) {
-        
+    register(setter: RegisteredSetter | RegisteredSetter[]) {
+        if (Array.isArray(setter)) {
+            this.setters.register(setter)
+        } else {
+            this.setters.register([setter])
+        }
     }
 
 }
