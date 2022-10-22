@@ -13,8 +13,8 @@ export default class PluginManager implements PluginManagerSpec {
      * @param pluginConfigCreator 
      * @param options 
      */
-    register(pluginConfigCreator: PluginConfigCreator , options: any): Promise<void> {
-        return Promise.resolve()
+    register(pluginConfigCreator: PluginConfigCreator , options?: any) {
+        return this.plugins.register(pluginConfigCreator, options)
     }
 
     /**

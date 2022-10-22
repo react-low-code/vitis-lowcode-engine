@@ -4,17 +4,17 @@ import { SkeletonSpec } from './skeleton'
 import { MaterialSpec } from './material'
 
 export interface  PluginConfig{
-    init(): void;
+    init(): Promise<void>;
     destroy?(): void;
 }
 
 export interface PluginConfigCreator {
     (ctx: PluginContext, options: any): PluginConfig;
-     pluginName: string;
+    pluginName: string;
 }
 
 export interface PluginManagerSpec {
-    register(pluginConfigCreator: PluginConfigCreator , options: any): Promise<void>;
+    register(pluginConfigCreator: PluginConfigCreator , options?: any): Promise<void>;
     delete(pluginName: string): Promise<boolean> 
     has(pluginName: string): boolean
     get(pluginName: string): LowCodePlugin | undefined
