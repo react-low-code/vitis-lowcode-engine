@@ -1,8 +1,8 @@
 import { ComponentType, ReactNode } from 'react'
 
 export interface SkeletonSpec {
-    add(config: WidgetBaseConfig): PanelSpec | PanelDockSpec | WidgetSpec;
-    remove(area: WidgetConfigArea, name: string): void
+    add(config: WidgetBaseConfig): BaseWidgetSpec | undefined;
+    remove(area: WidgetConfigArea, name: string): boolean
 }
 
 export interface WidgetBaseConfig {
@@ -21,20 +21,20 @@ export interface WidgetBaseConfig {
 
 export type WidgetConfigArea = 'left' | 'right' | 'main' | 'toolbar' | 'bottom' | 'topLeft' | 'topCenter' | 'topRight'
 
-export interface PanelSpec extends BaseWidget{
-    readonly isPanel: true;
-}
+// export interface PanelSpec extends BaseWidgetSpec{
+//     readonly isPanel: true;
+// }
 
-export interface PanelDockSpec extends BaseWidget{
-    readonly isPanelDock: true
-    disabled: boolean;
-}
+// export interface PanelDockSpec extends BaseWidgetSpec{
+//     readonly isPanelDock: true
+//     disabled: boolean;
+// }
 
-export interface WidgetSpec extends BaseWidget {
-    readonly isWidget: true
-}
+// export interface WidgetSpec extends BaseWidgetSpec {
+//     readonly isWidget: true
+// }
 
-export interface BaseWidget {
+export interface BaseWidgetSpec {
     readonly name: string;
     readonly content: ReactNode;
     visible: boolean;
