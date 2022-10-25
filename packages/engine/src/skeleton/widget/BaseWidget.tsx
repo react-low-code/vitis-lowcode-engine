@@ -1,5 +1,6 @@
 import { BaseWidgetSpec, WidgetBaseConfig } from 'vitis-lowcode-types'
 import { createElement } from 'react'
+import { makeAutoObservable } from 'mobx';
 
 export default abstract class BaseWidget implements BaseWidgetSpec {
     readonly name: string
@@ -7,6 +8,7 @@ export default abstract class BaseWidget implements BaseWidgetSpec {
     visible: boolean = true
 
     constructor(name: string, config: WidgetBaseConfig) {
+        makeAutoObservable(this)
         this.name = name
         this.config = config
     }

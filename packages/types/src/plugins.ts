@@ -4,7 +4,7 @@ import { SkeletonSpec } from './skeleton'
 import { MaterialSpec } from './material'
 
 export interface  PluginConfig{
-    init(): Promise<void>;
+    init(): void;
     destroy?(): void;
 }
 

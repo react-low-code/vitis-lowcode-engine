@@ -1,10 +1,12 @@
 import { WidgetConfigArea, BaseWidgetSpec, WidgetBaseConfig } from 'vitis-lowcode-types'
+import { makeAutoObservable } from 'mobx';
 
 export default class AreaContainer<C extends WidgetBaseConfig, W extends BaseWidgetSpec> {
-    area: WidgetConfigArea
+    readonly area: WidgetConfigArea
     items: W[] = [];
 
     constructor(area: WidgetConfigArea ) {
+        makeAutoObservable(this, { area: false });
         this.area = area
     }
 

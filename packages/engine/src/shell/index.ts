@@ -8,8 +8,9 @@ import InnerSkeleton from '../skeleton'
 import Skeleton from './skeleton'
 import Project from './project'
 
+export const observableSkeleton = new InnerSkeleton()
 export const setters = new Setters(new InnerSetters())
 export const plugins = new PluginManager(new InnerPluginManger())
 export const material = new Material(new InnerMaterial())
-export const skeleton = new Skeleton(new InnerSkeleton())
+export const skeleton = new Skeleton(observableSkeleton)
 export const project = new Project()
