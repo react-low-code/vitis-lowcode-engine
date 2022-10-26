@@ -10,11 +10,13 @@ export default class AreaContainer<C extends WidgetBaseConfig, W extends BaseWid
         this.area = area
     }
 
-    add(config: C, handle: (config: C) => W) {
+    add(config: C, handle: (config: C) => W | undefined) {
         const current = this.items.find(item => item.name === config.name)
         if (!current) {
             const newItem = handle(config)
-            this.items.push(newItem)
+            if (newItem) {
+                this.items.push(newItem)
+            }
             return newItem
         } else {
             console.warn(`${this.area} 已存在一个名为 ${config.name} 的元素，新增无效`)

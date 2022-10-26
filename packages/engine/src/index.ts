@@ -7,8 +7,34 @@ import { plugins } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton } from './shell'
 
+import { PluginContext } from 'vitis-lowcode-types'
+
 (async function registerPlugins() {
     plugins.register(exPlugin)
+    function addTopLeft(ctx: PluginContext) {
+        return {
+            init() {
+                ctx.skeleton.add({
+                    name: 'logo',
+                    area: "topRight",
+                    content: () => createElement('div', {}, 'div'),
+                    type: 'widget'
+                })
+
+                ctx.skeleton.add({
+                    name: 'bottom',
+                    area: "topRight",
+                    content: () => createElement('div', {}, 'divbbb'),
+                    type: 'widget'
+                })
+
+            }
+        }
+    }
+
+    addTopLeft.pluginName = 'addTopLeft'
+    plugins.register(addTopLeft)
+
 })()
 
 export function init(container?: HTMLElement) {

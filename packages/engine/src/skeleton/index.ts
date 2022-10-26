@@ -16,13 +16,18 @@ export default class Skeleton {
 
     add(config: WidgetBaseConfig) {
         const handle = (config: WidgetBaseConfig) => {
-            if (config.type === 'panel') {
-                return new Panel(config.name, config)
-            } else if (config.type === 'panelDock') {
-                return new PanelDock(config.name, config)
-            } else {
+            if (config.type === 'widget'){
                 return new Widget(config.name, config)
             }
+
+            if (config.type === 'panel') {
+                return new Panel(config.name, config)
+            } 
+            
+            if (config.type === 'panelDock') {
+                return new PanelDock(config.name, config)
+            } 
+            
         }
         switch (config.area) {
             case 'bottom':

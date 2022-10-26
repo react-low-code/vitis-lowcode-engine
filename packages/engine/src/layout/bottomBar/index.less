@@ -1,8 +1,14 @@
 .bottomBar {
     position: absolute;
+    display: flex;
     left: 0;
     right: 0;
     bottom: 0;
     height: 50px;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    .item+.item {
+        margin-left: 10px;
+    }
 }
