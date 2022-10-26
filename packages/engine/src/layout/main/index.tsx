@@ -1,4 +1,5 @@
 import React from 'react'
+import './index.less'
 
 interface Props {
 
@@ -6,6 +7,6 @@ interface Props {
 
 export default class MainArea extends React.Component<Props, {}> {
     render(){
-        return <div>MainArea</div>
+        return <div className='mainArea'>MainArea</div>
     }
 }
