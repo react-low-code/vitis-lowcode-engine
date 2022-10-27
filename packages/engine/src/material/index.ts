@@ -1,4 +1,6 @@
 import { NpmInfo, ComponentSpecRaw } from 'vitis-lowcode-types'
+import { project } from '../shell'
+import { ASSET_UPDATE } from '../eventType'
 
 export default class Material {
     private componentSpecRawMap: Map<string, ComponentSpecRaw> = new Map()
@@ -21,7 +23,8 @@ export default class Material {
                 result.push(false)
             } else {
                 try {
-                    this.componentSpecRawMap.set(item.value.info.npm, JSON.parse(item.value.text))
+                    const spec = JSON.parse(item.value.text)
+                    this.componentSpecRawMap.set(item.value.info.npm, spec)
                     result.push(true)
                 } catch (error) {
                     result.push(false)
@@ -29,6 +32,9 @@ export default class Material {
             }
             
         }
+
+        project.emit(ASSET_UPDATE, infos.filter((_, index) => result[index]).map(info => info.npm))
+
         return result
     }
 
@@ -38,5 +44,9 @@ export default class Material {
 
     getComponentSpecRawMap() {
         return new Map(this.componentSpecRawMap)
+    }
+
+    getComponentSpecRaw(name: string) {
+        return this.innerGetComponentSpecRawMap().get(name)
     }
 }

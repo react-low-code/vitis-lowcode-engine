@@ -1,40 +1,21 @@
 import { createElement } from 'react'
 import { render } from 'react-dom'
 
-export { setters, skeleton, plugins, project, material } from './shell'
-import { exPlugin } from 'vitis-lowcode-default-plugins'
-import { plugins } from './shell'
+import { project } from './shell'
 import Workbench from './layout/workbench'
-import { observableSkeleton } from './shell'
+import { observableSkeleton, observableProject } from './shell'
+import { ASSET_UPDATE } from './eventType'
 
-import { PluginContext } from 'vitis-lowcode-types'
+export { setters, skeleton, plugins, project, material } from './shell'
+export * from './eventType'
+
+
+// import { PluginContext } from 'vitis-lowcode-types'
 
 (async function registerPlugins() {
-    plugins.register(exPlugin)
-    function addTopLeft(ctx: PluginContext) {
-        return {
-            init() {
-                ctx.skeleton.add({
-                    name: 'logo',
-                    area: "topRight",
-                    content: () => createElement('div', {}, 'div'),
-                    type: 'widget'
-                })
-
-                ctx.skeleton.add({
-                    name: 'bottom',
-                    area: "topRight",
-                    content: () => createElement('div', {}, 'divbbb'),
-                    type: 'widget'
-                })
-
-            }
-        }
-    }
-
-    addTopLeft.pluginName = 'addTopLeft'
-    plugins.register(addTopLeft)
-
+    project.on(ASSET_UPDATE, (loadedPackageNames: string[]) => {
+        observableProject.designer.buildComponentSpecMap(loadedPackageNames)
+    })
 })()
 
 export function init(container?: HTMLElement) {

@@ -1,0 +1,1 @@
+export const ASSET_UPDATE = Symbol('ASSET_UPDATE')
