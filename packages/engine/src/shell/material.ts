@@ -20,6 +20,10 @@ export default class Material implements MaterialSpec {
     }
 
     get(packageName: string) {
-      return this.material.getComponentSpecRawMap().get(packageName)
+      return this.getAll().get(packageName)
+    }
+
+    getAll() {
+      return this.material.getComponentSpecRawMap()
     }
 }

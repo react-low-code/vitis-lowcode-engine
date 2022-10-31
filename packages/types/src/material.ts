@@ -4,6 +4,7 @@ export interface MaterialSpec {
   load(infos: NpmInfo[]): Promise<boolean[]> 
   has(packageName: string): boolean
   get(packageName: string): ComponentSpecRaw | undefined
+  getAll(): Map<string, ComponentSpecRaw>
 }
 
 export interface NpmInfo {

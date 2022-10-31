@@ -36,5 +36,6 @@ module.exports = ({ context, onGetWebpackConfig }) => {
       }]);
     config.plugins.delete('hot');
     config.devServer.hot(false);
+    config.module.rule('svg').uses.clear().end().use('svg').loader('@svgr/webpack').end();
   });
 };
