@@ -15,4 +15,8 @@ export default class Project implements ProjectSpec {
     on(eventName: symbol, fn: (...args: any[]) => void) {
         return this.innerProject.event.on(eventName, fn)
     }
+
+    off(eventName: symbol, fn?: (...args: any[]) => void) {
+        return this.innerProject.event.off(eventName, fn)
+    }
 }

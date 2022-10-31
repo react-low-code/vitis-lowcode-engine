@@ -20,10 +20,7 @@ export * from './eventType'
         type: "panelDock",
         name: "ComponentsPane",
         content: ComponentsPane,
-        area: "left",
-        contentProps: {
-            active: false
-        }
+        area: "left"
     })
 })()
 

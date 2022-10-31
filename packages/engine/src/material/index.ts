@@ -16,6 +16,7 @@ export default class Material {
                 text: await response.text()
             }
         }))
+
         const result: boolean[] = []
 
         for (const item of promiseSettledResult) {
@@ -30,10 +31,12 @@ export default class Material {
                     result.push(false)
                 }
             }
-            
         }
 
-        project.emit(ASSET_UPDATE, infos.filter((_, index) => result[index]).map(info => info.npm))
+        const upload = infos.filter((_, index) => result[index]).map(info => info.npm)
+        if (upload.length) {
+            project.emit(ASSET_UPDATE, upload)
+        }
 
         return result
     }
