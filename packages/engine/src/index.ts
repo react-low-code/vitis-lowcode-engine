@@ -1,8 +1,8 @@
 import { createElement } from 'react'
 import { render } from 'react-dom'
-import { plugins as defaultPlugins } from 'vitis-lowcode-default-ext'
+import { defaultPlugins, defaultSetters } from 'vitis-lowcode-default-ext'
 
-import { plugins, project } from './shell'
+import { plugins, project, setters } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATE } from './eventType'
@@ -19,6 +19,9 @@ export * from './eventType'
     defaultPlugins.forEach(defaultPlugin => {
         plugins.register(defaultPlugin)
     })
+
+    setters.register(defaultSetters)
+    
 })()
 
 export function init(container?: HTMLElement) {

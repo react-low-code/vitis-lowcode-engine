@@ -1,5 +1,5 @@
 import ComponentsPanePlugin from './ComponentsPane'
 
-export default [
+export const defaultPlugins =  [
     ComponentsPanePlugin
 ]
