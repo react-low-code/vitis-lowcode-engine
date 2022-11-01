@@ -1,4 +1,8 @@
 {
+  "externals": {
+    "react": "var window.React",
+    "react-dom": "var window.ReactDOM"
+  },
   "plugins": [
     "build-plugin-component"
   ]

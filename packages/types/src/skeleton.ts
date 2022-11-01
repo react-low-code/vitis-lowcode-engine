@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 
 export interface SkeletonSpec {
     add(config: WidgetBaseConfig): BaseWidgetSpec | undefined;
