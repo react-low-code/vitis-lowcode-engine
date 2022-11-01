@@ -1,8 +1,8 @@
 import { createElement } from 'react'
 import { render } from 'react-dom'
-import ComponentsPane from 'vitis-lowcode-components-pane'
+import { plugins as defaultPlugins } from 'vitis-lowcode-default-ext'
 
-import { plugins, project, skeleton } from './shell'
+import { plugins, project } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATE } from './eventType'
@@ -16,11 +16,8 @@ export * from './eventType'
         observableProject.designer.buildComponentSpecMap(loadedPackageNames)
     })
     
-    skeleton.add({
-        type: "panelDock",
-        name: "ComponentsPane",
-        content: ComponentsPane,
-        area: "left"
+    defaultPlugins.forEach(defaultPlugin => {
+        plugins.register(defaultPlugin)
     })
 })()
 

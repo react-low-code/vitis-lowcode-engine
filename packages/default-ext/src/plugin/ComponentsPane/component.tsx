@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import { Popover } from 'antd';
-import Icon from './Component'
+import Icon from './icon'
 import './index.less'
 
 interface ComponentItem {
