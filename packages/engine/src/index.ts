@@ -2,17 +2,17 @@ import { createElement } from 'react'
 import { render } from 'react-dom'
 import { defaultPlugins, defaultSetters } from 'vitis-lowcode-default-ext'
 
-import { plugins, project, setters } from './shell'
+import { plugins, setters, material } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATE } from './eventType'
 
 
-export { setters, skeleton, plugins, project, material } from './shell'
+export { setters, skeleton, plugins, material } from './shell'
 export * from './eventType'
 
 (async function registerPlugins() {
-    project.on(ASSET_UPDATE, (loadedPackageNames: string[]) => {
+    material.on(ASSET_UPDATE, (loadedPackageNames: string[]) => {
         observableProject.designer.buildComponentSpecMap(loadedPackageNames)
     })
     

@@ -1,6 +1,4 @@
 import { NpmInfo, ComponentSpecRaw } from 'vitis-lowcode-types'
-import { project } from '../shell'
-import { ASSET_UPDATE } from '../eventType'
 
 export default class Material {
     private componentSpecRawMap: Map<string, ComponentSpecRaw> = new Map()
@@ -31,11 +29,6 @@ export default class Material {
                     result.push(false)
                 }
             }
-        }
-
-        const upload = infos.filter((_, index) => result[index]).map(info => info.npm)
-        if (upload.length) {
-            project.emit(ASSET_UPDATE, upload)
         }
 
         return result

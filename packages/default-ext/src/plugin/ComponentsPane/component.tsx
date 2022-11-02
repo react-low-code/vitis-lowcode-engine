@@ -72,7 +72,7 @@ export default class ComponentsPane extends React.Component<{},State>{
         this.updateAsset()
        
         if (window.VitisLowCodeEngine) {
-            window.VitisLowCodeEngine.project.on(window.VitisLowCodeEngine.ASSET_UPDATE, this.updateAsset)
+            window.VitisLowCodeEngine.material.on(window.VitisLowCodeEngine.ASSET_UPDATE, this.updateAsset)
         }
 
         this.setState({
@@ -82,7 +82,7 @@ export default class ComponentsPane extends React.Component<{},State>{
 
     componentWillUnmount() {
         if (window.VitisLowCodeEngine) {
-            window.VitisLowCodeEngine.project.off(window.VitisLowCodeEngine.ASSET_UPDATE, this.updateAsset)
+            window.VitisLowCodeEngine.material.off(window.VitisLowCodeEngine.ASSET_UPDATE, this.updateAsset)
         }
     }
 

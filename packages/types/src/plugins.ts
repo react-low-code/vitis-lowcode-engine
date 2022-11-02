@@ -1,5 +1,4 @@
 import { SettersSpec } from './setter'
-import { ProjectSpec } from './project'
 import { SkeletonSpec } from './skeleton'
 import { MaterialSpec } from './material'
 
@@ -26,7 +25,6 @@ export interface PluginContext{
     plugins: PluginManagerSpec;
     setters: SettersSpec;
     material: MaterialSpec;
-    project: ProjectSpec;
 }
 
 export interface LowCodePlugin {

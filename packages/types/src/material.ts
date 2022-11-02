@@ -1,6 +1,7 @@
 import { PropRaw } from './Props'
+import type EventEmitter from 'eventemitter3';
 
-export interface MaterialSpec {
+export interface MaterialSpec extends EventEmitter{
   load(infos: NpmInfo[]): Promise<boolean[]> 
   has(packageName: string): boolean
   get(packageName: string): ComponentSpecRaw | undefined
