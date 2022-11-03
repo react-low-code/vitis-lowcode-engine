@@ -8,9 +8,9 @@ export interface RegisteredSetter {
 }
 
 export interface SettersSpec {
+    register(setter: RegisteredSetter | RegisteredSetter[]): void
     getSetter(name: string): RegisteredSetter | undefined
     getAll(): Map<string, RegisteredSetter>
-    register(setter: RegisteredSetter | RegisteredSetter[]): void
     hasSetter(name: string): boolean
 }
 

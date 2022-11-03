@@ -1,1 +1,1 @@
-export const ASSET_UPDATE = Symbol('ASSET_UPDATE')
+export const ASSET_UPDATED = Symbol('ASSET_UPDATED')

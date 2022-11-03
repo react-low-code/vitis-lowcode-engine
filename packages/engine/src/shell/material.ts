@@ -1,7 +1,7 @@
 import { MaterialSpec, NpmInfo} from 'vitis-lowcode-types'
 import type InnerMaterial from '../material'
 import { EventEmitter } from 'eventemitter3';
-import { ASSET_UPDATE } from '../eventType'
+import { ASSET_UPDATED } from '../eventType'
 
 export default class Material extends EventEmitter implements MaterialSpec  {
     private readonly material: InnerMaterial;
@@ -17,9 +17,8 @@ export default class Material extends EventEmitter implements MaterialSpec  {
     load = async (infos: NpmInfo[]): Promise<boolean[]> => {
       const loadedResult = await this.material.loadComponentSpec(infos)
       const upload = infos.filter((_, index) => loadedResult[index]).map(info => info.npm)
-      console.log('ffff', upload)
         if (upload.length) {
-            this.emit(ASSET_UPDATE, upload)
+            this.emit(ASSET_UPDATED, upload)
         }
       return loadedResult
     }

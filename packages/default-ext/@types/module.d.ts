@@ -5,7 +5,7 @@ declare module '*.module.scss' {
 
 declare interface Window {
   VitisLowCodeEngine: {
-    ASSET_UPDATE: symbol;
+    ASSET_UPDATED: symbol;
     plugins: any;
     material: any;
     setters: any;

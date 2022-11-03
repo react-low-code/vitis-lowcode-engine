@@ -1,5 +1,5 @@
 import { LowCodePlugin, PluginConfigCreator } from 'vitis-lowcode-types'
-import { setters, skeleton, material, plugins, project } from '../shell'
+import { setters, skeleton, material, plugins } from '../shell'
 
 export default class PluginManager {
    private pluginMap: Map<string, LowCodePlugin>  = new Map()
@@ -21,7 +21,6 @@ export default class PluginManager {
          skeleton,
          material,
          plugins,
-         project
       }, options)
 
       await config.init()
