@@ -1,16 +1,17 @@
-import { WidgetConfigArea, BaseWidgetSpec, WidgetBaseConfig } from 'vitis-lowcode-types'
+import { WidgetConfigArea, WidgetConfig } from 'vitis-lowcode-types'
+import Widget from './widget/widget'
 import { makeAutoObservable } from 'mobx';
 
-export default class AreaContainer<C extends WidgetBaseConfig, W extends BaseWidgetSpec> {
+export default class AreaContainer {
     readonly area: WidgetConfigArea
-    items: W[] = [];
+    items: Widget[] = [];
 
-    constructor(area: WidgetConfigArea ) {
+    constructor(area: WidgetConfigArea) {
         makeAutoObservable(this, { area: false });
         this.area = area
     }
 
-    add(config: C, handle: (config: C) => W | undefined) {
+    add(config: WidgetConfig, handle: (config: WidgetConfig) => Widget | undefined) {
         const current = this.items.find(item => item.name === config.name)
         if (!current) {
             const newItem = handle(config)

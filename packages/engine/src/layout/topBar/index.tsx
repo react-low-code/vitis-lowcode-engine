@@ -1,12 +1,12 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { BaseWidgetSpec } from 'vitis-lowcode-types'
+import { WidgetSpec } from 'vitis-lowcode-types'
 import './index.less'
 
 interface Props {
-    topLeftAreaItems: BaseWidgetSpec[];
-    topRightAreaItems: BaseWidgetSpec[];
-    topCenterAreaItems: BaseWidgetSpec[];
+    topLeftAreaItems: WidgetSpec[];
+    topRightAreaItems: WidgetSpec[];
+    topCenterAreaItems: WidgetSpec[];
 }
 
 @observer

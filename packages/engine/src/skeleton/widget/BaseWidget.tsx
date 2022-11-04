@@ -1,12 +1,12 @@
-import { BaseWidgetSpec, WidgetBaseConfig } from 'vitis-lowcode-types'
+import { WidgetSpec, WidgetConfig } from 'vitis-lowcode-types'
 import { createElement } from 'react'
 
-export default abstract class BaseWidget implements BaseWidgetSpec {
+export default abstract class BaseWidget implements WidgetSpec {
     readonly name: string
-    readonly config: WidgetBaseConfig
+    readonly config: WidgetConfig
     visible: boolean = true
 
-    constructor(name: string, config: WidgetBaseConfig) {
+    constructor(name: string, config: WidgetConfig) {
         this.name = name
         this.config = config
     }

@@ -1,11 +1,11 @@
 import React from 'react'
-import { BaseWidgetSpec } from 'vitis-lowcode-types'
+import { WidgetSpec } from 'vitis-lowcode-types'
 import { observer } from 'mobx-react'
 
 import './index.less'
 
 interface Props {
-    items: BaseWidgetSpec[]
+    items: WidgetSpec[]
 }
 
 @observer

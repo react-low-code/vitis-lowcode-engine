@@ -1,27 +1,19 @@
 import { createElement } from 'react'
-import { WidgetBaseConfig } from 'vitis-lowcode-types'
+import { WidgetConfig, WidgetSpec } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx';
 
-export default class Widget  {
+export default class Widget implements WidgetSpec {
     readonly name: string
-    readonly config: WidgetBaseConfig
+    readonly config: WidgetConfig
     visible: boolean = true
-    readonly isWidget: true
 
-    constructor(name: string, config: WidgetBaseConfig) {
+    constructor(name: string, config: WidgetConfig) {
         this.name = name
         this.config = config
         makeAutoObservable(this, {
-            isWidget: false,
             config: false,
             name: false
         })
-    }
-
-  
-
-    getName(): string {
-        return this.name
     }
 
     get content() {

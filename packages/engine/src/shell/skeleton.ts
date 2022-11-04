@@ -1,4 +1,4 @@
-import { SkeletonSpec, WidgetBaseConfig, WidgetConfigArea } from 'vitis-lowcode-types'
+import { SkeletonSpec, WidgetConfig, WidgetConfigArea } from 'vitis-lowcode-types'
 import type InnerSkeleton from '../skeleton'
 export default class Skeleton implements SkeletonSpec {
     private readonly skeleton: InnerSkeleton
@@ -8,7 +8,7 @@ export default class Skeleton implements SkeletonSpec {
     }
 
     
-    add(config: WidgetBaseConfig) {
+    add(config: WidgetConfig) {
         return this.skeleton.add(config)
     }
 

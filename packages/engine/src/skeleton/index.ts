@@ -1,43 +1,24 @@
-import { WidgetBaseConfig, WidgetConfigArea } from 'vitis-lowcode-types'
-import Panel from './widget/panel'
-import PanelDock from './widget/panel-dock'
+import { WidgetConfig, WidgetConfigArea } from 'vitis-lowcode-types'
 import Widget from './widget/widget'
 import AreaContainer from './container'
 
 export default class Skeleton {
     leftArea = new AreaContainer('left')
-    rightArea = new AreaContainer('right')
-    mainArea = new AreaContainer('main')
     toolbarArea = new AreaContainer('toolbar')
     bottomArea = new AreaContainer('bottom')
     topLeftArea = new AreaContainer('topLeft')
     topRightArea = new AreaContainer('topRight')
     topCenterArea = new AreaContainer('topCenter')
 
-    add(config: WidgetBaseConfig) {
-        const handle = (config: WidgetBaseConfig) => {
-            if (config.type === 'widget'){
-                return new Widget(config.name, config)
-            }
-
-            if (config.type === 'panel') {
-                return new Panel(config.name, config)
-            } 
-            
-            if (config.type === 'panelDock') {
-                return new PanelDock(config.name, config)
-            } 
-            
+    add(config: WidgetConfig) {
+        const handle = (config: WidgetConfig) => {
+            return new Widget(config.name, config)
         }
         switch (config.area) {
             case 'bottom':
                 return this.bottomArea.add(config, handle)
             case 'left':
                 return this.leftArea.add(config, handle)
-            case 'main':
-                return this.mainArea.add(config, handle)
-            case 'right':
-                return this.rightArea.add(config, handle)
             case 'toolbar':
                 return this.toolbarArea.add(config, handle)
             case 'topCenter':
@@ -59,10 +40,6 @@ export default class Skeleton {
                 return this.bottomArea.remove(name)
             case 'left':
                 return this.leftArea.remove(name)
-            case 'main':
-                return this.mainArea.remove( name)
-            case 'right':
-                return this.rightArea.remove(name)
             case 'toolbar':
                 return this.toolbarArea.remove(name)
             case 'topCenter':

@@ -1,14 +1,14 @@
 import { createElement } from 'react'
-import { WidgetBaseConfig } from 'vitis-lowcode-types'
+import { WidgetConfig } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx';
 
 export default class Panel {
     readonly isPanel: true = true
     readonly name: string
-    readonly config: WidgetBaseConfig
+    readonly config: WidgetConfig
     visible: boolean = true
 
-    constructor(name: string, config: WidgetBaseConfig) {
+    constructor(name: string, config: WidgetConfig) {
         this.name = name
         this.config = config
         makeAutoObservable(this, {
