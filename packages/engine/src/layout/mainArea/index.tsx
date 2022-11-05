@@ -7,6 +7,10 @@ interface Props {
 
 export default class MainArea extends React.Component<Props, {}> {
     render(){
-        return <div className='mainArea'>MainArea</div>
+        return (
+        <div className='mainArea'>
+            
+        </div>
+        )
     }
 }

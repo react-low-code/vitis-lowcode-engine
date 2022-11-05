@@ -2,9 +2,10 @@ import React from 'react'
 import type Skeleton from '../skeleton'
 import TopBar from './topBar'
 import BottomBar from './bottomBar'
-import Main from './main'
+import MainArea from './mainArea'
 import LeftArea from './leftArea'
 import RightArea from './rightArea'
+import ToolBarArea from './toolBar'
 import './workbench.less'
 
 interface Props {
@@ -22,7 +23,10 @@ export default class Workbench extends React.Component<Props, {}>{
                 />
                 <div className='vitis-workbench-body'>
                     <LeftArea items={this.props.skeleton.leftArea.items}/>
-                    <Main />
+                    <div className='vitis-workbench-center'>
+                        <ToolBarArea items={this.props.skeleton.toolbarArea.items}/>
+                        <MainArea />
+                    </div>
                     <RightArea />
                 </div>
                 <BottomBar items={this.props.skeleton.bottomArea.items}/>
