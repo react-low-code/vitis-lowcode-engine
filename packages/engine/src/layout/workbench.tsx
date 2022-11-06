@@ -1,5 +1,6 @@
 import React from 'react'
 import type Skeleton from '../skeleton'
+import type Project from '../project'
 import TopBar from './topBar'
 import BottomBar from './bottomBar'
 import MainArea from './mainArea'
@@ -10,6 +11,7 @@ import './workbench.less'
 
 interface Props {
     skeleton: Skeleton
+    project: Project
 }
 
 export default class Workbench extends React.Component<Props, {}>{
@@ -25,7 +27,7 @@ export default class Workbench extends React.Component<Props, {}>{
                     <LeftArea items={this.props.skeleton.leftArea.items}/>
                     <div className='vitis-workbench-center'>
                         <ToolBarArea items={this.props.skeleton.toolbarArea.items}/>
-                        <MainArea />
+                        <MainArea componentSpecMap={this.props.project.designer.componentSpecMap}/>
                     </div>
                     <RightArea />
                 </div>

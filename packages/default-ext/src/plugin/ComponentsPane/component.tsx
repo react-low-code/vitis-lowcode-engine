@@ -73,6 +73,7 @@ export default class ComponentsPane extends React.Component<{},State>{
        
         if (window.VitisLowCodeEngine) {
             window.VitisLowCodeEngine.material.on(window.VitisLowCodeEngine.ASSET_UPDATED, this.updateAsset)
+            window.VitisLowCodeEngine.project.on(window.VitisLowCodeEngine.DRAG_OVER, this.onDragOver)
         }
 
         this.setState({
@@ -83,7 +84,14 @@ export default class ComponentsPane extends React.Component<{},State>{
     componentWillUnmount() {
         if (window.VitisLowCodeEngine) {
             window.VitisLowCodeEngine.material.off(window.VitisLowCodeEngine.ASSET_UPDATED, this.updateAsset)
+            window.VitisLowCodeEngine.project.off(window.VitisLowCodeEngine.DRAG_OVER, this.onDragOver)
         }
+    }
+
+    onDragOver = () => {
+        this.setState({
+            active: false
+        })
     }
 
     renderComponentGroup(title: string, components: ComponentItem[]) {
@@ -95,8 +103,8 @@ export default class ComponentsPane extends React.Component<{},State>{
                     <div className='title'>{title}</div>
                     <div className='body'>
                         {components.map(item => 
-                        <div className='component'>
-                            <img src={item.iconUrl}/>
+                        <div className='component' draggable={true} onDragStart={this.onDragStart}>
+                            <img src={item.iconUrl} draggable={false} className='img'/>
                             <div className='name'>{item.title}</div>
                         </div>)
                         }
@@ -104,6 +112,13 @@ export default class ComponentsPane extends React.Component<{},State>{
                 </div>
             )
         }
+    }
+
+    onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        // e.dataTransfer.effectAllowed = "copy"
+        // this.setState({
+        //     active: false
+        // })
     }
 
     render(){
@@ -117,6 +132,7 @@ export default class ComponentsPane extends React.Component<{},State>{
                 {this.renderComponentGroup('高级组件', this.state.subjoinComponents)}
                 </div>}
                 onOpenChange={this.onOpenChange}
+                open={this.state.active}
             >
                 <Icon 
                     className={cn({icon: true, active: this.state.active})}

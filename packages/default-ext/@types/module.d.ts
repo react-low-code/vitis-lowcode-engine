@@ -6,9 +6,11 @@ declare module '*.module.scss' {
 declare interface Window {
   VitisLowCodeEngine: {
     ASSET_UPDATED: symbol;
+    DRAG_OVER: symbol;
     plugins: any;
     material: any;
     setters: any;
     skeleton: any
+    project: any
   }
 }

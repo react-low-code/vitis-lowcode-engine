@@ -8,7 +8,7 @@ import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATED } from './eventType'
 
 
-export { setters, skeleton, plugins, material } from './shell'
+export { setters, skeleton, plugins, material, project } from './shell'
 export * from './eventType'
 
 (async function registerPlugins() {
@@ -32,6 +32,7 @@ export function init(container?: HTMLElement) {
     }
 
     render(createElement(Workbench, {
-        skeleton: observableSkeleton
+        skeleton: observableSkeleton,
+        project: observableProject
     }),container)
 }
