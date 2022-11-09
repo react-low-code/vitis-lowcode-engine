@@ -1,8 +1,14 @@
-import {project} from "../shell"
+import { project } from "../shell"
 import { DRAG_OVER } from '../eventType'
+import type Project from "./index"
 
 export default class Host {
     frameDocument?: Document | null
+    readonly project: Project
+
+    constructor(project: Project) {
+        this.project = project
+    }
 
     mountContentFrame(frame: HTMLIFrameElement | null) {
         if (!frame) {

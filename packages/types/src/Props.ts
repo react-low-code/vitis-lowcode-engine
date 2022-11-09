@@ -22,3 +22,7 @@ interface SetterConfig {
     /**传递给设置器的属性 */
     props?: object;
 }
+
+export interface PropValue {
+
+}
