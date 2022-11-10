@@ -2,7 +2,7 @@ import { project, material, setters } from "../shell"
 import { DRAG_OVER, ASSET_UPDATED } from '../eventType'
 import type Project from "./index"
 import { DesignerSpec, SimulatorSpec, ComponentSpecRaw } from 'vitis-lowcode-types'
-import { getComponentImplUrl, getBaseAssets, getComponentSetterMap } from '../utils'
+import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
 
 export default class Host implements DesignerSpec{
     frameDocument?: Document | null
@@ -15,6 +15,10 @@ export default class Host implements DesignerSpec{
 
     }
 
+    onAssetUpdated = (additionalPackageNames: string[]) => {
+        // todo
+    }
+
     mountContentFrame = async (frame: HTMLIFrameElement | null) => {
         if (!frame) {
             return 
@@ -24,15 +28,13 @@ export default class Host implements DesignerSpec{
         this.frameWindow = frame.contentWindow
     
 
-        await this.createSimulator()
+        const render = await this.createSimulator()
 
-        material.off(ASSET_UPDATED).on(ASSET_UPDATED, (additionalPackageNames: string[]) => {
-            // todo
-        })
-
+        material.off(ASSET_UPDATED, this.onAssetUpdated).on(ASSET_UPDATED, this.onAssetUpdated)
         this.frameDocument?.addEventListener('dragover', () => {
             project.emit(DRAG_OVER)
         })
+
     }
 
     private getSimulatorComponentAssets = (assetMap: Map<string, ComponentSpecRaw>) => {
@@ -49,24 +51,35 @@ export default class Host implements DesignerSpec{
         return result
     }
 
+    /**
+     * 注册组件包自带的设置器
+     */
+    private registerComponentSetters = (assetBundles: {packageName: string, componentName: string, url: string}[]) => {
+        assetBundles.forEach(bundle => {
+            const innerSetterMap = getComponentSetterMap(this.frameWindow!, bundle)
+            for (const key of Object.keys(innerSetterMap)) {
+                setters.register({
+                    name: `${bundle.packageName}/${key}`,
+                    view: innerSetterMap[key],
+                })
+            }
+        })
+    }
+
+    /**
+     * 收集低代码组件的实现
+     * @param assetBundles 
+     */
+    private collectComponentImpl = (assetBundles: {packageName: string, componentName: string, url: string}[]) => {
+        assetBundles.forEach(bundle => {
+            const componentImpl = getComponentImplFromWin(this.frameWindow!, bundle)
+            this.project.designer.addComponentImpl(bundle.componentName, componentImpl)
+        })
+    }
+
     private createSimulator = async () => {
         const assetBundles = this.getSimulatorComponentAssets(material.getAll());
         const baseAssets = getBaseAssets()
-
-        // 注册组件包自带的设置器
-        const regComponentSetters = () => {
-            assetBundles.forEach(bundle => {
-                getComponentSetterMap(this.frameWindow!, bundle)
-                
-                const innerSetterMap = getComponentSetterMap(this.frameWindow!, bundle)
-                for (const key of Object.keys(innerSetterMap)) {
-                    setters.register({
-                        name: `${bundle.packageName}/${key}`,
-                        view: innerSetterMap[key],
-                    })
-                }
-            })
-        }
 
         // 这个属性在模拟器内部要访问
         this.frameWindow!.LCSimulatorHost = this
@@ -99,10 +112,12 @@ export default class Host implements DesignerSpec{
 
         return new Promise<void>((resolve, rejected) => {
             const loaded = () => {
-              regComponentSetters()
-              resolve();
+              this.registerComponentSetters(assetBundles)
+              this.collectComponentImpl(assetBundles)
+              resolve(this.frameWindow!.SimulatorRenderer);
               this.frameWindow!.removeEventListener('load', loaded);
             };
+
             const errored = () => {
                 rejected()
                 this.frameWindow!.removeEventListener('error', errored);

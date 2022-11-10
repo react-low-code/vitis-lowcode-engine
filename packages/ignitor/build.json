@@ -1,6 +1,7 @@
 {
   "entry": {
-    "engine-core": "../engine/src/index.ts"
+    "engine-core": "../engine/src/index.ts",
+    "simulator-renderer": "../simulator-renderer/src/index.ts"
   },
   "vendor": false,
   "devServer": {

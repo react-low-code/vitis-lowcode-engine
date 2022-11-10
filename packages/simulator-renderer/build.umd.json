@@ -1,0 +1,20 @@
+{
+  "entry": {
+    "simulator-renderer": "src/index"
+  },
+  "sourceMap": true,
+  "library": "VitisLowCodeSimulatorRenderer",
+  "libraryTarget": "umd",
+  "externals": {
+    "react": "window.React",
+    "react-dom": "window.ReactDOM"
+  },
+  "polyfill": false,
+  "outputDir": "dist",
+  "vendor": false,
+  "ignoreHtmlTemplate": true,
+  "plugins": [
+    "build-plugin-react-app",
+    "./build.plugin.js"
+  ]
+}
