@@ -42,4 +42,8 @@ export default class Project extends EventEmitter{
         super()
         this.documentModel = new DocumentModel(schema)
     }
+
+    setSchema(schema: PageSchema) {
+        this.documentModel.open(schema)
+    }
 }

@@ -4,7 +4,7 @@ import Node from '../node'
 export default class DocumentModel {
     rootNode: Node<PageSchema>
     constructor(schema: PageSchema) {
-        this.rootNode = this.createNode<PageSchema>(schema, null)
+        this.open(schema)
     }
 
     get schema() {
@@ -13,5 +13,9 @@ export default class DocumentModel {
 
     createNode<S extends NodeSchema>(schema: S, pNode: Node<S> | null) {
         return new Node<S>(schema, pNode)
+    }
+
+    open(schema: PageSchema) {
+        this.rootNode = this.createNode<PageSchema>(schema, null)
     }
 }
