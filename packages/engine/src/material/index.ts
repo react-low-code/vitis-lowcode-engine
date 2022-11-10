@@ -1,4 +1,5 @@
 import { NpmInfo, ComponentSpecRaw } from 'vitis-lowcode-types'
+import { getComponentSpecUrl } from '../utils'
 
 export default class Material {
     private componentSpecRawMap: Map<string, ComponentSpecRaw> = new Map()
@@ -8,7 +9,8 @@ export default class Material {
             if (this.componentSpecRawMap.has(info.npm)) {
                 console.warn(`已经加载过${info.npm}，现在开始重新加载并替换原来的`)
             }
-            const response =  await fetch(`https://unpkg.com/${info.npm}@${info.version}/asset/index.json`)
+            
+            const response =  await fetch(getComponentSpecUrl(info))
             return {
                 info,
                 text: await response.text()

@@ -3,7 +3,6 @@ import type { ComponentType } from 'react'
 
 export interface RegisteredSetter {
     view: ComponentType<SetterCommonProps & {}>;
-    defaultProps?: object;
     name: string
 }
 
