@@ -1,10 +1,11 @@
 import { project, material, setters } from "../shell"
 import { DRAG_OVER, ASSET_UPDATED } from '../eventType'
 import type Project from "./index"
-import { DesignerSpec, SimulatorSpec, ComponentSpecRaw } from 'vitis-lowcode-types'
+import { HostSpec, SimulatorSpec, ComponentSpecRaw } from 'vitis-lowcode-types'
+import { IReactionPublic, autorun } from 'mobx'
 import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
 
-export default class Host implements DesignerSpec{
+export default class Host implements HostSpec{
     frameDocument?: Document | null
     frameWindow?: Window | null
     readonly project: Project
@@ -129,7 +130,9 @@ export default class Host implements DesignerSpec{
         });
     }
 
-    connect(renderer: SimulatorSpec) {
+    connect = (renderer: SimulatorSpec, effect: (reaction: IReactionPublic) => void) => {
         this.renderer = renderer
+
+        autorun(effect)
     }
 }

@@ -13,11 +13,11 @@ class SimulatorRenderer implements SimulatorSpec {
     constructor() {
         makeAutoObservable(this)
         host.connect(this, () => {
-
+            console.log(host.project.designer.componentImplMap)
         })
         
     }
-    
+
     run() {
         if (this.isRan) {
             return

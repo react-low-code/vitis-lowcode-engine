@@ -1,9 +1,10 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable,  } from 'mobx';
 import { ComponentType } from 'react'
+import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
-export default class Designer {
+export default class Designer implements DesignerSpec{
     componentSpecMap: Map<string, ComponentSpec> = new Map()
     componentImplMap: Map<string, ComponentType> = new Map()
 
@@ -26,5 +27,7 @@ export default class Designer {
             console.error(`${name} 的实现已经存在，即将重置！！！`)
         }
         this.componentImplMap.set(name, component)
+
+        this.componentImplMap = new Map(this.componentImplMap)
     }
 }

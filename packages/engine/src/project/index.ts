@@ -1,8 +1,8 @@
-import { EventEmitter } from 'eventemitter3';
+import { makeAutoObservable } from 'mobx'
 import Designer from './designer';
 import Host from './host'
 import DocumentModel from './documentModel'
-import { PageSchema } from 'vitis-lowcode-types'
+import { PageSchema, ObservableProjectSpec } from 'vitis-lowcode-types'
 
 const defaultPageSchema: PageSchema = {
     componentName: 'Page',
@@ -25,7 +25,7 @@ const defaultPageSchema: PageSchema = {
     },
 }
 
-export default class Project extends EventEmitter{
+export default class Project  implements ObservableProjectSpec{
     readonly designer = new Designer()
     readonly host = new Host(this)
     readonly documentModel: DocumentModel
@@ -39,7 +39,12 @@ export default class Project extends EventEmitter{
     }
 
     constructor(schema: PageSchema = defaultPageSchema) {
-        super()
+        makeAutoObservable(this, {
+            designer: false,
+            host: false,
+            documentModel: false
+        })
+
         this.documentModel = new DocumentModel(schema)
     }
 
