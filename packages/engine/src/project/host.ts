@@ -35,6 +35,8 @@ export default class Host implements DesignerSpec{
             project.emit(DRAG_OVER)
         })
 
+        render.run()
+
     }
 
     private getSimulatorComponentAssets = (assetMap: Map<string, ComponentSpecRaw>) => {
@@ -110,7 +112,7 @@ export default class Host implements DesignerSpec{
         )
         this.frameDocument!.close()
 
-        return new Promise<void>((resolve, rejected) => {
+        return new Promise<SimulatorSpec>((resolve, rejected) => {
             const loaded = () => {
               this.registerComponentSetters(assetBundles)
               this.collectComponentImpl(assetBundles)
@@ -130,6 +132,4 @@ export default class Host implements DesignerSpec{
     connect(renderer: SimulatorSpec) {
         this.renderer = renderer
     }
-
-
 }

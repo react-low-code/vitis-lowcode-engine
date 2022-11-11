@@ -5,4 +5,5 @@ declare module '*.module.scss' {
 
 declare interface Window {
   SimulatorRenderer: any
+  LCSimulatorHost: any
 }

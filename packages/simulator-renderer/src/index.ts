@@ -1,3 +1,9 @@
+import renderer from './renderer'
+
 import './index.less'
 
-window.SimulatorRenderer = 'ddSimulatorRenderer'
+if (window) {
+    window.SimulatorRenderer = renderer
+}
+
+export default renderer

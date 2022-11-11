@@ -12,13 +12,14 @@
     "build": "build-scripts build --skip-demo"
   },
   "dependencies": {
-    "strict-event-emitter-types": "^2.0.0"
+    "strict-event-emitter-types": "^2.0.0",
+    "mobx": "^6.5.0"
   },
   "devDependencies": {
     "build-scripts": "^1.1.1",
     "@types/node": "^13.7.1",
     "@types/react": "^17.0.14",
-    "build-plugin-component": "^0.2.10"
+    "build-plugin-component": "^0.2.10",
   },
   "publishConfig": {
     "access": "public",
