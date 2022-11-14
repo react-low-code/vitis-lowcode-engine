@@ -1,26 +1,34 @@
 
-import { PageSchema, NodeSchema } from 'vitis-lowcode-types'
-import { ComponentType, ReactInstance } from 'react'
+import { PageSchema } from 'vitis-lowcode-types'
 import PageRenderer from './page';
 
 import BaseRenderer from "./baseRenderer";
+import { ContextSpec, Context } from '../context'
+import { emptyPageComponent } from '../default/component'
 
-interface Props {
+interface Props extends ContextSpec{
     schema: PageSchema;
-    components: Map<string, ComponentType>;
-    onCompGetRef?: (schema: NodeSchema, ref: ReactInstance | null) => void;
-    customCreateElement?: (schema: NodeSchema) => React.ReactNode
 }
 
 export default class Renderer extends BaseRenderer<Props, {}> {
+
+    get defaultConfig() {
+        return {
+            emptyPageComponent
+        }
+    }
+
     render() {
         const { schema } = this.props
 
         if (schema.isContainer && schema.containerType === 'Page') {
-            return <PageRenderer/>
+            return (
+                <Context.Provider value={{...this.defaultConfig,...this.props}}>
+                    <PageRenderer nodeSchema={schema}/>
+                </Context.Provider>
+            )
         } else {
             return <div>根节点不是一个页面容器</div>
         }
-        
     }
 }

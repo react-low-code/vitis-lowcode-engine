@@ -1,6 +1,10 @@
 {
   "plugins": [
-    "build-plugin-component",
+    ["build-plugin-component",
+    {
+      "babelPlugins": ["@babel/plugin-transform-typescript", "@babel/plugin-proposal-class-properties", "@babel/plugin-proposal-private-methods","@babel/plugin-proposal-decorators"]
+    }
+    ],
     "./build.plugin.js"
   ]
 }
