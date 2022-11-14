@@ -74,10 +74,13 @@ export default class Host implements HostSpec{
      * @param assetBundles 
      */
     private collectComponentImpl = (assetBundles: {packageName: string, componentName: string, url: string}[]) => {
+        const componentMap = new Map()
+
         assetBundles.forEach(bundle => {
-            const componentImpl = getComponentImplFromWin(this.frameWindow!, bundle)
-            this.project.designer.addComponentImpl(bundle.componentName, componentImpl)
+            componentMap.set(bundle.componentName, getComponentImplFromWin(this.frameWindow!, bundle))
         })
+
+        this.project.designer.addComponentsImpl(componentMap)
     }
 
     private createSimulator = async () => {

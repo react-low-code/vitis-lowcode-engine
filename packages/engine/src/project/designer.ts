@@ -12,7 +12,7 @@ export default class Designer implements DesignerSpec{
         makeAutoObservable(this);
     }
 
-    buildComponentSpecMap(packageNames: string[]) {
+    buildComponentSpecMap = (packageNames: string[]) => {
         packageNames.forEach(packageName => {
             const result = innerMaterial.getComponentSpecRaw(packageName)
 
@@ -22,12 +22,18 @@ export default class Designer implements DesignerSpec{
         })
     }
 
-    addComponentImpl(name: string, component: ComponentType) {
+    addComponentsImpl = (componentMap: Map<string,ComponentType >) => {
+        for (const [name, component ] of componentMap) {
+            this.addComponentImpl(name, component)
+        }
+
+        this.componentImplMap = new Map(this.componentImplMap)
+    }
+
+    private addComponentImpl = (name: string, component: ComponentType) => {
         if (this.componentImplMap.has(name)) {
             console.error(`${name} 的实现已经存在，即将重置！！！`)
         }
         this.componentImplMap.set(name, component)
-
-        this.componentImplMap = new Map(this.componentImplMap)
     }
 }

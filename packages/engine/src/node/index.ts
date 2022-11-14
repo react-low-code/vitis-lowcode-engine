@@ -1,4 +1,4 @@
-import { NodeSchema } from 'vitis-lowcode-types'
+import { NodeSchema, ContainerSchema } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import { project } from '../shell'
 import type ComponentSpec from '../project/componentSpec'
@@ -13,6 +13,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly parent: Node<NodeSchema> | null;
     readonly children: Node<NodeSchema>[]
     readonly props: Props
+    readonly containerType?: ContainerSchema['containerType']
 
     get componentSpec(): ComponentSpec {
         const result = project.project.designer.componentSpecMap.get(this.componentName)
@@ -59,6 +60,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.id = schema.id || uniqueId('node')
         this.componentName = schema.componentName
         this.isContainer = schema.isContainer
+        this.containerType = schema.containerType
         this.schema = schema
 
         this.children = schema.children.map(child => new Node<NodeSchema>(child, this))
@@ -71,6 +73,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
             componentName: this.componentName,
             isContainer: this.isContainer,
             props: this.props.export(),
+            containerType: this.containerType,
             children: this.children.map(child => child.export()),
         }
     }

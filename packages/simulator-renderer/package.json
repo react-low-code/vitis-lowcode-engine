@@ -20,7 +20,8 @@
       "mobx": "^6.5.0",
       "mobx-react": "^7.3.0",
       "eventemitter3": "^4.0.7",
-      "vitis-lowcode-types": "^1.0.0"
+      "vitis-lowcode-types": "^1.0.0",
+      "vitis-lowcode-renderer": "0.0.1"
     },
     "devDependencies": {
       "build-scripts": "^1.1.1",

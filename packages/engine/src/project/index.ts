@@ -31,7 +31,7 @@ export default class Project  implements ObservableProjectSpec{
     readonly documentModel: DocumentModel
 
     get schema() {
-        return this.documentModel.schema
+        return this.documentModel.schema as PageSchema
     }
 
     get componentsMap() {

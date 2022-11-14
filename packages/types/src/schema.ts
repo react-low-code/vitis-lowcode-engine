@@ -49,7 +49,7 @@ export interface NodeSchema {
     pathToVal?: string;
     isFormControl?: boolean;
     isHidden?: JSFunction;
-    containerType?: string;
+    containerType?: 'Layout'|'Data'|'Page';
 }
 
 export interface DataSource {
