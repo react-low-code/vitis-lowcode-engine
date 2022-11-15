@@ -4,12 +4,16 @@ import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
+import { Dragon } from './dragon'
 export default class Designer implements DesignerSpec{
     componentSpecMap: Map<string, ComponentSpec> = new Map()
     componentImplMap: Map<string, ComponentType> = new Map()
+    dragon = new Dragon(this)
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this, {
+            dragon: false
+        });
     }
 
     buildComponentSpecMap = (packageNames: string[]) => {

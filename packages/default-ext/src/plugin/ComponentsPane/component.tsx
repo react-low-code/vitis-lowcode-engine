@@ -2,9 +2,8 @@ import React from 'react'
 import cn from 'classnames'
 import { Popover } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
+import { DragonSpec } from 'vitis-lowcode-types'
 
-
-import Icon from './icon'
 import './index.less'
 
 interface ComponentItem {
@@ -106,7 +105,11 @@ export default class ComponentsPane extends React.Component<{},State>{
                     <div className='title'>{title}</div>
                     <div className='body'>
                         {components.map(item => 
-                        <div className='component' draggable={true} onDragStart={this.onDragStart}>
+                        <div 
+                            className='component' 
+                            draggable={true} 
+                            onDragStart={(e: React.DragEvent<HTMLDivElement>) => this.onDragStart(e, item.packageName)}
+                        >
                             <img src={item.iconUrl} draggable={false} className='img'/>
                             <div className='name'>{item.title}</div>
                         </div>)
@@ -117,7 +120,11 @@ export default class ComponentsPane extends React.Component<{},State>{
         }
     }
 
-    onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    onDragStart = (e: React.DragEvent<HTMLDivElement>, packageName: string) => {
+        if (window.VitisLowCodeEngine) {
+            const dragon = window.VitisLowCodeEngine.dragon as DragonSpec
+            dragon.bindNodeDataDrag(e.nativeEvent, packageName)
+        }
         // e.dataTransfer.effectAllowed = "copy"
         // this.setState({
         //     active: false

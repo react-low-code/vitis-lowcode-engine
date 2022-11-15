@@ -10,7 +10,8 @@ declare interface Window {
     plugins: any;
     material: any;
     setters: any;
-    skeleton: any
-    project: any
+    skeleton: any;
+    project: any;
+    dragon: any;
   }
 }

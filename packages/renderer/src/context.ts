@@ -10,7 +10,7 @@ export interface ContextSpec {
     onCompGetRef?: (schema: NodeSchema, ref: ReactInstance | null) => void;
     customCreateElement?: (schema: NodeSchema) => React.ReactNode;
     rendererMode?: RendererMode;
-    emptyPageComponent: React.ReactNode
+    emptyPageComponent?: React.ReactNode
 }
 
 export const Context = React.createContext<ContextSpec>({

@@ -32,12 +32,26 @@ export default class Host implements HostSpec{
         const render = await this.createSimulator()
 
         material.off(ASSET_UPDATED, this.onAssetUpdated).on(ASSET_UPDATED, this.onAssetUpdated)
-        this.frameDocument?.addEventListener('dragover', () => {
-            project.emit(DRAG_OVER)
-        })
+        this.setupEvent()
 
         render.run()
 
+    }
+
+    private setupEvent = () => {
+        this.frameDocument?.addEventListener('dragover', (e: DragEvent) => {
+            e.preventDefault()
+            console.log('dddd')
+            project.emit(DRAG_OVER)
+        }, true)
+
+        this.frameDocument?.addEventListener('mousedown', (e: MouseEvent) => {
+            // todo
+        })
+
+        this.frameDocument?.addEventListener('drop', (e: DragEvent) => {
+            this.project.designer.dragon.bindDrop(e)
+        })
     }
 
     private getSimulatorComponentAssets = (assetMap: Map<string, ComponentSpecRaw>) => {

@@ -9,7 +9,7 @@ import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATED } from './eventType'
 
 
-export { setters, skeleton, plugins, material, project } from './shell'
+export { setters, skeleton, plugins, material, project, dragon } from './shell'
 export * from './eventType'
 
 (async function registerPlugins() {
