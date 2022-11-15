@@ -1,6 +1,9 @@
 import React from 'react'
 import cn from 'classnames'
 import { Popover } from 'antd';
+import { AppstoreOutlined } from '@ant-design/icons';
+
+
 import Icon from './icon'
 import './index.less'
 
@@ -134,9 +137,7 @@ export default class ComponentsPane extends React.Component<{},State>{
                 onOpenChange={this.onOpenChange}
                 open={this.state.active}
             >
-                <Icon 
-                    className={cn({icon: true, active: this.state.active})}
-                />
+                <AppstoreOutlined className={cn({icon: true, active: this.state.active})}/>
             </Popover>
         </div>
     }

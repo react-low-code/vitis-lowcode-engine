@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { NodeSchema, SimulatorSpec } from 'vitis-lowcode-types'
 import { createElement, ReactInstance } from 'react'
-import { Renderer } from 'vitis-lowcode-renderer'
+import { Renderer, RendererMode } from 'vitis-lowcode-renderer'
 import reactInstanceCollector from './reactInstanceCollector'
 
 import { render } from 'react-dom'
@@ -39,6 +39,7 @@ class SimulatorRenderer implements SimulatorSpec {
             createElement(Renderer, {
                 schema: this.schema,
                 components: this.components,
+                rendererMode: RendererMode.design,
                 onCompGetRef: (schema: NodeSchema, instance: ReactInstance | null) => {
                     reactInstanceCollector.mount(schema.id!, instance)
                 },
