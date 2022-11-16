@@ -3,7 +3,6 @@ import { DragObject } from '../types'
 import { makeAutoObservable } from 'mobx'
 import type Designer from './designer'
 
-
 export class Dragon {
     private emitter = new EventEmitter()
     dragging: boolean = false
@@ -12,20 +11,30 @@ export class Dragon {
 
     constructor(designer: Designer) {
         makeAutoObservable(this, {
-            designer: false
+            designer: false,
         })
-
         this.designer = designer
     }
 
 
-    bindDrag = (event: DragEvent, dragObject: DragObject) => {
+    bindDragStart = (dragObject: DragObject | null) => {
         this.dragging = true
-        console.log('dragging true')
+        this.dragObject = dragObject
     }
 
     bindDrop = (event: DragEvent) => {
         this.dragging = false
-        console.log('dragging false')
+        this.dragObject = null
+    }
+
+    onDragOver = (e: DragEvent) => {
+
+        this.createLocationEvent(e)
+    }
+
+    private createLocationEvent = (e: DragEvent) => {
+        return {
+
+        }
     }
 }

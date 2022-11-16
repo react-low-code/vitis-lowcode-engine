@@ -2,7 +2,6 @@ import React from 'react'
 import { PageSchema, NodeSchema } from 'vitis-lowcode-types'
 import { ComponentType, ReactInstance } from 'react'
 import { RendererMode } from './types'
-import { emptyPageComponent } from './default/component'
 
 export interface ContextSpec {
     schema?: PageSchema;
@@ -15,6 +14,5 @@ export interface ContextSpec {
 
 export const Context = React.createContext<ContextSpec>({
     components: new Map(),
-    rendererMode: RendererMode.design,
-    emptyPageComponent
+    rendererMode: RendererMode.design
 })

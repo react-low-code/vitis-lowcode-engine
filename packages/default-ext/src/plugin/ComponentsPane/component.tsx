@@ -123,12 +123,8 @@ export default class ComponentsPane extends React.Component<{},State>{
     onDragStart = (e: React.DragEvent<HTMLDivElement>, packageName: string) => {
         if (window.VitisLowCodeEngine) {
             const dragon = window.VitisLowCodeEngine.dragon as DragonSpec
-            dragon.bindNodeDataDrag(e.nativeEvent, packageName)
+            dragon.bindNodeDataDrag(packageName)
         }
-        // e.dataTransfer.effectAllowed = "copy"
-        // this.setState({
-        //     active: false
-        // })
     }
 
     render(){

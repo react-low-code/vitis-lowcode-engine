@@ -6,7 +6,7 @@ import './index.less'
 export default class CanvasView extends React.Component<{}, {}> {
 
     mountContentFrame = (frame: HTMLIFrameElement | null) => {
-        project.host.mountContentFrame(frame)
+        project.designer.host.mountContentFrame(frame)
     }
 
     render(): React.ReactNode {

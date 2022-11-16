@@ -7,12 +7,13 @@ import { plugins, setters, material, project } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATED } from './eventType'
+import { PageComponentsSpec } from './defaultConfig/asset'
 
 
 export { setters, skeleton, plugins, material, project, dragon } from './shell'
 export * from './eventType'
 
-(async function registerPlugins() {
+(async function () {
     material.on(ASSET_UPDATED, (loadedPackageNames: string[]) => {
         observableProject.designer.buildComponentSpecMap(loadedPackageNames)
     })
@@ -22,7 +23,9 @@ export * from './eventType'
     })
 
     setters.register(defaultSetters)
-    
+
+    material.addComponentSpec('Page', PageComponentsSpec)
+    observableProject.designer.buildComponentSpecMap(['Page'])
 })()
 
 export interface EngineOptions {

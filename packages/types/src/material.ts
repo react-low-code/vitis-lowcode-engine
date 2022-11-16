@@ -3,6 +3,7 @@ import type EventEmitter from 'eventemitter3';
 
 export interface MaterialSpec extends EventEmitter{
   load(infos: NpmInfo[]): Promise<boolean[]> 
+  addComponentSpec(packageName: string, spec: ComponentSpecRaw): void;
   has(packageName: string): boolean
   get(packageName: string): ComponentSpecRaw | undefined
   getAll(): Map<string, ComponentSpecRaw>
@@ -24,9 +25,9 @@ export interface ComponentSpecRaw {
   props: PropRaw[];
   // 描述该组件位于组件面板中哪个区域
   group?: "base"|"layout"|"subjoin";
-  advanced: {
+  advanced?: {
     // 组件的嵌套规则
-    nestingRule: {
+    nestingRule?: {
       // 父级组件白名单
       // 非容器组件必须放置在容器组件中
       parentWhitelist?: string[];
@@ -34,23 +35,23 @@ export interface ComponentSpecRaw {
       // 空数组则说明其他组件不能放置在该组件中, undefined 则说明其他组件能放置在该组件中
       childWhitelist?: string[];
     };
-    supports: {
+    supports?: {
       // 是否能配置样式
-      styles: boolean;
+      styles?: boolean;
       // 是否能配置校验规则
-      validation: boolean;
+      validation?: boolean;
       // 是否能配置联动规则
-      linkage: boolean;
+      linkage?: boolean;
       // 支持的事件列表，空数组意味着不支持任何事件
-      events: string[]
+      events?: string[]
     },
-    component: {
+    component?: {
       // 是否是容器
-      isContainer: boolean;
+      isContainer?: boolean;
       // 容器类型
-      containerType: 'Layout'|'Data'|'Page';
+      containerType?: 'Layout'|'Data'|'Page';
       // 是否是表单组件
-      isFormControl: boolean
+      isFormControl?: boolean
     }
   }
 }

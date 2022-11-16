@@ -3,6 +3,7 @@ import { NodeSchema, SimulatorSpec } from 'vitis-lowcode-types'
 import { createElement, ReactInstance } from 'react'
 import { Renderer, RendererMode } from 'vitis-lowcode-renderer'
 import reactInstanceCollector from './reactInstanceCollector'
+import { emptyPageComponent } from './emptyComponent/page'
 
 import { render } from 'react-dom'
 
@@ -32,7 +33,8 @@ class SimulatorRenderer implements SimulatorSpec {
 
         this.isRan = true
         const container = document.createElement('div')
-        container.id = 'simulator-renderer'
+        container.id = 'simulatorRenderer'
+        container.className = 'simulator-renderer'
         document.body.appendChild(container)
 
         render(
@@ -46,7 +48,8 @@ class SimulatorRenderer implements SimulatorSpec {
                 customCreateElement: (schema: NodeSchema) => {
                     // todo
                     return <div></div>
-                }
+                },
+                emptyPageComponent
             },null),
             container
         )

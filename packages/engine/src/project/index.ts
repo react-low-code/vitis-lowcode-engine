@@ -26,8 +26,7 @@ const defaultPageSchema: PageSchema = {
 }
 
 export default class Project  implements ObservableProjectSpec{
-    readonly designer = new Designer()
-    readonly host = new Host(this)
+    readonly designer = new Designer(this)
     readonly documentModel: DocumentModel
 
     get schema() {
@@ -41,7 +40,6 @@ export default class Project  implements ObservableProjectSpec{
     constructor(schema: PageSchema = defaultPageSchema) {
         makeAutoObservable(this, {
             designer: false,
-            host: false,
             documentModel: false
         })
 

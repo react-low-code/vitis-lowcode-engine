@@ -21,7 +21,10 @@ export default class PageRenderer extends React.Component<Props, {}>{
     }
     render() {
         return (
-            <div data-node-id={this.props.nodeSchema.id}>{
+            <div 
+                data-node-id={this.props.nodeSchema.id} 
+                style={{minHeight: '100%'}}
+            >{
                 !this.props.nodeSchema.children.length ? 
                 this.context.emptyPageComponent: 
                 <div>ddd</div>

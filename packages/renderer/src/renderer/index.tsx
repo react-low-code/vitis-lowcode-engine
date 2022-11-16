@@ -4,7 +4,6 @@ import PageRenderer from './page';
 
 import BaseRenderer from "./baseRenderer";
 import { ContextSpec, Context } from '../context'
-import { emptyPageComponent } from '../default/component'
 
 interface Props extends ContextSpec{
     schema: PageSchema;
@@ -14,7 +13,6 @@ export default class Renderer extends BaseRenderer<Props, {}> {
 
     get defaultConfig() {
         return {
-            emptyPageComponent
         }
     }
 

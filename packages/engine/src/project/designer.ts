@@ -5,15 +5,28 @@ import { DesignerSpec } from 'vitis-lowcode-types'
 import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
 import { Dragon } from './dragon'
+import Host from './host'
+import type Project from './index'
+import Viewport from './viewport'
+
 export default class Designer implements DesignerSpec{
     componentSpecMap: Map<string, ComponentSpec> = new Map()
     componentImplMap: Map<string, ComponentType> = new Map()
     dragon = new Dragon(this)
+    host: Host
+    project: Project
+    viewport: Viewport
 
-    constructor() {
+    constructor(project: Project) {
         makeAutoObservable(this, {
-            dragon: false
+            dragon: false,
+            project: false,
+            viewport: false
         });
+
+        this.project = project
+        this.host = new Host(project)
+        this.viewport = new Viewport()
     }
 
     buildComponentSpecMap = (packageNames: string[]) => {
@@ -39,5 +52,9 @@ export default class Designer implements DesignerSpec{
             console.error(`${name} 的实现已经存在，即将重置！！！`)
         }
         this.componentImplMap.set(name, component)
+    }
+
+    mountViewport = (element: Element) => {
+        this.viewport.mount(element)
     }
 }

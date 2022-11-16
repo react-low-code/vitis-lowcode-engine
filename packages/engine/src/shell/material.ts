@@ -1,4 +1,4 @@
-import { MaterialSpec, NpmInfo} from 'vitis-lowcode-types'
+import { MaterialSpec, NpmInfo, ComponentSpecRaw} from 'vitis-lowcode-types'
 import type InnerMaterial from '../material'
 import { EventEmitter } from 'eventemitter3';
 import { ASSET_UPDATED } from '../eventType'
@@ -24,7 +24,7 @@ export default class Material extends EventEmitter implements MaterialSpec  {
     }
 
     has = (packageName: string) => {
-      return this.material.innerGetComponentSpecRawMap().has(packageName)
+      return this.material.getComponentSpecRawMap().has(packageName)
     }
 
     get = (packageName: string) => {
@@ -32,6 +32,20 @@ export default class Material extends EventEmitter implements MaterialSpec  {
     }
 
     getAll = () => {
-      return this.material.getComponentSpecRawMap()
+      const componentSpecRawMap = this.material.getComponentSpecRawMap()
+      const result = new Map<string, ComponentSpecRaw>()
+
+      for (const [key, spec] of componentSpecRawMap) {
+        const component = spec.advanced?.component
+        if (!component?.isContainer || component?.containerType !== 'Page') {
+          result.set(key, spec)
+        }
+      }
+      
+      return result
+    }
+
+    addComponentSpec = (packageName: string, spec: ComponentSpecRaw) => {
+      this.material.addComponentSpec(packageName, spec)
     }
 }

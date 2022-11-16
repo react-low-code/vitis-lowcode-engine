@@ -41,8 +41,8 @@ export default class Host implements HostSpec{
     private setupEvent = () => {
         this.frameDocument?.addEventListener('dragover', (e: DragEvent) => {
             e.preventDefault()
-            console.log('dddd')
             project.emit(DRAG_OVER)
+            this.project.designer.dragon.onDragOver(e)
         }, true)
 
         this.frameDocument?.addEventListener('mousedown', (e: MouseEvent) => {

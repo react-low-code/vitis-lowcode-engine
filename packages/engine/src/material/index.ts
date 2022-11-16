@@ -36,15 +36,18 @@ export default class Material {
         return result
     }
 
-    innerGetComponentSpecRawMap() {
+    getComponentSpecRawMap() {
         return this.componentSpecRawMap
     }
 
-    getComponentSpecRawMap() {
-        return new Map(this.componentSpecRawMap)
+    getComponentSpecRaw(name: string) {
+        return this.componentSpecRawMap.get(name)
     }
 
-    getComponentSpecRaw(name: string) {
-        return this.innerGetComponentSpecRawMap().get(name)
+    addComponentSpec(packageName: string, spec: ComponentSpecRaw) {
+        if (this.componentSpecRawMap.has(packageName)) {
+            console.warn(`${packageName}已经存在，现在开始重新设置并替换原来的`)
+        }
+        this.componentSpecRawMap.set(packageName, spec)
     }
 }
