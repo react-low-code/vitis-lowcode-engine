@@ -8,8 +8,9 @@ import { Dragon } from './dragon'
 import Host from './host'
 import type Project from './index'
 import Viewport from './viewport'
+import { LocationEvent } from '../types'
 
-export default class Designer implements DesignerSpec{
+export default class Designer implements DesignerSpec {
     componentSpecMap: Map<string, ComponentSpec> = new Map()
     componentImplMap: Map<string, ComponentType> = new Map()
     dragon = new Dragon(this)
@@ -54,7 +55,16 @@ export default class Designer implements DesignerSpec{
         this.componentImplMap.set(name, component)
     }
 
-    mountViewport = (element: Element) => {
+    mountViewport = (element: HTMLElement | null) => {
         this.viewport.mount(element)
+    }
+
+    locate = (locateEvent: LocationEvent) => {
+        this.getDropContainer(locateEvent)
+    }
+
+    getDropContainer = (locateEvent: LocationEvent) => {
+        const nodeId = this.host.getClosestNodeIdByLocation({clientX: locateEvent.clientX, clientY: locateEvent.clientY})
+        console.log(nodeId)
     }
 }

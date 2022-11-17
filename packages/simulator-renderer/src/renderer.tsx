@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import { NodeSchema, SimulatorSpec } from 'vitis-lowcode-types'
+import { NodeSchema, SimulatorSpec, Point } from 'vitis-lowcode-types'
 import { createElement, ReactInstance } from 'react'
 import { Renderer, RendererMode } from 'vitis-lowcode-renderer'
-import reactInstanceCollector from './reactInstanceCollector'
+import reactInstanceCollector, { DomNode } from './reactInstanceCollector'
 import { emptyPageComponent } from './emptyComponent/page'
 
 import { render } from 'react-dom'
@@ -26,6 +26,37 @@ class SimulatorRenderer implements SimulatorSpec {
         host.connect(this, () => {})
     }
 
+    getClosestNodeIdByLocation = (point: Point): string | undefined => {
+
+        // 第一步：找出包含 point 的dom
+        const suitableContainer = new Map<string, DomNode>()
+        for (const [id, domNode] of reactInstanceCollector.domNodeMap) {
+            if (!domNode) continue
+
+            const { width, height, left, top } = domNode.rect
+            if (left < point.clientX && top < point.clientY && width + left > point.clientX && height + top > point.clientY) {
+                suitableContainer.set(id, domNode)
+            }
+        }
+
+        // 第二步：找出离 point 最近的 dom
+        const minGap: {id: string| undefined; minLeft: number} = {
+            id: undefined,
+            minLeft: Infinity
+        }
+
+        for (const [id, domNode] of suitableContainer) {
+            const { left } = domNode.rect
+
+            if (point.clientX - left < minGap.minLeft) {
+                minGap.id = id;
+                minGap.minLeft = point.clientX - left
+            }
+        }
+
+        return minGap.id
+    }
+
     run() {
         if (this.isRan) {
             return
@@ -42,8 +73,8 @@ class SimulatorRenderer implements SimulatorSpec {
                 schema: this.schema,
                 components: this.components,
                 rendererMode: RendererMode.design,
-                onCompGetRef: (schema: NodeSchema, instance: ReactInstance | null) => {
-                    reactInstanceCollector.mount(schema.id!, instance)
+                onCompGetRef: (schema: NodeSchema, instance: ReactInstance | null, domElement: HTMLElement | null) => {
+                    reactInstanceCollector.mount(schema.id!, instance, domElement)
                 },
                 customCreateElement: (schema: NodeSchema) => {
                     // todo

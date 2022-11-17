@@ -1,11 +1,11 @@
 import { project, material, setters } from "../shell"
 import { DRAG_OVER, ASSET_UPDATED } from '../eventType'
 import type Project from "./index"
-import { HostSpec, SimulatorSpec, ComponentSpecRaw } from 'vitis-lowcode-types'
+import { HostSpec, SimulatorSpec, ComponentSpecRaw, Point } from 'vitis-lowcode-types'
 import { IReactionPublic, autorun } from 'mobx'
 import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
 
-export default class Host implements HostSpec{
+export default class Host implements HostSpec {
     frameDocument?: Document | null
     frameWindow?: Window | null
     readonly project: Project
@@ -151,5 +151,9 @@ export default class Host implements HostSpec{
         this.renderer = renderer
 
         autorun(effect)
+    }
+
+    getClosestNodeIdByLocation = (point: Point) => {
+        return this.renderer.getClosestNodeIdByLocation(point)
     }
 }

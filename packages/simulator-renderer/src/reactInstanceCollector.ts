@@ -1,11 +1,25 @@
 import { ReactInstance } from "react"
 
-class ReactInstanceCollector {
-    private reactInstanceMap: Map<string, ReactInstance | null> = new Map()
+export interface DomNode {
+    node: HTMLElement;
+    rect: DOMRect
+}
 
-    mount(id: string, instance: ReactInstance | null){
-        console.log(instance)
+class ReactInstanceCollector {
+    reactInstanceMap: Map<string, ReactInstance | null> = new Map()
+    domNodeMap: Map<string, DomNode | null> = new Map()
+
+    mount(id: string, instance: ReactInstance | null, domElement: HTMLElement | null){
         this.reactInstanceMap.set(id, instance)
+        if (domElement) {
+            this.domNodeMap.set(id, {
+                node: domElement,
+                rect: domElement.getBoundingClientRect()
+            })
+        } else {
+            this.domNodeMap.set(id, null)
+        }
+
     }
 }
 

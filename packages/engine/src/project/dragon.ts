@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3'
-import { DragObject } from '../types'
+import { DragObject, LocationEvent } from '../types'
 import { makeAutoObservable } from 'mobx'
 import type Designer from './designer'
 
@@ -28,13 +28,20 @@ export class Dragon {
     }
 
     onDragOver = (e: DragEvent) => {
-
-        this.createLocationEvent(e)
+        if (this.dragObject) {
+            const locateEvent = this.createLocationEvent(e)
+            this.designer.locate(locateEvent)
+        }
     }
 
-    private createLocationEvent = (e: DragEvent) => {
+    private createLocationEvent = (e: DragEvent): LocationEvent => {
         return {
-
+            type: 'LocateEvent',
+            dragObject: this.dragObject!,
+            target: e.target,
+            originalEvent: e,
+            clientX: e.clientX,
+            clientY: e.clientY
         }
     }
 }

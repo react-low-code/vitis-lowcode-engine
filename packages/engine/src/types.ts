@@ -19,3 +19,12 @@ export interface DragNodeObject {
   }
 
 export type DragObject = DragNodeObject | DragNodeDataObject
+
+export interface LocationEvent {
+  type: 'LocateEvent',
+  dragObject: DragObject,
+  target?: EventTarget | null,
+  originalEvent: DragEvent,
+  clientX: number,
+  clientY: number
+}

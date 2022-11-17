@@ -9,14 +9,15 @@ interface Props {
 export default class PageRenderer extends React.Component<Props, {}>{
     static contextType = Context;
     context: React.ContextType<typeof Context>
+    rootRef = React.createRef<HTMLDivElement>()
     componentDidMount() {
         if (this.context.rendererMode === RendererMode.design && this.context.onCompGetRef) {
-            this.context.onCompGetRef(this.props.nodeSchema, this)
+            this.context.onCompGetRef(this.props.nodeSchema, this, this.rootRef.current)
         }
     }
     componentWillUnmount() {
         if (this.context.rendererMode === RendererMode.design && this.context.onCompGetRef) {
-            this.context.onCompGetRef(this.props.nodeSchema, null)
+            this.context.onCompGetRef(this.props.nodeSchema, null, null)
         }
     }
     render() {
@@ -24,6 +25,7 @@ export default class PageRenderer extends React.Component<Props, {}>{
             <div 
                 data-node-id={this.props.nodeSchema.id} 
                 style={{minHeight: '100%'}}
+                ref={this.rootRef}
             >{
                 !this.props.nodeSchema.children.length ? 
                 this.context.emptyPageComponent: 

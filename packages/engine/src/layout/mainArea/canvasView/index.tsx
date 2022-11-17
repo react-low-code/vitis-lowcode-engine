@@ -12,7 +12,7 @@ export default class CanvasView extends React.Component<{}, {}> {
     render(): React.ReactNode {
         const frameStyle = {}
         return (
-            <div className='vitis-canvas-view'>
+            <div className='vitis-canvas-view' ref={project.designer.mountViewport}>
                 <iframe
                     name="SimulatorRenderer"
                     className="vitis-simulator-frame"
