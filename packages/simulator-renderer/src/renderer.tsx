@@ -57,6 +57,10 @@ class SimulatorRenderer implements SimulatorSpec {
         return minGap.id
     }
 
+    getNodeRect = (nodeId: string): DOMRect | undefined => {
+        return reactInstanceCollector.domNodeMap.get(nodeId)?.rect
+    }
+
     run() {
         if (this.isRan) {
             return

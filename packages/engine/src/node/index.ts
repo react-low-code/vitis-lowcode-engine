@@ -4,6 +4,7 @@ import { project } from '../shell'
 import type ComponentSpec from '../project/componentSpec'
 import Props from './props'
 import { uniqueId } from '../utils'
+import type DocumentModel from '../project/documentModel'
 
 export default class Node<S extends NodeSchema = NodeSchema> {
     readonly id: string;
@@ -11,6 +12,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly isContainer: boolean;
     readonly schema: S
     readonly parent: Node<NodeSchema> | null;
+    readonly owner: DocumentModel
     readonly children: Node<NodeSchema>[]
     readonly props: Props
     readonly containerType?: ContainerSchema['containerType']
@@ -49,11 +51,12 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         }
     }
 
-    constructor(schema: S, parent: Node<S> | null) {
+    constructor(owner: DocumentModel,schema: S, parent: Node<S> | null) {
         makeAutoObservable(this, {
             id: false,
             componentName: false,
-            isContainer: false
+            isContainer: false,
+            owner: false
         })
 
         this.parent = parent
@@ -62,8 +65,9 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.isContainer = schema.isContainer
         this.containerType = schema.containerType
         this.schema = schema
+        this.owner = owner
 
-        this.children = schema.children.map(child => new Node<NodeSchema>(child, this))
+        this.children = schema.children.map(child => this.owner.createNode(child, this))
         this.props = new Props(this, schema.props)
     }
 

@@ -4,7 +4,7 @@ import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
-import { Dragon } from './dragon'
+import { Dragon, isDragDataNode, isDragNode } from './dragon'
 import Host from './host'
 import type Project from './index'
 import Viewport from './viewport'
@@ -13,6 +13,7 @@ import { LocationEvent } from '../types'
 export default class Designer implements DesignerSpec {
     componentSpecMap: Map<string, ComponentSpec> = new Map()
     componentImplMap: Map<string, ComponentType> = new Map()
+
     dragon = new Dragon(this)
     host: Host
     project: Project
@@ -22,7 +23,8 @@ export default class Designer implements DesignerSpec {
         makeAutoObservable(this, {
             dragon: false,
             project: false,
-            viewport: false
+            viewport: false,
+            host: false
         });
 
         this.project = project
@@ -59,12 +61,27 @@ export default class Designer implements DesignerSpec {
         this.viewport.mount(element)
     }
 
-    locate = (locateEvent: LocationEvent) => {
-        this.getDropContainer(locateEvent)
-    }
 
     getDropContainer = (locateEvent: LocationEvent) => {
-        const nodeId = this.host.getClosestNodeIdByLocation({clientX: locateEvent.clientX, clientY: locateEvent.clientY})
-        console.log(nodeId)
+        const containerNode = this.host.getClosestNodeByLocation({clientX: locateEvent.clientX, clientY: locateEvent.clientY})
+        if (containerNode) {
+            if (isDragDataNode(locateEvent.dragObject) && containerNode.componentSpec.isCanInclude(locateEvent.dragObject.data)) {
+                return {
+                    node: containerNode,
+                    rect: this.getNodeRect(containerNode.id)!
+                }
+            }
+
+            if (isDragNode(locateEvent.dragObject) && containerNode.componentSpec.isCanInclude(locateEvent.dragObject.node.componentSpec)) {
+                return {
+                    node: containerNode,
+                    rect: this.getNodeRect(containerNode.id)!
+                }
+            }
+        }
+    }
+
+    getNodeRect = (nodeId: string) => {
+        return this.host.getNodeRect(nodeId)
     }
 }

@@ -11,6 +11,7 @@ export interface SimulatorSpec {
      * @param point 
      */
     getClosestNodeIdByLocation(point: Point): string | undefined
+    getNodeRect(id: string): DOMRect | undefined
 }
 
 /**这是设计器器要给模拟器提供的方法 */

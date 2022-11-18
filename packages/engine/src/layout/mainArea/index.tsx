@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import { Spin } from 'antd';
 
 import CanvasView from './canvasView'
+import LocationTools from './locationTools'
 import type ComponentSpec from '../../project/componentSpec'
 
 import './index.less'
@@ -19,7 +20,8 @@ export default class MainArea extends React.Component<Props, {}> {
         }
         return (
         <div className='vitis-main-area'>
-            <CanvasView/>
+            <CanvasView />
+            <LocationTools />
         </div>
         )
     }

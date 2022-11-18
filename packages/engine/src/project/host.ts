@@ -153,7 +153,12 @@ export default class Host implements HostSpec {
         autorun(effect)
     }
 
-    getClosestNodeIdByLocation = (point: Point) => {
-        return this.renderer.getClosestNodeIdByLocation(point)
+    getClosestNodeByLocation = (point: Point) => {
+        const id = this.renderer.getClosestNodeIdByLocation(point)
+        return id ? this.project.documentModel.getNode(id): undefined
+    }
+
+    getNodeRect = (nodeId: string) => {
+        return this.renderer.getNodeRect(nodeId)
     }
 }

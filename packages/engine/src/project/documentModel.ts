@@ -3,6 +3,7 @@ import Node from '../node'
 
 export default class DocumentModel {
     rootNode: Node<PageSchema>
+    private nodeMap: Map<string, Node> = new Map()
     constructor(schema: PageSchema) {
         this.open(schema)
     }
@@ -12,10 +13,16 @@ export default class DocumentModel {
     }
 
     createNode<S extends NodeSchema>(schema: S, pNode: Node<S> | null) {
-        return new Node<S>(schema, pNode)
+        const node = new Node<S>(this,schema, pNode)
+        this.nodeMap.set(node.id, node)
+        return node
     }
 
     open(schema: PageSchema) {
         this.rootNode = this.createNode<PageSchema>(schema, null)
+    }
+
+    getNode(id: string) {
+        return this.nodeMap.get(id)
     }
 }

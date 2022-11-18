@@ -1,4 +1,5 @@
 import type ComponentSpec from './project/componentSpec'
+import type Node from './node';
 
 export enum DragObjectType {
     // eslint-disable-next-line no-shadow
@@ -8,7 +9,7 @@ export enum DragObjectType {
 
 export interface DragNodeObject {
     type: DragObjectType.Node;
-    nodes: Node[];
+    node: Node;
   }
   export interface DragNodeDataObject {
     type: DragObjectType.NodeData;
@@ -27,4 +28,10 @@ export interface LocationEvent {
   originalEvent: DragEvent,
   clientX: number,
   clientY: number
+}
+
+export interface LocationData {
+  index: number;
+  containerNode: Node;
+  containerRect: DOMRect;
 }
