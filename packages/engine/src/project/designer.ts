@@ -6,6 +6,7 @@ import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
 import { Dragon, isDragDataNode, isDragNode } from './dragon'
 import Host from './host'
+import Detection from './detection';
 import type Project from './index'
 import Viewport from './viewport'
 import { LocationEvent } from '../types'
@@ -18,6 +19,7 @@ export default class Designer implements DesignerSpec {
     host: Host
     project: Project
     viewport: Viewport
+    detection: Detection = new Detection(this)
 
     constructor(project: Project) {
         makeAutoObservable(this, {

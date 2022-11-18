@@ -12,7 +12,6 @@ export function isDragNode(dragObject: DragObject): dragObject is DragNodeObject
 }
 
 export class Dragon {
-    private emitter = new EventEmitter()
     dragging: boolean = false
     dragObject: DragObject | null = null
     locationData: LocationData | undefined
