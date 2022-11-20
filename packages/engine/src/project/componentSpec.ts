@@ -22,6 +22,22 @@ export default class ComponentSpec {
         return this.rawData.componentName
     }
 
+    get unableDel() {
+        return this.rawData.advanced?.component?.containerType === 'Page'
+    }
+
+    get unableCopy() {
+        return this.rawData.advanced?.component?.containerType === 'Page'
+    }
+
+    get unableMove() {
+        return this.rawData.advanced?.component?.containerType === 'Page'
+    }
+
+    get title() {
+        return this.rawData.title
+    }
+
     parseRawData() {
 
     }

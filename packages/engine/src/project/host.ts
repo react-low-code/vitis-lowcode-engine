@@ -45,21 +45,22 @@ export default class Host implements HostSpec {
             this.project.designer.dragon.onDragOver(e)
         }, true)
 
-        this.frameDocument?.addEventListener('mousedown', (e: MouseEvent) => {
-            this.project.designer.detection.release()
-        })
-
         this.frameDocument?.addEventListener('mousemove', (e: MouseEvent) => {
             this.project.designer.detection.capture(e)
         })
 
         this.frameDocument?.addEventListener('mouseleave', (e: MouseEvent) => {
             this.project.designer.detection.release()
+            this.project.documentModel.selectNode()
         }, false)
 
 
         this.frameDocument?.addEventListener('drop', (e: DragEvent) => {
             this.project.designer.dragon.bindDrop(e)
+        })
+
+        this.frameDocument?.addEventListener('mouseup', (e: MouseEvent) => {
+            this.project.documentModel.selectNode(this.getClosestNodeByLocation(e)?.id)
         })
     }
 

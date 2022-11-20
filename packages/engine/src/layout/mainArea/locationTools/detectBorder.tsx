@@ -4,15 +4,15 @@ import { observer } from 'mobx-react'
 import { observableProject } from '../../..//shell'
 
 import './detectBorder.less'
-import { reaction } from 'mobx'
 
 export default observer(function DetectBorder() {
     const [style, setStyle] = useState<React.CSSProperties>({})
     useEffect(() => {
         const rect = observableProject.designer.detection.rect
+        const hasSelectedNodeId = !!observableProject.documentModel.selectedNodeId
         if (rect) {
             setStyle({
-                borderStyle: 'dashed',
+                borderStyle: hasSelectedNodeId ? 'solid' :'dashed',
                 left: rect.left,
                 width: rect.width,
                 height: rect.height,
@@ -21,6 +21,6 @@ export default observer(function DetectBorder() {
         } else {
             setStyle({})
         }
-    }, [observableProject.designer.detection.rect])
+    }, [observableProject.designer.detection.rect, observableProject.documentModel.selectedNodeId])
     return <div className='vitis-detect-border' style={style}/>
 })

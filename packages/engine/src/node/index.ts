@@ -51,6 +51,10 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         }
     }
 
+    get title() {
+        return this.componentSpec.title
+    }
+
     constructor(owner: DocumentModel,schema: S, parent: Node<S> | null) {
         makeAutoObservable(this, {
             id: false,
