@@ -1,5 +1,4 @@
-import { EventEmitter } from 'eventemitter3'
-import { DragObject, LocationEvent, DragObjectType, DragNodeDataObject, DragNodeObject, LocationData } from '../types'
+import { DragObject, LocationEvent, DragObjectType, DragNodeDataObject, DragNodeObject, DropLocation } from '../types'
 import { makeAutoObservable } from 'mobx'
 import type Designer from './designer'
 
@@ -14,7 +13,7 @@ export function isDragNode(dragObject: DragObject): dragObject is DragNodeObject
 export class Dragon {
     dragging: boolean = false
     dragObject: DragObject | null = null
-    locationData: LocationData | undefined
+    dropLocation: DropLocation | undefined
 
     readonly designer: Designer
 
@@ -34,13 +33,13 @@ export class Dragon {
     bindDrop = (event: DragEvent) => {
         this.dragging = false
         this.dragObject = null
-        this.locationData = undefined
+        this.dropLocation = undefined
     }
 
     onDragOver = (e: DragEvent) => {
         if (this.dragObject) {
             const locateEvent = this.createLocationEvent(e)
-            this.locationData = this.locate(locateEvent)
+            this.dropLocation = this.locate(locateEvent)
         }
     }
 
@@ -48,7 +47,7 @@ export class Dragon {
         const container = this.designer.getDropContainer(locateEvent)
 
         if (container) {
-            const locationData: LocationData = {
+            const dropLocation: DropLocation = {
                 index: 0,
                 containerNode: container.node,
                 containerRect: container.rect
@@ -69,18 +68,16 @@ export class Dragon {
                     }
                 })
 
-                locationData.index = minIndex
+                dropLocation.index = minIndex
             }
 
-            return locationData
+            return dropLocation
         }
     }
 
     private createLocationEvent = (e: DragEvent): LocationEvent => {
         return {
-            type: 'LocateEvent',
             dragObject: this.dragObject!,
-            target: e.target,
             originalEvent: e,
             clientX: e.clientX,
             clientY: e.clientY

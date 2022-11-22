@@ -108,7 +108,7 @@ export default class ComponentsPane extends React.Component<{},State>{
                         <div 
                             className='component' 
                             draggable={true} 
-                            onDragStart={(e: React.DragEvent<HTMLDivElement>) => this.onDragStart(e, item.packageName)}
+                            onDragStart={() => this.onDragStart(item.packageName)}
                         >
                             <img src={item.iconUrl} draggable={false} className='img'/>
                             <div className='name'>{item.title}</div>
@@ -120,7 +120,7 @@ export default class ComponentsPane extends React.Component<{},State>{
         }
     }
 
-    onDragStart = (e: React.DragEvent<HTMLDivElement>, packageName: string) => {
+    onDragStart = ( packageName: string) => {
         if (window.VitisLowCodeEngine) {
             const dragon = window.VitisLowCodeEngine.dragon as DragonSpec
             dragon.bindNodeDataDrag(packageName)

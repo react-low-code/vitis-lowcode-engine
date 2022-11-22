@@ -7,11 +7,11 @@ import './insertionView.less'
 export default observer(function InsertionView() {
     const [style, setStyle] = useState<React.CSSProperties>({})
     useEffect(() => {
-        const locationData = observableProject.designer.dragon.locationData
-        if (!locationData) {
+        const dropLocation = observableProject.designer.dragon.dropLocation
+        if (!dropLocation) {
             setStyle({})
         } else {
-            const { width, left, top } = locationData.containerRect
+            const { width, left, top } = dropLocation.containerRect
             setStyle({
                 borderTopStyle: 'solid',
                 width,
@@ -19,7 +19,7 @@ export default observer(function InsertionView() {
                 top
             })
         }
-    }, [observableProject.designer.dragon.locationData])
+    }, [observableProject.designer.dragon.dropLocation])
     return (
         <div className='vitis-insertion-view' style={style}></div>
     )

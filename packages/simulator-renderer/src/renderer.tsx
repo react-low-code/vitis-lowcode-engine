@@ -27,27 +27,23 @@ class SimulatorRenderer implements SimulatorSpec {
     }
 
     getClosestNodeIdByLocation = (point: Point): string | undefined => {
-
-        // 第一步：找出包含 point 的dom
+        // 第一步：找出包含 point 的全部 dom 节点
         const suitableContainer = new Map<string, DomNode>()
         for (const [id, domNode] of reactInstanceCollector.domNodeMap) {
             if (!domNode) continue
-
             const { width, height, left, top } = domNode.rect
             if (left < point.clientX && top < point.clientY && width + left > point.clientX && height + top > point.clientY) {
                 suitableContainer.set(id, domNode)
             }
         }
 
-        // 第二步：找出离 point 最近的 dom
+        // 第二步：找出离 point 最近的 dom 节点
         const minGap: {id: string| undefined; minLeft: number} = {
             id: undefined,
             minLeft: Infinity
         }
-
         for (const [id, domNode] of suitableContainer) {
             const { left } = domNode.rect
-
             if (point.clientX - left < minGap.minLeft) {
                 minGap.id = id;
                 minGap.minLeft = point.clientX - left

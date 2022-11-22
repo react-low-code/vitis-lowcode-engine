@@ -10,10 +10,6 @@ export default class Dragon implements DragonSpec{
         this.innerDragon = innerDragon
     }
 
-    // bindDrag = (sourceNode: Element, boost: (e: MouseEvent | DragEvent) => DragObject) =>  {
-    //     return this.innerDragon.bindDrag(sourceNode, boost)
-    // }
-
     bindNodeDataDrag = (packageName: string) => {
         if (this.innerDragon.designer.componentSpecMap.has(packageName)) {
             this.innerDragon.bindDragStart({

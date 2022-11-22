@@ -14,23 +14,18 @@ export interface DragNodeObject {
   export interface DragNodeDataObject {
     type: DragObjectType.NodeData;
     data: ComponentSpec;
-    thumbnail?: string;
-    description?: string;
-    [extra: string]: any;
   }
 
 export type DragObject = DragNodeObject | DragNodeDataObject
 
 export interface LocationEvent {
-  type: 'LocateEvent',
   dragObject: DragObject,
-  target?: EventTarget | null,
   originalEvent: DragEvent,
   clientX: number,
   clientY: number
 }
 
-export interface LocationData {
+export interface DropLocation {
   index: number;
   containerNode: Node;
   containerRect: DOMRect;

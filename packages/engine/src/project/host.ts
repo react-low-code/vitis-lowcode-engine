@@ -43,7 +43,7 @@ export default class Host implements HostSpec {
             e.preventDefault()
             project.emit(DRAG_OVER)
             this.project.designer.dragon.onDragOver(e)
-        }, true)
+        })
 
         this.frameDocument?.addEventListener('mousemove', (e: MouseEvent) => {
             this.project.designer.detection.capture(e)
