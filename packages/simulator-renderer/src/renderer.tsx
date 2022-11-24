@@ -1,5 +1,5 @@
 import { NodeSchema, SimulatorSpec, Point } from 'vitis-lowcode-types'
-import { createElement, ReactInstance } from 'react'
+import { createElement } from 'react'
 import { RendererMode } from 'vitis-lowcode-renderer'
 import reactInstanceCollector, { DomNode } from './reactInstanceCollector'
 import { emptyPageComponent } from './emptyComponent/page'
@@ -8,7 +8,7 @@ import observerData from './store'
 
 import { render } from 'react-dom'
 
-import { getHost } from './utils'
+import { getHost, deferUtil } from './utils'
 
 const host = getHost()
 
@@ -23,23 +23,23 @@ class SimulatorRenderer implements SimulatorSpec {
         // 第一步：找出包含 point 的全部 dom 节点
         const suitableContainer = new Map<string, DomNode>()
         for (const [id, domNode] of reactInstanceCollector.domNodeMap) {
-            if (!domNode) continue
-            const { width, height, left, top } = domNode.rect
+            const rect = this.getNodeRect(id)
+            if (!domNode || !rect) continue
+            const { width, height, left, top } = rect
             if (left < point.clientX && top < point.clientY && width + left > point.clientX && height + top > point.clientY) {
                 suitableContainer.set(id, domNode)
             }
         }
-
         // 第二步：找出离 point 最近的 dom 节点
-        const minGap: {id: string| undefined; minLeft: number} = {
+        const minGap: {id: string| undefined; minArea: number} = {
             id: undefined,
-            minLeft: Infinity
+            minArea: Infinity
         }
         for (const [id, domNode] of suitableContainer) {
-            const { left } = domNode.rect
-            if (point.clientX - left < minGap.minLeft) {
+            const { left, width, height } = domNode.rect
+            if (width *  height  < minGap.minArea) {
                 minGap.id = id;
-                minGap.minLeft = point.clientX - left
+                minGap.minArea = width *  height
             }
         }
 
@@ -47,12 +47,14 @@ class SimulatorRenderer implements SimulatorSpec {
     }
 
     getNodeRect = (nodeId: string): DOMRect | undefined => {
-        return reactInstanceCollector.domNodeMap.get(nodeId)?.rect
+        return reactInstanceCollector.domNodeMap.get(nodeId)?.node.getBoundingClientRect()
     }
 
-    rerender = () => {
+    rerender = async () => {
         observerData.components = host.project.designer.componentImplMap,
         observerData.schema = host.project.schema
+
+        await deferUtil.didRender()
     }
 
     run() {
@@ -69,8 +71,8 @@ class SimulatorRenderer implements SimulatorSpec {
         render(
             createElement(SimulatorRendererView, {
                 rendererMode: RendererMode.design,
-                onCompGetRef: (schema: NodeSchema, instance: ReactInstance | null, domElement: HTMLElement | null) => {
-                    reactInstanceCollector.mount(schema.id!, instance, domElement)
+                onCompGetRef: (schema: NodeSchema, domElement: HTMLElement | null) => {
+                    reactInstanceCollector.mount(schema.id!, domElement)
                 },
                 customCreateElement: (schema: NodeSchema) => {
                     // todo

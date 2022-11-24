@@ -1,36 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PageSchema } from 'vitis-lowcode-types'
 import { Context } from '../context'
-import { RendererMode } from '../types'
+import BaseComponentRenderer from './baseComponentRenderer'
+import useGetDOM from '../hooks/useGetDOM'
 
 interface Props {
-    nodeSchema: PageSchema
+    schema: PageSchema
 }
-export default class PageRenderer extends React.Component<Props, {}>{
-    static contextType = Context;
-    context: React.ContextType<typeof Context>
-    rootRef = React.createRef<HTMLDivElement>()
-    componentDidMount() {
-        if (this.context.rendererMode === RendererMode.design && this.context.onCompGetRef) {
-            this.context.onCompGetRef(this.props.nodeSchema, this, this.rootRef.current)
-        }
-    }
-    componentWillUnmount() {
-        if (this.context.rendererMode === RendererMode.design && this.context.onCompGetRef) {
-            this.context.onCompGetRef(this.props.nodeSchema, null, null)
-        }
-    }
-    render() {
-        return (
-            <div 
-                data-node-id={this.props.nodeSchema.id} 
-                style={{minHeight: '100%'}}
-                ref={this.rootRef}
-            >{
-                !this.props.nodeSchema.children.length ? 
-                this.context.emptyPageComponent: 
-                <div>ddd</div>
-            }</div>
-        )
-    }
+
+export default function PageRenderer(props: Props) {
+    const context = useContext(Context)
+    const rootRef = useGetDOM(props.schema)
+
+    return (
+        <div 
+            data-node-id={props.schema.id} 
+            style={{minHeight: '100%'}}
+            ref={rootRef}
+        >{
+            !props.schema.children.length ? 
+            context.emptyPageComponent: 
+            <>{props.schema.children.map(child => <BaseComponentRenderer schema={child} key={child.id}/>)}</>
+        }</div>
+    )
 }

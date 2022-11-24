@@ -7,11 +7,11 @@ import './insertionView.less'
 export default observer(function InsertionView() {
     const [style, setStyle] = useState<React.CSSProperties>({})
     useEffect(() => {
-        const dropLocation = observableProject.designer.dragon.dropLocation
-        if (!dropLocation) {
+        const insertRect = observableProject.designer.getInsertRect()
+        if (!insertRect) {
             setStyle({})
         } else {
-            const { width, left, top } = dropLocation.containerRect
+            const { width, left, top } = insertRect
             setStyle({
                 borderTopStyle: 'solid',
                 width,

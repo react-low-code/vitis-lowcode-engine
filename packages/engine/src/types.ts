@@ -28,5 +28,4 @@ export interface LocationEvent {
 export interface DropLocation {
   index: number;
   containerNode: Node;
-  containerRect: DOMRect;
 }

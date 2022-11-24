@@ -22,7 +22,7 @@ export interface SimulatorSpec {
     /**
      * 重新渲染
      */
-    rerender(): void
+    rerender(): Promise<void>
 }
 
 /**这是设计器器要给模拟器提供的方法 */

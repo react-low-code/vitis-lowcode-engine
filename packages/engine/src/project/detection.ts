@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { Point } from 'vitis-lowcode-types'
+import Node from '../node'
 import type Designer from './designer'
 
 export default class Detection {
@@ -17,10 +18,14 @@ export default class Detection {
     capture(point: Point) {
         const containerNode = this.designer.host.getClosestNodeByLocation(point)
         if (containerNode) {
-            this.rect = this.designer.getNodeRect(containerNode.id)
+            this.computedRectByNode(containerNode.id)
         } else {
             this.rect = undefined
         }
+    }
+
+    computedRectByNode(nodeId: string) {
+        this.rect = this.designer.getNodeRect(nodeId)
     }
 
     release() {

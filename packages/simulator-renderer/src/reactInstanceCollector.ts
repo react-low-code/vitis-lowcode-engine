@@ -6,11 +6,11 @@ export interface DomNode {
 }
 
 class ReactInstanceCollector {
-    reactInstanceMap: Map<string, ReactInstance | null> = new Map()
+    // reactInstanceMap: Map<string, ReactInstance | null> = new Map()
     domNodeMap: Map<string, DomNode | null> = new Map()
 
-    mount(id: string, instance: ReactInstance | null, domElement: HTMLElement | null){
-        this.reactInstanceMap.set(id, instance)
+    mount(id: string, domElement: HTMLElement | null){
+        // this.reactInstanceMap.set(id, instance)
         if (domElement) {
             this.domNodeMap.set(id, {
                 node: domElement,

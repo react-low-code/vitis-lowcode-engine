@@ -49,11 +49,10 @@ export class Dragon {
         if (container) {
             const dropLocation: DropLocation = {
                 index: 0,
-                containerNode: container.node,
-                containerRect: container.rect
+                containerNode: container,
             }
 
-            const { children } = container.node
+            const { children } = container
             const { clientY } = locateEvent
 
             if (children.length > 0) {
@@ -67,7 +66,6 @@ export class Dragon {
                         minIndex = index
                     }
                 })
-
                 dropLocation.index = minIndex
             }
 

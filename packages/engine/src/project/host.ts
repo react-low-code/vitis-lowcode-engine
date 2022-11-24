@@ -56,14 +56,15 @@ export default class Host implements HostSpec {
         }, false)
 
 
-        this.frameDocument?.addEventListener('drop', (e: DragEvent) => {
+        this.frameDocument?.addEventListener('drop', async (e: DragEvent) => {
             const {dragObject, dropLocation} = this.project.designer.dragon
             if (dragObject && dropLocation) {
                 if (isDragDataNode(dragObject)) {
                     const node = this.project.documentModel.createNode(dragObject.data.schema, dropLocation.containerNode)
                     dropLocation.containerNode.inertChildAtIndex(node, dropLocation.index)
+                    await this.rerender()
+                    this.project.designer.detection.computedRectByNode(node.id)
                     this.project.documentModel.selectNode(node.id)
-                    this.rerender()
                 }
             }
             this.project.designer.dragon.onDragEnd(e)
@@ -182,7 +183,7 @@ export default class Host implements HostSpec {
         return this.renderer.getNodeRect(nodeId)
     }
 
-    rerender = () => {
-        this.renderer.rerender()
+    rerender = async () => {
+        await this.renderer.rerender()
     }
 }

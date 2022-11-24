@@ -68,22 +68,28 @@ export default class Designer implements DesignerSpec {
         const containerNode = this.host.getClosestNodeByLocation({clientX: locateEvent.clientX, clientY: locateEvent.clientY})
         if (containerNode) {
             if (isDragDataNode(locateEvent.dragObject) && containerNode.componentSpec.isCanInclude(locateEvent.dragObject.data)) {
-                return {
-                    node: containerNode,
-                    rect: this.getNodeRect(containerNode.id)!
-                }
+                return containerNode
             }
 
             if (isDragNode(locateEvent.dragObject) && containerNode.componentSpec.isCanInclude(locateEvent.dragObject.node.componentSpec)) {
-                return {
-                    node: containerNode,
-                    rect: this.getNodeRect(containerNode.id)!
-                }
+                return containerNode
             }
         }
     }
 
     getNodeRect = (nodeId: string) => {
         return this.host.getNodeRect(nodeId)
+    }
+
+    getInsertRect = () => {
+        const dropLocation = this.dragon.dropLocation
+
+        if (dropLocation) {
+            if (dropLocation.index === 0) {
+                return this.getNodeRect(dropLocation.containerNode.id)
+            } else {
+                return this.getNodeRect(dropLocation.containerNode.children[dropLocation.index].id)
+            }
+        }
     }
 }

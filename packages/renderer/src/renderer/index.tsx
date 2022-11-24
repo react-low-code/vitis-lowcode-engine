@@ -1,15 +1,15 @@
 
 import { PageSchema } from 'vitis-lowcode-types'
 import PageRenderer from './page';
+import React from 'react';
 
-import BaseRenderer from "./baseRenderer";
 import { ContextSpec, Context } from '../context'
 
 export interface Props extends ContextSpec{
     schema: PageSchema;
 }
 
-export default class Renderer extends BaseRenderer<Props, {}> {
+export default class Renderer extends React.Component<Props, {}> {
 
     get defaultConfig() {
         return {
@@ -22,7 +22,7 @@ export default class Renderer extends BaseRenderer<Props, {}> {
         if (schema.isContainer && schema.containerType === 'Page') {
             return (
                 <Context.Provider value={{...this.defaultConfig,...this.props}}>
-                    <PageRenderer nodeSchema={schema}/>
+                    <PageRenderer schema={schema}/>
                 </Context.Provider>
             )
         } else {
