@@ -5,7 +5,7 @@ import PageRenderer from './page';
 import BaseRenderer from "./baseRenderer";
 import { ContextSpec, Context } from '../context'
 
-interface Props extends ContextSpec{
+export interface Props extends ContextSpec{
     schema: PageSchema;
 }
 

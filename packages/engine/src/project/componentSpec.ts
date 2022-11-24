@@ -1,4 +1,4 @@
-import { ComponentSpecRaw } from 'vitis-lowcode-types'
+import { ComponentSpecRaw, NodeSchema } from 'vitis-lowcode-types'
 
 export default class ComponentSpec {
     // todo
@@ -36,6 +36,20 @@ export default class ComponentSpec {
 
     get title() {
         return this.rawData.title
+    }
+
+    /**
+     * 这个组件的初始 schema
+     */
+    get schema(): NodeSchema {
+        return {
+            componentName: this.componentName,
+            props: {},
+            isContainer: !!this.rawData.advanced?.component?.isContainer,
+            children: [],
+            containerType: this.rawData.advanced?.component?.containerType || undefined,
+            packageName: this.rawData.packageName
+        }
     }
 
     parseRawData() {

@@ -123,7 +123,7 @@ export default class ComponentsPane extends React.Component<{},State>{
     onDragStart = ( packageName: string) => {
         if (window.VitisLowCodeEngine) {
             const dragon = window.VitisLowCodeEngine.dragon as DragonSpec
-            dragon.bindNodeDataDrag(packageName)
+            dragon.onNodeDataDragStart(packageName)
         }
     }
 

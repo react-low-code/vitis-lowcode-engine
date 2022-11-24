@@ -19,6 +19,10 @@ export interface SimulatorSpec {
      * @param id 
      */
     getNodeRect(id: string): DOMRect | undefined
+    /**
+     * 重新渲染
+     */
+    rerender(): void
 }
 
 /**这是设计器器要给模拟器提供的方法 */

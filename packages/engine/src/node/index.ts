@@ -10,17 +10,17 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly id: string;
     readonly componentName: string;
     readonly isContainer: boolean;
-    readonly schema: S
     readonly parent: Node<NodeSchema> | null;
     readonly owner: DocumentModel
     readonly children: Node<NodeSchema>[]
     readonly props: Props
     readonly containerType?: ContainerSchema['containerType']
+    readonly packageName: string
 
     get componentSpec(): ComponentSpec {
-        const result = project.project.designer.componentSpecMap.get(this.componentName)
+        const result = project.project.designer.componentSpecMap.get(this.packageName)
         if (!result) {
-            throw `不存在 ${this.componentName} 组件`
+            throw `不存在 ${this.packageName} 组件`
         }
         return result
     }
@@ -55,7 +55,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return this.componentSpec.title
     }
 
-    constructor(owner: DocumentModel,schema: S, parent: Node<S> | null) {
+    constructor(owner: DocumentModel,initSchema: S, parent: Node<S> | null) {
         makeAutoObservable(this, {
             id: false,
             componentName: false,
@@ -64,25 +64,34 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         })
 
         this.parent = parent
-        this.id = schema.id || uniqueId('node')
-        this.componentName = schema.componentName
-        this.isContainer = schema.isContainer
-        this.containerType = schema.containerType
-        this.schema = schema
+        this.id = initSchema.id || uniqueId('node')
+        this.componentName = initSchema.componentName
+        this.packageName = initSchema.packageName
+        this.isContainer = initSchema.isContainer
+        this.containerType = initSchema.containerType
         this.owner = owner
 
-        this.children = schema.children.map(child => this.owner.createNode(child, this))
-        this.props = new Props(this, schema.props)
+        this.children = initSchema.children.map(child => this.owner.createNode(child, this))
+        this.props = new Props(this, initSchema.props)
     }
 
     export(): NodeSchema {
         return {
             id: this.id,
             componentName: this.componentName,
+            packageName: this.packageName,
             isContainer: this.isContainer,
             props: this.props.export(),
             containerType: this.containerType,
             children: this.children.map(child => child.export()),
         }
+    }
+
+    inertChildAtIndex = (node: Node<NodeSchema>, index: number) => {
+        this.children.splice(index, 0, node)
+    }
+
+    delChildAtIndex = (index: number) => {
+        this.children.splice(index, 1)
     }
 }

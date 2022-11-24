@@ -1,9 +1,10 @@
-import { makeAutoObservable } from 'mobx'
 import { NodeSchema, SimulatorSpec, Point } from 'vitis-lowcode-types'
 import { createElement, ReactInstance } from 'react'
-import { Renderer, RendererMode } from 'vitis-lowcode-renderer'
+import { RendererMode } from 'vitis-lowcode-renderer'
 import reactInstanceCollector, { DomNode } from './reactInstanceCollector'
 import { emptyPageComponent } from './emptyComponent/page'
+import SimulatorRendererView from './view'
+import observerData from './store'
 
 import { render } from 'react-dom'
 
@@ -14,15 +15,7 @@ const host = getHost()
 class SimulatorRenderer implements SimulatorSpec {
     private isRan: boolean = false
 
-    get components() {
-        return host.project.designer.componentImplMap
-    }
-
-    get schema() {
-        return host.project.schema
-    }
     constructor() {
-        makeAutoObservable(this)
         host.connect(this, () => {})
     }
 
@@ -57,6 +50,11 @@ class SimulatorRenderer implements SimulatorSpec {
         return reactInstanceCollector.domNodeMap.get(nodeId)?.rect
     }
 
+    rerender = () => {
+        observerData.components = host.project.designer.componentImplMap,
+        observerData.schema = host.project.schema
+    }
+
     run() {
         if (this.isRan) {
             return
@@ -69,9 +67,7 @@ class SimulatorRenderer implements SimulatorSpec {
         document.body.appendChild(container)
 
         render(
-            createElement(Renderer, {
-                schema: this.schema,
-                components: this.components,
+            createElement(SimulatorRendererView, {
                 rendererMode: RendererMode.design,
                 onCompGetRef: (schema: NodeSchema, instance: ReactInstance | null, domElement: HTMLElement | null) => {
                     reactInstanceCollector.mount(schema.id!, instance, domElement)

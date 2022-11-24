@@ -1,11 +1,11 @@
 import { makeAutoObservable } from 'mobx'
 import Designer from './designer';
-import Host from './host'
 import DocumentModel from './documentModel'
 import { PageSchema, ObservableProjectSpec } from 'vitis-lowcode-types'
 
 const defaultPageSchema: PageSchema = {
     componentName: 'Page',
+    packageName: 'Page',
     containerType: 'Page',
     isContainer: true,
     children: [],

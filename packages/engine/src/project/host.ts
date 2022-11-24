@@ -4,6 +4,7 @@ import type Project from "./index"
 import { HostSpec, SimulatorSpec, ComponentSpecRaw, Point } from 'vitis-lowcode-types'
 import { IReactionPublic, autorun } from 'mobx'
 import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
+import { isDragDataNode } from './dragon'
 
 export default class Host implements HostSpec {
     frameDocument?: Document | null
@@ -56,7 +57,16 @@ export default class Host implements HostSpec {
 
 
         this.frameDocument?.addEventListener('drop', (e: DragEvent) => {
-            this.project.designer.dragon.bindDrop(e)
+            const {dragObject, dropLocation} = this.project.designer.dragon
+            if (dragObject && dropLocation) {
+                if (isDragDataNode(dragObject)) {
+                    const node = this.project.documentModel.createNode(dragObject.data.schema, dropLocation.containerNode)
+                    dropLocation.containerNode.inertChildAtIndex(node, dropLocation.index)
+                    this.project.documentModel.selectNode(node.id)
+                    this.rerender()
+                }
+            }
+            this.project.designer.dragon.onDragEnd(e)
         })
 
         this.frameDocument?.addEventListener('mouseup', (e: MouseEvent) => {
@@ -170,5 +180,9 @@ export default class Host implements HostSpec {
 
     getNodeRect = (nodeId: string) => {
         return this.renderer.getNodeRect(nodeId)
+    }
+
+    rerender = () => {
+        this.renderer.rerender()
     }
 }

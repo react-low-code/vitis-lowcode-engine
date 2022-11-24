@@ -10,9 +10,9 @@ export default class Dragon implements DragonSpec{
         this.innerDragon = innerDragon
     }
 
-    bindNodeDataDrag = (packageName: string) => {
+    onNodeDataDragStart = (packageName: string) => {
         if (this.innerDragon.designer.componentSpecMap.has(packageName)) {
-            this.innerDragon.bindDragStart({
+            this.innerDragon.onDragStart({
                 type: DragObjectType.NodeData,
                 data: this.innerDragon.designer.componentSpecMap.get(packageName)!
             })

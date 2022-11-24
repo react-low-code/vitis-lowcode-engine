@@ -43,6 +43,7 @@ export interface ComponentSchema extends NodeSchema {
 export interface NodeSchema {
     id?: string;
     componentName: string;
+    packageName: string;
     props: {[key: string]: PropValue;}
     isContainer: boolean;
     children: NodeSchema[];

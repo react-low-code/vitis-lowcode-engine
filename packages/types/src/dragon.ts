@@ -1,3 +1,3 @@
 export interface DragonSpec {
-    bindNodeDataDrag: (packageName: string) => void
+    onNodeDataDragStart: (packageName: string) => void
 }

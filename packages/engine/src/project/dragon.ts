@@ -25,12 +25,12 @@ export class Dragon {
     }
 
 
-    bindDragStart = (dragObject: DragObject | null) => {
+    onDragStart = (dragObject: DragObject | null) => {
         this.dragging = true
         this.dragObject = dragObject
     }
 
-    bindDrop = (event: DragEvent) => {
+    onDragEnd = (event: DragEvent) => {
         this.dragging = false
         this.dragObject = null
         this.dropLocation = undefined
