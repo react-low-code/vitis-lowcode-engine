@@ -47,12 +47,14 @@ export default class Host implements HostSpec {
         })
 
         this.frameDocument?.addEventListener('mousemove', (e: MouseEvent) => {
-            this.project.designer.detection.capture(e)
+            const node = this.project.designer.host.getClosestNodeByLocation(e)
+            this.project.documentModel.hoverNode(node?.id)
+            this.project.designer.detection.computeHoveredPosition(node?.id)
+            
         })
 
         this.frameDocument?.addEventListener('mouseleave', (e: MouseEvent) => {
-            this.project.designer.detection.release()
-            this.project.documentModel.selectNode()
+            this.project.designer.detection.computeHoveredPosition()
         }, false)
 
 
@@ -63,15 +65,17 @@ export default class Host implements HostSpec {
                     const node = this.project.documentModel.createNode(dragObject.data.schema, dropLocation.containerNode)
                     dropLocation.containerNode.inertChildAtIndex(node, dropLocation.index)
                     await this.rerender()
-                    this.project.designer.detection.computedRectByNode(node.id)
                     this.project.documentModel.selectNode(node.id)
+                    this.project.designer.detection.computeSelectedPosition(node.id)
                 }
             }
             this.project.designer.dragon.onDragEnd(e)
         })
 
         this.frameDocument?.addEventListener('mouseup', (e: MouseEvent) => {
-            this.project.documentModel.selectNode(this.getClosestNodeByLocation(e)?.id)
+            const nodeId = this.getClosestNodeByLocation(e)?.id
+            this.project.documentModel.selectNode(nodeId)
+            this.project.designer.detection.computeSelectedPosition(nodeId)
         })
     }
 

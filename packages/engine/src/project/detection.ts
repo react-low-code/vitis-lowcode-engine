@@ -1,11 +1,10 @@
 import { makeAutoObservable } from 'mobx'
-import { Point } from 'vitis-lowcode-types'
-import Node from '../node'
 import type Designer from './designer'
 
 export default class Detection {
-    rect: DOMRect | undefined
     designer: Designer
+    hoveredNodePosition: DOMRect | undefined
+    selectedNodePosition: DOMRect | undefined
 
     constructor(designer: Designer) {
         makeAutoObservable(this, {
@@ -15,20 +14,19 @@ export default class Detection {
         this.designer = designer
     }
 
-    capture(point: Point) {
-        const containerNode = this.designer.host.getClosestNodeByLocation(point)
-        if (containerNode) {
-            this.computedRectByNode(containerNode.id)
+    computeHoveredPosition(nodeId?: string) {
+        if (nodeId) {
+            this.hoveredNodePosition = this.designer.getNodeRect(nodeId)
         } else {
-            this.rect = undefined
+            this.hoveredNodePosition = undefined
         }
     }
 
-    computedRectByNode(nodeId: string) {
-        this.rect = this.designer.getNodeRect(nodeId)
-    }
-
-    release() {
-        this.rect = undefined
+    computeSelectedPosition(nodeId?: string) {
+        if (nodeId) {
+            this.selectedNodePosition = this.designer.getNodeRect(nodeId)
+        } else {
+            this.selectedNodePosition = undefined
+        }
     }
 }

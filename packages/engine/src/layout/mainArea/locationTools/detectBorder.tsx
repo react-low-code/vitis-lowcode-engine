@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { observer } from 'mobx-react'
-
-import { observableProject } from '../../..//shell'
 
 import './detectBorder.less'
 
-export default observer(function DetectBorder() {
+interface Props {
+    type: 'solid' | 'dashed'
+    position?: DOMRect
+    show: boolean
+}
+
+export default function DetectBorder(props: Props) {
     const [style, setStyle] = useState<React.CSSProperties>({})
     useEffect(() => {
-        const rect = observableProject.designer.detection.rect
-        const hasSelectedNodeId = !!observableProject.documentModel.selectedNodeId
-        if (rect) {
+        if (props.position && props.show) {
             setStyle({
-                borderStyle: hasSelectedNodeId ? 'solid' :'dashed',
-                left: rect.left,
-                width: rect.width,
-                height: rect.height,
-                top: rect.top
+                borderStyle: props.type,
+                left: props.position.left,
+                width: props.position.width,
+                height: props.position.height,
+                top: props.position.top
             })
         } else {
             setStyle({})
         }
-    }, [observableProject.designer.detection.rect, observableProject.documentModel.selectedNodeId])
+    }, [props.show, props.position])
     return <div className='vitis-detect-border' style={style}/>
-})
+}

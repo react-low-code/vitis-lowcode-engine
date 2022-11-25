@@ -6,6 +6,7 @@ export default class DocumentModel {
     rootNode: Node<PageSchema>
     private nodeMap: Map<string, Node> = new Map()
     selectedNodeId?: string
+    hoveredNodeId?: string
 
     constructor(schema: PageSchema) {
         makeAutoObservable(this)
@@ -36,5 +37,9 @@ export default class DocumentModel {
 
     selectNode(id?: string) {
         this.selectedNodeId = id
+    }
+
+    hoverNode(id?: string) {
+        this.hoveredNodeId = id
     }
 }
