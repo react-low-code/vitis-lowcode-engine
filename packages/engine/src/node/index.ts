@@ -10,7 +10,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly id: string;
     readonly componentName: string;
     readonly isContainer: boolean;
-    readonly parent: Node<NodeSchema> | null;
+    readonly parent: Node<NodeSchema> | undefined;
     readonly owner: DocumentModel
     readonly children: Node<NodeSchema>[]
     readonly props: Props
@@ -25,29 +25,29 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return result
     }
 
-    get nextSibling(): Node<NodeSchema> | null {
+    get nextSibling(): Node<NodeSchema> | undefined {
         if (this.parent) {
             const index = this.parent.children.findIndex(c => c === this)
             if (index === -1) {
-                return null
+                return undefined
             } else {
-                return this.parent.children[index + 1] || null
+                return this.parent.children[index + 1] || undefined
             }
         } else {
-            return null
+            return undefined
         }
     }
 
-    get prevSibling(): Node<NodeSchema> | null {
+    get prevSibling(): Node<NodeSchema> | undefined {
         if (this.parent) {
             const index = this.parent.children.findIndex(c => c === this)
             if (index === -1) {
-                return null
+                return undefined
             } else {
-                return this.parent.children[index - 1] || null
+                return this.parent.children[index - 1] || undefined
             }
         } else {
-            return null
+            return undefined
         }
     }
 
@@ -55,7 +55,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return this.componentSpec.title
     }
 
-    constructor(owner: DocumentModel,initSchema: S, parent: Node<S> | null) {
+    constructor(owner: DocumentModel,initSchema: S, parent: Node<S> | undefined) {
         makeAutoObservable(this, {
             id: false,
             componentName: false,

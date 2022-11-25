@@ -20,14 +20,14 @@ export default class DocumentModel {
         return this.selectedNodeId ? this.nodeMap.get(this.selectedNodeId) : undefined
     }
 
-    createNode<S extends NodeSchema>(schema: S, pNode: Node<S> | null) {
+    createNode<S extends NodeSchema>(schema: S, pNode: Node<S> | undefined) {
         const node = new Node<S>(this,schema, pNode)
         this.nodeMap.set(node.id, node)
         return node
     }
 
     open(schema: PageSchema) {
-        this.rootNode = this.createNode<PageSchema>(schema, null)
+        this.rootNode = this.createNode<PageSchema>(schema, undefined)
     }
 
     getNode(id: string) {
