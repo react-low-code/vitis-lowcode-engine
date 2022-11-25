@@ -7,7 +7,7 @@ import './insertionView.less'
 export default observer(function InsertionView() {
     const [style, setStyle] = useState<React.CSSProperties>({})
     useEffect(() => {
-        const insertRect = observableProject.designer.getInsertRect()
+        const insertRect = observableProject.designer.getInsertPointRect()
         if (!insertRect) {
             setStyle({})
         } else {

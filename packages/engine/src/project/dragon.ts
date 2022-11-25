@@ -52,21 +52,30 @@ export class Dragon {
                 containerNode: container,
             }
 
-            const { children } = container
+            const { childrenSize } = container
             const { clientY } = locateEvent
-
-            if (children.length > 0) {
-                let minDistance = Infinity
-                // 容器中最近的插入点
-                let minIndex = 0
-                children.forEach((child, index) => {
-                    const rect = this.designer.getNodeRect(child.id)
-                    if (rect && Math.abs(rect.top - clientY) < minDistance) {
-                        minDistance = Math.abs(rect.top - clientY)
-                        minIndex = index
+            const lastChild = container.lastChild
+            
+            if (lastChild) {
+                const lastChildRect = this.designer.getNodeRect(lastChild.id)
+                // 判断是否要插到容器的末尾
+                if (lastChildRect && clientY > lastChildRect.bottom) {
+                    dropLocation.index = childrenSize
+                } else {
+                    let minDistance = Infinity
+                    // 容器中最近的插入点
+                    let minIndex = 0
+                    for (let index = 0 ; index < childrenSize; index ++) {
+                        const child = container.getChildAtIndex(index)!
+                        const rect = this.designer.getNodeRect(child.id)
+                        if (rect && Math.abs(rect.top - clientY) < minDistance) {
+                            minDistance = Math.abs(rect.top - clientY)
+                            minIndex = index
+                        }
                     }
-                })
-                dropLocation.index = minIndex
+                    
+                    dropLocation.index = minIndex
+                }
             }
 
             return dropLocation

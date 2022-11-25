@@ -4,7 +4,7 @@ import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
 import { innerMaterial } from '../shell'
-import { Dragon, isDragDataNode, isDragNode } from './dragon'
+import { Dragon, isDragDataNode } from './dragon'
 import Host from './host'
 import Detection from './detection';
 import type Project from './index'
@@ -81,14 +81,22 @@ export default class Designer implements DesignerSpec {
         return this.host.getNodeRect(nodeId)
     }
 
-    getInsertRect = () => {
+    getInsertPointRect = () => {
         const dropLocation = this.dragon.dropLocation
 
         if (dropLocation) {
-            if (dropLocation.index === 0) {
-                return this.getNodeRect(dropLocation.containerNode.id)
+            const { containerNode, index } = dropLocation
+            if (index === 0) {
+                return this.getNodeRect(containerNode.id)
+            } 
+            // 插到容器的最后一个位置
+            else if (index >= containerNode.childrenSize) {
+                const lastChild = containerNode.lastChild
+                const lastChildRect = lastChild ? this.getNodeRect(lastChild.id): undefined
+                return lastChildRect ? new DOMRect(lastChildRect.x, lastChildRect.y + lastChildRect.height, lastChildRect.width, lastChildRect.height): undefined
             } else {
-                return this.getNodeRect(dropLocation.containerNode.children[dropLocation.index].id)
+                const child = containerNode.getChildAtIndex(index)
+                return child ? this.getNodeRect(child.id): undefined
             }
         }
     }

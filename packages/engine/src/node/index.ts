@@ -12,7 +12,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly isContainer: boolean;
     readonly parent: Node<NodeSchema> | undefined;
     readonly owner: DocumentModel
-    readonly children: Node<NodeSchema>[]
+    protected readonly children: Node<NodeSchema>[]
     readonly props: Props
     readonly containerType?: ContainerSchema['containerType']
     readonly packageName: string
@@ -55,6 +55,14 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return this.componentSpec.title
     }
 
+    get lastChild(): Node<NodeSchema> | undefined {
+        return this.children[this.children.length - 1]
+    }
+
+    get childrenSize(): number {
+        return this.children.length
+    }
+
     constructor(owner: DocumentModel,initSchema: S, parent: Node<S> | undefined) {
         makeAutoObservable(this, {
             id: false,
@@ -93,5 +101,9 @@ export default class Node<S extends NodeSchema = NodeSchema> {
 
     delChildAtIndex = (index: number) => {
         this.children.splice(index, 1)
+    }
+
+    getChildAtIndex = (index: number): Node<NodeSchema> | undefined => {
+        return this.children[index]
     }
 }
