@@ -12,7 +12,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly isContainer: boolean;
     readonly parent: Node<NodeSchema> | undefined;
     readonly owner: DocumentModel
-    protected readonly children: Node<NodeSchema>[]
+    protected children: Node<NodeSchema>[]
     readonly props: Props
     readonly containerType?: ContainerSchema['containerType']
     readonly packageName: string
@@ -105,5 +105,9 @@ export default class Node<S extends NodeSchema = NodeSchema> {
 
     getChildAtIndex = (index: number): Node<NodeSchema> | undefined => {
         return this.children[index]
+    }
+
+    delChild = (child: Node<NodeSchema>) => {
+        this.children = this.children.filter(item => item !== child)
     }
 }

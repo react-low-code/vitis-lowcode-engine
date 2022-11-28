@@ -5,6 +5,7 @@ import { HostSpec, SimulatorSpec, ComponentSpecRaw, Point } from 'vitis-lowcode-
 import { IReactionPublic, autorun } from 'mobx'
 import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
 import { isDragDataNode } from './dragon'
+import { DragObjectType } from "../types"
 
 export default class Host implements HostSpec {
     frameDocument?: Document | null
@@ -46,6 +47,16 @@ export default class Host implements HostSpec {
             this.project.designer.dragon.onDragOver(e)
         })
 
+        this.frameDocument?.addEventListener('dragstart', (e: DragEvent) => {
+            const node = this.getNodeByDOMElem(e.target as HTMLElement)
+            if (node) {
+                this.project.designer.dragon.onDragStart({
+                    type: DragObjectType.Node,
+                    node
+                })
+            }
+        })
+
         this.frameDocument?.addEventListener('mousemove', (e: MouseEvent) => {
             const node = this.project.designer.host.getClosestNodeByLocation(e)
             this.project.documentModel.hoverNode(node?.id)
@@ -67,6 +78,12 @@ export default class Host implements HostSpec {
                     await this.rerender()
                     this.project.documentModel.selectNode(node.id)
                     this.project.designer.detection.computeSelectedPosition(node.id)
+                } else {
+                    dragObject.node.parent?.delChild(dragObject.node)
+                    dropLocation.containerNode.inertChildAtIndex(dragObject.node, dropLocation.index)
+                    await this.rerender()
+                    this.project.documentModel.selectNode(dragObject.node.id)
+                    this.project.designer.detection.computeSelectedPosition(dragObject.node.id)
                 }
             }
             this.project.designer.dragon.onDragEnd(e)
@@ -77,6 +94,14 @@ export default class Host implements HostSpec {
             this.project.documentModel.selectNode(nodeId)
             this.project.designer.detection.computeSelectedPosition(nodeId)
         })
+    }
+
+    private getNodeByDOMElem = (domElem: HTMLElement | null) => {
+        if (domElem) {
+            const noId = domElem.getAttribute('data-node-id')
+
+            return noId ? this.project.documentModel.getNode(noId): undefined
+        }
     }
 
     private getSimulatorComponentAssets = (assetMap: Map<string, ComponentSpecRaw>) => {

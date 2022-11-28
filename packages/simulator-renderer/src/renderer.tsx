@@ -36,7 +36,7 @@ class SimulatorRenderer implements SimulatorSpec {
             minArea: Infinity
         }
         for (const [id, domNode] of suitableContainer) {
-            const { left, width, height } = domNode.rect
+            const { width, height } = domNode.rect
             if (width *  height  < minGap.minArea) {
                 minGap.id = id;
                 minGap.minArea = width *  height
