@@ -1,5 +1,6 @@
 import React from 'react'
 import type SettingField from '../../setting/SettingField'
+import SettingFieldView from './settingFieldView'
 
 import './settingPanel.less'
 
@@ -13,7 +14,7 @@ export default function SettingPanel(props: Props) {
     return (
         <div className='vitis-settings-pane'>
             {props.target.fields.map(field => {
-                return <div>{field.name}</div>
+                return <SettingFieldView field={field}/>
             })}
         </div>
     )

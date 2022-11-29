@@ -70,6 +70,7 @@ export default class ComponentSpec {
                         type: 'field',
                         title: '样式',
                         name: 'style',
+                        hiddenTitle: true,
                         setters: [{ name: 'StyleSetter' }] as FieldSingleConfig['setters']
                     }
                 ]

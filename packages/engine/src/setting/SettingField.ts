@@ -31,4 +31,8 @@ export default class SettingField {
     get name () {
         return this.config.name
     }
+
+    get hiddenTitle() {
+        return this.config.hiddenTitle === true
+    }
 }

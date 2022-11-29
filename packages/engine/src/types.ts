@@ -33,6 +33,7 @@ export interface DropLocation {
 
 export interface FieldConfig {
   type: 'group' | 'field';
+  hiddenTitle?: boolean;
   title: string;
   fields?: FieldConfig[];
   setters?: {

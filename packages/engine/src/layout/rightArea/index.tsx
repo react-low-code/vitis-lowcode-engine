@@ -10,9 +10,74 @@ interface Props {
     settingMain?: SettingMain
 }
 
+interface State {
+    activeTab?: string
+}
+
+
+observer(function RightArea(props: Props) {
+    const settingEntry = props.settingMain?.settingEntry
+        // if (!settingEntry) {
+        //     return <div className='rightArea'>请在画布上选中节点</div>
+        // }
+        // if (!settingEntry.fields.length) {
+        //     return <div className='rightArea'>该组件暂无配置</div>
+        // }
+        // const items = settingEntry.fields.map(filed => {
+        //     return {
+        //         label: filed.title,
+        //         key: filed.id,
+        //         children: filed.title
+        //         // children: <SettingPanel target={filed} key={filed.id}/>
+        //     }
+        // })
+        return (
+        
+
+            <Tabs
+                size="small"
+                // items={items}
+                // defaultActiveKey='one'
+            >
+                <Tabs.TabPane tab='ddd' key="one">44</Tabs.TabPane>
+                <Tabs.TabPane tab='ddd3' key="two">444fdfee</Tabs.TabPane>
+            </Tabs>
+        
+        )
+})
 @observer
-export default class RightArea extends React.Component<Props, {}> {
+export default class RightArea extends React.Component<Props, State> {
+    state: Readonly<State> =  {
+
+    }
+    componentDidMount() {
+        this.setDefaultActiveTab()
+    }
+
+    componentDidUpdate(prev: Props) {
+        if (prev.settingMain?.settingEntry !== this.props.settingMain?.settingEntry) {
+            this.setDefaultActiveTab()
+        }
+    }
+
+    setDefaultActiveTab() {
+        const settingEntry = this.props.settingMain?.settingEntry
+        if (settingEntry && settingEntry.fields.length) {
+            this.setState({
+                activeTab: settingEntry.fields[0].id
+            })
+        }
+    }
+
+    onChangeTab = (activeTab: string) => {
+        this.setState({
+            activeTab
+        })
+    }
+
+
     render(){
+        
         const settingEntry = this.props.settingMain?.settingEntry
         if (!settingEntry) {
             return <div className='rightArea'>请在画布上选中节点</div>
@@ -23,17 +88,16 @@ export default class RightArea extends React.Component<Props, {}> {
         const items = settingEntry.fields.map(filed => {
             return {
                 label: filed.title,
-                key: filed.name,
+                key: filed.id,
                 children: <SettingPanel target={filed} key={filed.id}/>
             }
         })
-
         return (
         <div className='rightArea'>
             {this.renderBreadcrumb()}
             <Tabs
-                items={items}
                 size="small"
+                items={items}
             />
         </div>
         )
