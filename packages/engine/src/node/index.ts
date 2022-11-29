@@ -1,24 +1,25 @@
 import { NodeSchema, ContainerSchema } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
-import { project } from '../shell'
 import type ComponentSpec from '../project/componentSpec'
 import Props from './props'
 import { uniqueId } from '../utils'
 import type DocumentModel from '../project/documentModel'
+import SettingTopEntry from '../setting/SettingTopEntry'
 
 export default class Node<S extends NodeSchema = NodeSchema> {
     readonly id: string;
     readonly componentName: string;
     readonly isContainer: boolean;
-    readonly parent: Node<NodeSchema> | undefined;
+    parent: Node<NodeSchema> | undefined;
     readonly owner: DocumentModel
     protected children: Node<NodeSchema>[]
     readonly props: Props
     readonly containerType?: ContainerSchema['containerType']
     readonly packageName: string
+    private _settingEntry: SettingTopEntry | undefined
 
     get componentSpec(): ComponentSpec {
-        const result = project.project.designer.componentSpecMap.get(this.packageName)
+        const result = this.owner.project.designer.componentSpecMap.get(this.packageName)
         if (!result) {
             throw `不存在 ${this.packageName} 组件`
         }
@@ -83,6 +84,16 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.props = new Props(this, initSchema.props)
     }
 
+    get settingEntry() {
+        if (this._settingEntry) {
+            return this._settingEntry
+        }
+
+        this._settingEntry = new SettingTopEntry(this)
+
+        return this._settingEntry
+    }
+
     export(): NodeSchema {
         return {
             id: this.id,
@@ -96,6 +107,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     }
 
     inertChildAtIndex = (node: Node<NodeSchema>, index: number) => {
+        node.parent = this
         this.children.splice(index, 0, node)
     }
 

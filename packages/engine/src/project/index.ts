@@ -43,7 +43,7 @@ export default class Project  implements ObservableProjectSpec{
             documentModel: false
         })
 
-        this.documentModel = new DocumentModel(schema)
+        this.documentModel = new DocumentModel(this,schema)
     }
 
     setSchema(schema: PageSchema) {

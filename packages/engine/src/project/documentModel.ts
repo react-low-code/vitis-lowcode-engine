@@ -1,16 +1,19 @@
 import { PageSchema, NodeSchema } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import Node from '../node'
+import type Project from './index'
 
 export default class DocumentModel {
     rootNode: Node<PageSchema>
     private nodeMap: Map<string, Node> = new Map()
     selectedNodeId?: string
     hoveredNodeId?: string
+    readonly project: Project
 
-    constructor(schema: PageSchema) {
+    constructor(project: Project,schema: PageSchema) {
         makeAutoObservable(this)
         this.open(schema)
+        this.project = project
     }
 
     get schema() {

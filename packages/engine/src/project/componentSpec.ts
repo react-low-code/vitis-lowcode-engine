@@ -1,8 +1,8 @@
-import { ComponentSpecRaw, NodeSchema } from 'vitis-lowcode-types'
+import { ComponentSpecRaw, NodeSchema, SetterConfig } from 'vitis-lowcode-types'
+import { FieldConfig, FieldGroupConfig, FieldSingleConfig } from '../types'
 
 export default class ComponentSpec {
-    // todo
-    propsConfigure: any;
+    configure: FieldConfig[] = [];
     rawData: ComponentSpecRaw
 
     constructor(componentSpecRaw: ComponentSpecRaw) {
@@ -42,9 +42,14 @@ export default class ComponentSpec {
      * 这个组件的初始 schema
      */
     get schema(): NodeSchema {
+        const props: {[attr: string]: any} = {}
+        this.rawData.props.forEach(prop => {
+            props[prop.name] = prop.defaultValue
+        })
+
         return {
             componentName: this.componentName,
-            props: {},
+            props,
             isContainer: !!this.rawData.advanced?.component?.isContainer,
             children: [],
             containerType: this.rawData.advanced?.component?.containerType || undefined,
@@ -52,11 +57,61 @@ export default class ComponentSpec {
         }
     }
 
-    parseRawData() {
-
+    private parseRawData = () => {
+        this.configure.push(this.getPropsConfig())
+        const supports = this.rawData.advanced?.supports
+        if (supports?.styles) {
+            this.configure.push({
+                type: 'group',
+                title: '样式',
+                name: 'style',
+                fields: [
+                    {
+                        type: 'field',
+                        title: '样式',
+                        name: 'style',
+                        setters: [{ name: 'StyleSetter' }] as FieldSingleConfig['setters']
+                    }
+                ]
+            })
+        }
     }
 
-    isCanDropTo(componentSpec: ComponentSpec) {
+    getPropsConfig = (): FieldGroupConfig => {
+        const getSettersName = (setterConfig: SetterConfig | SetterConfig[]) => {
+            if (!Array.isArray(setterConfig)) {
+                setterConfig = [setterConfig]
+            }
+
+            return setterConfig.map(config => ({
+                name: config.isUseSelf ? this.rawData.packageName + '/' + config.setterName : config.setterName,
+                props: config.props
+            }))
+        }
+
+        return {
+            type: 'group',
+            title: '属性',
+            name: 'props',
+            fields: [
+                {
+                    type: 'field',
+                    title: 'ID',
+                    name: 'id',
+                    setters: [{ name: 'TextString' }] as FieldSingleConfig['setters'],
+                    initialValue: {
+                        type: 'JSFunction',
+                        value: "node => node.id"
+                    }
+                },
+                ...this.rawData.props.filter(prop => prop.name !== 'style').map(prop => ({
+                    type: 'field' as 'field',
+                    name: prop.name,
+                    title: prop.description || prop.name,
+                    setters: getSettersName(prop.setter),
+                }))
+            ]
+        }
     }
 
     isCanInclude(componentSpec: ComponentSpec) {

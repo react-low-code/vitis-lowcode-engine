@@ -14,7 +14,7 @@ interface PropType {
     [k: string]: any;
 }
 
-interface SetterConfig {
+export interface SetterConfig {
     /**设置器的名称 */
     setterName: string;
     /**是否使用组件包自带的设置器 */
