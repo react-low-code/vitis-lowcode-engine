@@ -10,6 +10,12 @@ const defaultPageSchema: PageSchema = {
     isContainer: true,
     children: [],
     props: {},
+    extraProps: {
+        id: {
+            type: 'JSFunction',
+            value: 'node => node.id'
+        }
+    },
     dataSource: {
         url: '',
         method: 'GET',

@@ -4,6 +4,7 @@ import { FieldConfig, FieldGroupConfig, FieldSingleConfig } from '../types'
 export default class ComponentSpec {
     configure: FieldConfig[] = [];
     rawData: ComponentSpecRaw
+    initdExtraProps: any
 
     constructor(componentSpecRaw: ComponentSpecRaw) {
         this.rawData = componentSpecRaw
@@ -50,6 +51,7 @@ export default class ComponentSpec {
         return {
             componentName: this.componentName,
             props,
+            extraProps: this.initdExtraProps,
             isContainer: !!this.rawData.advanced?.component?.isContainer,
             children: [],
             containerType: this.rawData.advanced?.component?.containerType || undefined,
@@ -76,6 +78,14 @@ export default class ComponentSpec {
                 ]
             })
         }
+
+        // 将取值路径、name和dataSource放在 extraProps 中
+        this.initdExtraProps = {
+            id: {
+                type: 'JSFunction',
+                value: "node => node.id"
+            }
+        }
     }
 
     getPropsConfig = (): FieldGroupConfig => {
@@ -99,11 +109,15 @@ export default class ComponentSpec {
                     type: 'field',
                     title: 'ID',
                     name: 'id',
-                    setters: [{ name: 'StringSetter' }] as FieldSingleConfig['setters'],
-                    initialValue: {
-                        type: 'JSFunction',
-                        value: "node => node.id"
-                    }
+                    isExtra: true,
+                    setters: [{ 
+                        name: 'TextSetter', 
+                        props: {
+                            style: {
+                                color: '#999'
+                            }
+                        }
+                     }] as FieldSingleConfig['setters']
                 },
                 ...this.rawData.props.filter(prop => prop.name !== 'style').map(prop => ({
                     type: 'field' as 'field',

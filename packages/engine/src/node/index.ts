@@ -14,6 +14,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly owner: DocumentModel
     protected children: Node<NodeSchema>[]
     readonly props: Props
+    readonly extraProps: Props
     readonly containerType?: ContainerSchema['containerType']
     readonly packageName: string
     private _settingEntry: SettingTopEntry | undefined
@@ -82,6 +83,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
 
         this.children = initSchema.children.map(child => this.owner.createNode(child, this))
         this.props = new Props(this, initSchema.props)
+        this.extraProps = new Props(this, initSchema.extraProps)
     }
 
     get settingEntry(): SettingTopEntry {
@@ -101,6 +103,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
             packageName: this.packageName,
             isContainer: this.isContainer,
             props: this.props.export(),
+            extraProps: this.extraProps.export(),
             containerType: this.containerType,
             children: this.children.map(child => child.export()),
         }
@@ -129,5 +132,13 @@ export default class Node<S extends NodeSchema = NodeSchema> {
 
     setProp = (propName: string, value: PropValue) => {
         this.props.getProp(propName)?.setValue(value)
+    }
+
+    getExtraProp = (propName: string) => {
+        return this.extraProps.getProp(propName)
+    }
+
+    setExtraProp = (propName: string, value: PropValue) => {
+        this.extraProps.getProp(propName)?.setValue(value)
     }
 }

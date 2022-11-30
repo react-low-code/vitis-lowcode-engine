@@ -15,7 +15,7 @@ export interface SettersSpec {
 
 export interface SetterCommonProps {
     value: any;
-    onChange: (val: any) => void;
+    onChange?: (val: any) => void;
     field: any;
     defaultValue?: any;
 }

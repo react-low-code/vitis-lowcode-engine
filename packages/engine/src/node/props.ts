@@ -35,6 +35,4 @@ export default class Props {
     getProp(propName: string) {
         return this.items.find(prop => prop.name === propName)
     }
-
-    
 }

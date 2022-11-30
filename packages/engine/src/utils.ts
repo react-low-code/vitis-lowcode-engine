@@ -1,4 +1,4 @@
-import { NpmInfo } from 'vitis-lowcode-types'
+import { JSFunction, NpmInfo } from 'vitis-lowcode-types'
 
 let guid = Date.now();
 export function uniqueId(prefix = '') {
@@ -43,4 +43,8 @@ export function getComponentImplFromWin(win: Window, bundle: {packageName: strin
   } else {
     return (win as any)[name]
   }
+}
+
+export function transformStringToFunction(str: string) {
+  return new Function(`"use strict"; return ${str}`)();
 }

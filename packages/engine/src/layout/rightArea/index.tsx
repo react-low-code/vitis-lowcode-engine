@@ -14,37 +14,6 @@ interface State {
     activeTab?: string
 }
 
-
-observer(function RightArea(props: Props) {
-    const settingEntry = props.settingMain?.settingEntry
-        // if (!settingEntry) {
-        //     return <div className='rightArea'>请在画布上选中节点</div>
-        // }
-        // if (!settingEntry.fields.length) {
-        //     return <div className='rightArea'>该组件暂无配置</div>
-        // }
-        // const items = settingEntry.fields.map(filed => {
-        //     return {
-        //         label: filed.title,
-        //         key: filed.id,
-        //         children: filed.title
-        //         // children: <SettingPanel target={filed} key={filed.id}/>
-        //     }
-        // })
-        return (
-        
-
-            <Tabs
-                size="small"
-                // items={items}
-                // defaultActiveKey='one'
-            >
-                <Tabs.TabPane tab='ddd' key="one">44</Tabs.TabPane>
-                <Tabs.TabPane tab='ddd3' key="two">444fdfee</Tabs.TabPane>
-            </Tabs>
-        
-        )
-})
 @observer
 export default class RightArea extends React.Component<Props, State> {
     state: Readonly<State> =  {
@@ -77,7 +46,6 @@ export default class RightArea extends React.Component<Props, State> {
 
 
     render(){
-        
         const settingEntry = this.props.settingMain?.settingEntry
         if (!settingEntry) {
             return <div className='rightArea'>请在画布上选中节点</div>
@@ -92,12 +60,15 @@ export default class RightArea extends React.Component<Props, State> {
                 children: <SettingPanel target={filed} key={filed.id}/>
             }
         })
+
         return (
         <div className='rightArea'>
             {this.renderBreadcrumb()}
             <Tabs
                 size="small"
                 items={items}
+                // activeKey={this.state.activeTab}
+                onChange={this.onChangeTab}
             />
         </div>
         )

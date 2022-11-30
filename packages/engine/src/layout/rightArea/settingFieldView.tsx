@@ -1,4 +1,5 @@
 import React, { createElement } from 'react'
+import { observer } from 'mobx-react'
 import type SettingField from '../../setting/SettingField'
 import { setters } from "../../shell"
 import './settingFieldView.less'
@@ -13,7 +14,7 @@ function getSetter(setterName: string) {
     return setter ? setter.view : undefined
 }
 
-export default function SettingFieldView(props: Props) {
+export default observer(function SettingFieldView(props: Props) {
     const { field } = props
     
     const setter = field.setters ? getSetter(field.setters[0].name): undefined
@@ -25,6 +26,7 @@ export default function SettingFieldView(props: Props) {
             <div className='field-view-main'>
                 {
                  setter ? createElement(setter,{
+                    ...field.setters![0].props,
                     field,
                     value: field.getValue(),
                     onChange: field.setValue,
@@ -33,4 +35,4 @@ export default function SettingFieldView(props: Props) {
             </div>
         </div>
     )
-}
+})

@@ -1,3 +1,5 @@
+import { JSFunction } from "./schema";
+
 export interface PropRaw {
     name: string;
     propType: PropType;
@@ -23,4 +25,4 @@ export interface SetterConfig {
     props?: object;
 }
 
-export type PropValue = string | number
+export type PropValue = string | number | JSFunction | undefined

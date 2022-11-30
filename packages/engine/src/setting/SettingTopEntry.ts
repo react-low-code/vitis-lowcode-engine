@@ -30,4 +30,12 @@ export default class SettingTopEntry {
     setPropValue = (propName: string, value: PropValue) => {
         this.owner.setProp(propName, value)
     }
+
+    getExtraPropValue = (propName: string) => {
+        return this.owner.getExtraProp(propName)
+    }
+
+    setExtraPropValue = (propName: string, value: PropValue) => {
+        this.owner.setExtraProp(propName, value)
+    }
 }

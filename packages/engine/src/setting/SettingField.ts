@@ -1,7 +1,11 @@
 import type SettingTopEntry from "./SettingTopEntry";
 import { FieldConfig } from '../types'
-import { uniqueId } from '../utils'
-import { PropValue } from 'vitis-lowcode-types'
+import { uniqueId, transformStringToFunction } from '../utils'
+import { JSFunction, PropValue } from 'vitis-lowcode-types'
+
+function isJsFunction(value: PropValue): value is JSFunction {
+    return !!value && (value as any).type === 'JSFunction'
+}
 
 export default class SettingField {
     owner: SettingTopEntry
@@ -21,7 +25,7 @@ export default class SettingField {
         }
     }
 
-    get isGroup() {
+    private get isGroup() {
         return this.config.type === 'group'
     }
 
@@ -41,11 +45,32 @@ export default class SettingField {
         return this.config.setters
     }
 
+    private get isExtra() {
+        return !this.isGroup && this.config.isExtra === true
+    }
+
     getValue() {
-        return this.owner.getPropValue(this.name)?.export()
+        let value: PropValue | undefined
+        if (!this.isExtra) {
+            value = this.owner.getPropValue(this.name)?.export()
+        } else {
+            value = this.owner.getExtraPropValue(this.name)?.export()
+        }
+
+        if (isJsFunction(value)) {
+            const tempFunc = transformStringToFunction(value.value)
+            return tempFunc(this.owner.owner)
+        } else {
+            return value
+        }       
     }
 
     setValue(value: PropValue) {
-        return this.owner.setPropValue(this.name, value)
+        if (!this.isExtra) {
+            this.owner.setPropValue(this.name, value)
+        } else {
+            this.owner.setExtraPropValue(this.name, value)
+        }
+        
     }
 }

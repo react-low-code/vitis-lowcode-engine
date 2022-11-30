@@ -45,6 +45,7 @@ export interface NodeSchema {
     componentName: string;
     packageName: string;
     props: {[key: string]: PropValue;}
+    extraProps: {[key: string]: PropValue;}
     isContainer: boolean;
     children: NodeSchema[];
     pathToVal?: string;
