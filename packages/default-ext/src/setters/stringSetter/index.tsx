@@ -8,7 +8,7 @@ export interface Props extends SetterCommonProps {
 
 
 function StringSetter(props: Props) {
-    return <div></div>
+    return <div><input/></div>
 }
 
 export default {

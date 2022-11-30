@@ -23,6 +23,4 @@ export interface SetterConfig {
     props?: object;
 }
 
-export interface PropValue {
-
-}
+export type PropValue = string | number

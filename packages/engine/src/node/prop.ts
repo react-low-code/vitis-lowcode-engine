@@ -28,4 +28,8 @@ export default class Prop {
     export() {
         return this.value
     }
+
+    setValue(value: PropValue) {
+        this.value = value
+    }
 }

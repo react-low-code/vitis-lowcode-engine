@@ -1,4 +1,4 @@
-import { NodeSchema, ContainerSchema } from 'vitis-lowcode-types'
+import { NodeSchema, ContainerSchema, PropValue } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import type ComponentSpec from '../project/componentSpec'
 import Props from './props'
@@ -84,7 +84,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.props = new Props(this, initSchema.props)
     }
 
-    get settingEntry() {
+    get settingEntry(): SettingTopEntry {
         if (this._settingEntry) {
             return this._settingEntry
         }
@@ -121,5 +121,13 @@ export default class Node<S extends NodeSchema = NodeSchema> {
 
     delChild = (child: Node<NodeSchema>) => {
         this.children = this.children.filter(item => item !== child)
+    }
+
+    getProp = (propName: string) => {
+        return this.props.getProp(propName)
+    }
+
+    setProp = (propName: string, value: PropValue) => {
+        this.props.getProp(propName)?.setValue(value)
     }
 }

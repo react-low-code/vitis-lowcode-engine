@@ -1,6 +1,7 @@
 import type SettingTopEntry from "./SettingTopEntry";
 import { FieldConfig } from '../types'
 import { uniqueId } from '../utils'
+import { PropValue } from 'vitis-lowcode-types'
 
 export default class SettingField {
     owner: SettingTopEntry
@@ -34,5 +35,17 @@ export default class SettingField {
 
     get hiddenTitle() {
         return this.config.hiddenTitle === true
+    }
+
+    get setters() {
+        return this.config.setters
+    }
+
+    getValue() {
+        return this.owner.getPropValue(this.name)?.export()
+    }
+
+    setValue(value: PropValue) {
+        return this.owner.setPropValue(this.name, value)
     }
 }

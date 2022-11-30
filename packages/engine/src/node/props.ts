@@ -31,4 +31,10 @@ export default class Props {
 
         return result
     }
+
+    getProp(propName: string) {
+        return this.items.find(prop => prop.name === propName)
+    }
+
+    
 }

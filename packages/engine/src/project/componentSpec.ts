@@ -99,7 +99,7 @@ export default class ComponentSpec {
                     type: 'field',
                     title: 'ID',
                     name: 'id',
-                    setters: [{ name: 'TextString' }] as FieldSingleConfig['setters'],
+                    setters: [{ name: 'StringSetter' }] as FieldSingleConfig['setters'],
                     initialValue: {
                         type: 'JSFunction',
                         value: "node => node.id"
