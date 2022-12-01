@@ -47,6 +47,13 @@ export default class ComponentSpec {
         this.rawData.props.forEach(prop => {
             props[prop.name] = prop.defaultValue
         })
+        const supports = this.rawData.advanced?.supports
+        if (supports?.styles) {
+            props['style'] = {
+                type: 'CSSProperties',
+                value: ''
+            }
+        }
 
         return {
             componentName: this.componentName,

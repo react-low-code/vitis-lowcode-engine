@@ -9,7 +9,9 @@ const defaultPageSchema: PageSchema = {
     containerType: 'Page',
     isContainer: true,
     children: [],
-    props: {},
+    props: {
+
+    },
     extraProps: {
         id: {
             type: 'JSFunction',
@@ -48,7 +50,7 @@ export default class Project  implements ObservableProjectSpec{
             designer: false,
             documentModel: false
         })
-
+        
         this.documentModel = new DocumentModel(this,schema)
     }
 

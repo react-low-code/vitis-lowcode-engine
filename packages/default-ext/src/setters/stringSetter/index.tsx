@@ -1,5 +1,6 @@
 import React from 'react'
 import { SetterCommonProps } from 'vitis-lowcode-types'
+import { Input } from 'antd'
 
 export interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
@@ -8,7 +9,7 @@ export interface Props extends SetterCommonProps {
 
 
 function StringSetter(props: Props) {
-    return <div><input/></div>
+    return <Input value={props.value} onChange={props.onChange}/>
 }
 
 export default {

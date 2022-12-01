@@ -1,4 +1,4 @@
-import { JSFunction } from "./schema";
+import { JSFunction, CSSProperties } from "./schema";
 
 export interface PropRaw {
     name: string;
@@ -25,4 +25,4 @@ export interface SetterConfig {
     props?: object;
 }
 
-export type PropValue = string | number | JSFunction | undefined
+export type PropValue = string | number | JSFunction | undefined | CSSProperties
