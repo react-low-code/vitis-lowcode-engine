@@ -109,4 +109,8 @@ export default class Designer implements DesignerSpec {
         this.detection.computeSelectedPosition(nodeId)
         this.settingMain.setup(nodeId ? this.project.documentModel.getNode(nodeId)?.settingEntry: undefined)
     }
+
+    rerender = () => {
+        return this.host.rerender()
+    }
 }
