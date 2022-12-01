@@ -37,6 +37,18 @@ export default observer(function Operation() {
     
     }, [observableProject.designer.detection.selectedNodePosition, observableProject.documentModel.currentNode])
 
+    const onDel = () => {
+        observableProject.documentModel.delNode(observableProject.documentModel.selectedNodeId!)
+        observableProject.designer.selectNode(undefined)
+    }
+
+    const onCopy = () => {
+        const currentNode = observableProject.documentModel.currentNode!
+        const node = observableProject.documentModel.copyNode(currentNode);
+        currentNode.parent?.insertAfter(node, currentNode)
+        observableProject.designer.rerender()
+    }
+
     return (
         <div className="vitis-node-operation" style={style} ref={rootRef}>
             {observableProject.documentModel.currentNode && 
@@ -50,8 +62,8 @@ export default observer(function Operation() {
                 <UnorderedListOutlined className="icon"/>
             </Popover>
             }
-            {observableProject.documentModel.currentNode?.componentSpec.unableDel === false && <DeleteOutlined className="icon"/>}
-            {observableProject.documentModel.currentNode?.componentSpec.unableCopy === false && <CopyOutlined className="icon"/>}
+            {observableProject.documentModel.currentNode?.componentSpec.unableDel === false && <DeleteOutlined className="icon" onClick={onDel}/>}
+            {observableProject.documentModel.currentNode?.componentSpec.unableCopy === false && <CopyOutlined className="icon" onClick={onCopy}/>}
         </div>
     )
 })

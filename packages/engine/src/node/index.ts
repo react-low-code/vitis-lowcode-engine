@@ -114,6 +114,17 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.children.splice(index, 0, node)
     }
 
+    insertAfter = (node: Node<NodeSchema>, afterNode: Node<NodeSchema>) => {
+        node.parent = this
+        const index = this.children.findIndex(child => child === afterNode)
+
+        if (index === -1) {
+            this.children.push(node)
+        } else {
+            this.children.splice(index, 0, node)
+        }
+    }
+
     delChildAtIndex = (index: number) => {
         this.children.splice(index, 1)
     }

@@ -53,7 +53,6 @@ class SimulatorRenderer implements SimulatorSpec {
     rerender = async () => {
         observerData.components = host.project.designer.componentImplMap,
         observerData.schema = host.project.schema
-        console.log(observerData.schema,'sss')
         await deferUtil.didRender()
     }
 

@@ -4,6 +4,7 @@ import { Context } from '../context'
 import BaseComponentRenderer from './baseComponentRenderer'
 import useGetDOM from '../hooks/useGetDOM'
 import { transformStringToCSSProperties } from '../utils'
+import './page.less'
 
 interface Props {
     schema: PageSchema

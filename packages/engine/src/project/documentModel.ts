@@ -30,6 +30,22 @@ export default class DocumentModel {
         return node
     }
 
+    delNode(nodeId: string) {
+        const thisNode = this.nodeMap.get(nodeId)
+        if (thisNode) {
+            this.nodeMap.delete(nodeId)
+            thisNode.parent?.delChild(thisNode)
+            this.project.designer.rerender()
+        }
+    }
+
+    copyNode(node: Node<NodeSchema>) {
+        const schema = node.export()
+        delete schema.id
+
+        return this.createNode(schema, undefined)
+    }
+
     open(schema: PageSchema) {
         this.rootNode = this.createNode<PageSchema>(schema, undefined)
     }
