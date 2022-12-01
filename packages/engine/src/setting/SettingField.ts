@@ -1,14 +1,10 @@
 import type SettingTopEntry from "./SettingTopEntry";
 import { FieldConfig } from '../types'
-import { uniqueId, transformStringToFunction, transformStringToCSSProperties } from '../utils'
-import { JSFunction, PropValue, CSSProperties } from 'vitis-lowcode-types'
+import { uniqueId, transformStringToFunction } from '../utils'
+import { JSFunction, PropValue } from 'vitis-lowcode-types'
 
 function isJsFunction(value: PropValue): value is JSFunction {
     return !!value && (value as any).type === 'JSFunction'
-}
-
-function isCSSProperties(value: PropValue): value is CSSProperties {
-    return !!value && (value as any).type === 'CSSProperties'
 }
 
 export default class SettingField {
@@ -53,7 +49,7 @@ export default class SettingField {
         return !this.isGroup && this.config.isExtra === true
     }
 
-    getValue() {
+    getValue = () => {
         let value: PropValue | undefined
         if (!this.isExtra) {
             value = this.owner.getPropValue(this.name)?.export()
@@ -64,14 +60,12 @@ export default class SettingField {
         if (isJsFunction(value)) {
             const tempFunc = transformStringToFunction(value.value)
             return tempFunc(this.owner.owner)
-        } else if (isCSSProperties(value)){
-            return transformStringToCSSProperties(value.value)
         } else {
             return value
         }       
     }
 
-    setValue(value: PropValue) {
+    setValue = (value: PropValue) => {
         if (!this.isExtra) {
             this.owner.setPropValue(this.name, value)
         } else {

@@ -1,22 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SetterCommonProps } from 'vitis-lowcode-types'
 import Background from './background'
 
+function transformStringToCSSProperties(str: string) {
+    const result: any = {}
+    str = str.replace(/\S\s/g,'')
+    str.split(';').forEach(item => {
+      const [key, value] = item.split(':')
+      if (key && value) {
+        result[key] = value
+      }
+    })
+    
+    return result as React.CSSProperties
+  }
+
 interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
-    value: React.CSSProperties
+    value: string
     [attr: string]: any;
 }
 
 function StyleSetter(props: Props) {
+    const [formatVal, setFormatVal] = useState<React.CSSProperties>({})
+    useEffect(() => {
+        setFormatVal(transformStringToCSSProperties(props.value))
+    }, [props.value]);
+
     const onChange = (name: string) => (value?: string | number) => {
-        // todo
+        const newValue = {
+            ...formatVal,
+            [name]: value
+        } as any
+        let result = ''
+        for (const key in newValue) {
+            if (Object.prototype.hasOwnProperty.call(newValue, key)) {
+                const element = newValue[key];
+                result +=`${key}:${element};`
+            }
+        }
+
+        if (props.onChange) {
+            props.onChange(result)
+        }
     }
 
     return (
         <div>
             <Background 
-                background={props.value.backgroundColor || props.value.background} 
+                background={formatVal.backgroundColor || formatVal.background} 
                 onChange={onChange('background')}
             />
         </div>

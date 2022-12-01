@@ -49,10 +49,7 @@ export default class ComponentSpec {
         })
         const supports = this.rawData.advanced?.supports
         if (supports?.styles) {
-            props['style'] = {
-                type: 'CSSProperties',
-                value: ''
-            }
+            props['style'] = ''
         }
 
         return {

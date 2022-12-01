@@ -69,11 +69,6 @@ export interface JSFunction {
     value: string
 }
 
-export interface CSSProperties {
-    type: 'CSSProperties',
-    value: string
-}
-
 export interface LifeCycles {
     load?: JSFunction;
     unload?: JSFunction;

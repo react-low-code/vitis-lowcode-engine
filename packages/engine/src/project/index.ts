@@ -10,7 +10,7 @@ const defaultPageSchema: PageSchema = {
     isContainer: true,
     children: [],
     props: {
-
+        style: ''
     },
     extraProps: {
         id: {

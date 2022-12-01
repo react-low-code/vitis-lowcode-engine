@@ -8,8 +8,6 @@ interface Props {
     target: SettingField
 }
 
-
-
 export default function SettingPanel(props: Props) {
     return (
         <div className='vitis-settings-pane'>

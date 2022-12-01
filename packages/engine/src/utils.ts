@@ -49,16 +49,3 @@ export function getComponentImplFromWin(win: Window, bundle: {packageName: strin
 export function transformStringToFunction(str: string) {
   return new Function(`"use strict"; return ${str}`)();
 }
-
-export function transformStringToCSSProperties(str: string) {
-  const result: any = {}
-  str = str.replace(/\S\s/g,'')
-  str.split(';').forEach(item => {
-    const [key, value] = item.split(':')
-    if (key && value) {
-      result[key] = value
-    }
-  })
-  
-  return result as React.CSSProperties
-}

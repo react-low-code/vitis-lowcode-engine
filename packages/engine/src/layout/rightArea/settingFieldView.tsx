@@ -10,7 +10,6 @@ interface Props {
 
 function getSetter(setterName: string) {
     const setter = setters.getSetter(setterName)
-
     return setter ? setter.view : undefined
 }
 
@@ -18,7 +17,6 @@ export default observer(function SettingFieldView(props: Props) {
     const { field } = props
     
     const setter = field.setters ? getSetter(field.setters[0].name): undefined
-    
 
     return (
         <div className='vitis-setting-field-view'>

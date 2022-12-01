@@ -24,7 +24,7 @@ export default observer(function Operation() {
     const [style, setStyle] = useState<React.CSSProperties>({})
     const rootRef = useRef<HTMLDivElement>(null)
     useLayoutEffect(() => {
-        const rect = observableProject.designer.detection.rect
+        const rect = observableProject.designer.detection.selectedNodePosition
         if (rect && observableProject.documentModel.currentNode) {
             setStyle({
                 left: rect.right - (rootRef.current?.clientWidth || 0),
@@ -35,7 +35,7 @@ export default observer(function Operation() {
             setStyle({})
         }
     
-    }, [observableProject.designer.detection.rect, observableProject.documentModel.currentNode])
+    }, [observableProject.designer.detection.selectedNodePosition, observableProject.documentModel.currentNode])
 
     return (
         <div className="vitis-node-operation" style={style} ref={rootRef}>
