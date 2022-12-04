@@ -1,5 +1,4 @@
-import React from 'react';
-import { JSFunction, NpmInfo } from 'vitis-lowcode-types'
+import { JSFunction, NpmInfo, PropValue, JSRunFunction } from 'vitis-lowcode-types'
 
 let guid = Date.now();
 export function uniqueId(prefix = '') {
@@ -48,4 +47,12 @@ export function getComponentImplFromWin(win: Window, bundle: {packageName: strin
 
 export function transformStringToFunction(str: string) {
   return new Function(`"use strict"; return ${str}`)();
+}
+
+export function isJsFunction(value: PropValue): value is JSFunction {
+  return !!value && (value as any).type === 'JSFunction'
+}
+
+export function isJsRunFunction(value: PropValue): value is JSRunFunction {
+  return !!value && (value as any).type === 'JSRunFunction'
 }

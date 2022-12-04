@@ -1,4 +1,4 @@
-import { JSFunction } from "./schema";
+import { JSFunction, JSDataSource, JSRunFunction } from "./schema";
 
 export interface PropRaw {
     name: string;
@@ -22,7 +22,9 @@ export interface SetterConfig {
     /**是否使用组件包自带的设置器 */
     isUseSelf?: boolean;
     /**传递给设置器的属性 */
-    props?: object;
+    props?: {
+        [attr: string]: any
+    };
 }
 
-export type PropValue = string | number | JSFunction | undefined
+export type PropValue = string | number | JSFunction | undefined | JSDataSource | JSRunFunction

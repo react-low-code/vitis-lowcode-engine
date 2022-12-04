@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import type Node from '../node'
 import SettingField from './SettingField';
-import { PropValue } from 'vitis-lowcode-types'
 
 export default class SettingTopEntry {
     readonly owner: Node
@@ -27,15 +26,7 @@ export default class SettingTopEntry {
         return this.owner.getProp(propName)
     }
 
-    setPropValue = (propName: string, value: PropValue) => {
-        this.owner.setProp(propName, value)
-    }
-
     getExtraPropValue = (propName: string) => {
         return this.owner.getExtraProp(propName)
-    }
-
-    setExtraPropValue = (propName: string, value: PropValue) => {
-        this.owner.setExtraProp(propName, value)
     }
 }

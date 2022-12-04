@@ -14,21 +14,23 @@ const defaultPageSchema: PageSchema = {
     },
     extraProps: {
         id: {
-            type: 'JSFunction',
+            type: 'JSRunFunction',
             value: 'node => node.id'
-        }
-    },
-    dataSource: {
-        url: '',
-        method: 'GET',
-        requestHandler: {
-            type: 'JSFunction',
-            value: 'function(params){return params}'
         },
-
-        responseHandler: {
-            type: 'JSFunction',
-            value: 'function(response) { return response.data }'
+        dataSource: {
+            type: 'DataSource',
+            value: {
+                url: '',
+                method: 'GET',
+                requestHandler: {
+                    type: 'JSFunction',
+                    value: 'function(params){return params}'
+                },
+                responseHandler: {
+                    type: 'JSFunction',
+                    value: 'function(response) { return response.data }'
+                }
+            }
         }
     },
 }

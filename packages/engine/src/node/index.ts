@@ -141,16 +141,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return this.props.getProp(propName)
     }
 
-    setProp = (propName: string, value: PropValue) => {
-        this.props.getProp(propName)?.setValue(value)
-        this.owner.project.designer.rerender()
-    }
-
     getExtraProp = (propName: string) => {
         return this.extraProps.getProp(propName)
-    }
-
-    setExtraProp = (propName: string, value: PropValue) => {
-        this.extraProps.getProp(propName)?.setValue(value)
     }
 }

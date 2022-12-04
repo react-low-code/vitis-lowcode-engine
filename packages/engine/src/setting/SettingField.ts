@@ -1,11 +1,7 @@
 import type SettingTopEntry from "./SettingTopEntry";
 import { FieldConfig } from '../types'
-import { uniqueId, transformStringToFunction } from '../utils'
-import { JSFunction, PropValue } from 'vitis-lowcode-types'
-
-function isJsFunction(value: PropValue): value is JSFunction {
-    return !!value && (value as any).type === 'JSFunction'
-}
+import { uniqueId, transformStringToFunction, isJsRunFunction } from '../utils'
+import { PropValue } from 'vitis-lowcode-types'
 
 export default class SettingField {
     owner: SettingTopEntry
@@ -37,6 +33,10 @@ export default class SettingField {
         return this.config.name
     }
 
+    get parentName() {
+        return this.config.parentName
+    }
+
     get hiddenTitle() {
         return this.config.hiddenTitle === true
     }
@@ -49,15 +49,23 @@ export default class SettingField {
         return !this.isGroup && this.config.isExtra === true
     }
 
+    private get PropKey() {
+        const name: string = this.parentName ? this.parentName: this.name
+        const subName: string | undefined = this.parentName ? this.name : undefined
+        return {name, subName}
+    }
+
     getValue = () => {
         let value: PropValue | undefined
+       const {name, subName} = this.PropKey
+
         if (!this.isExtra) {
-            value = this.owner.getPropValue(this.name)?.export()
+            value = this.owner.getPropValue(name)?.getValue(subName)
         } else {
-            value = this.owner.getExtraPropValue(this.name)?.export()
+            value = this.owner.getExtraPropValue(name)?.getValue(subName)
         }
 
-        if (isJsFunction(value)) {
+        if (isJsRunFunction(value)) {
             const tempFunc = transformStringToFunction(value.value)
             return tempFunc(this.owner.owner)
         } else {
@@ -66,10 +74,12 @@ export default class SettingField {
     }
 
     setValue = (value: PropValue) => {
+        const {name, subName} = this.PropKey
+
         if (!this.isExtra) {
-            this.owner.setPropValue(this.name, value)
+            this.owner.getPropValue(name)?.setValue(value, subName)
         } else {
-            this.owner.setExtraPropValue(this.name, value)
+            this.owner.getExtraPropValue(name)?.setValue(value, subName)
         }
         
     }

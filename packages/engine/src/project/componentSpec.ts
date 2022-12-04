@@ -4,7 +4,7 @@ import { FieldConfig, FieldGroupConfig, FieldSingleConfig } from '../types'
 export default class ComponentSpec {
     configure: FieldConfig[] = [];
     rawData: ComponentSpecRaw
-    initdExtraProps: any
+    extraProps: any
 
     constructor(componentSpecRaw: ComponentSpecRaw) {
         this.rawData = componentSpecRaw
@@ -55,7 +55,7 @@ export default class ComponentSpec {
         return {
             componentName: this.componentName,
             props,
-            extraProps: this.initdExtraProps,
+            extraProps: this.extraProps,
             isContainer: !!this.rawData.advanced?.component?.isContainer,
             children: [],
             containerType: this.rawData.advanced?.component?.containerType || undefined,
@@ -64,6 +64,29 @@ export default class ComponentSpec {
     }
 
     private parseRawData = () => {
+        this.genConfigure()
+        this.initExtraProps()
+    }
+
+    private initExtraProps = () => {
+        // 将取值路径、name 和 id 放在 extraProps 中
+        this.extraProps = {
+            id: {
+                type: 'JSRunFunction',
+                value: "node => node.id"
+            }
+        }
+
+        if (this.rawData.advanced?.component?.containerType !== 'Page') {
+            this.extraProps.pathToVal = ''
+        }
+
+        if (this.rawData.advanced?.component?.isFormControl) {
+            this.extraProps.name = ''
+        }
+    }
+
+    private genConfigure = () => {
         this.configure.push(this.getPropsConfig())
         const supports = this.rawData.advanced?.supports
         if (supports?.styles) {
@@ -83,16 +106,58 @@ export default class ComponentSpec {
             })
         }
 
-        // 将取值路径、name和dataSource放在 extraProps 中
-        this.initdExtraProps = {
-            id: {
-                type: 'JSFunction',
-                value: "node => node.id"
-            }
+        if (this.rawData.advanced?.component?.isContainer) {
+            this.configure.push({
+                type: 'group',
+                title: '数据源',
+                name: 'dataSource',
+                fields: [
+                    {
+                        type: 'field',
+                        hiddenTitle: true,
+                        title: 'tip',
+                        name: 'tip',
+                        isExtra: true,
+                        setters: [{ 
+                            name: 'TextSetter', 
+                            props: {
+                                value: '这里的配置将发送网络请求，它返回的数据优先级高于取值',
+                                style: {
+                                    color: 'red',
+                                    fontSize: '12px'
+                                }
+                            } 
+                        }]
+                    },
+                    {
+                        type: 'field',
+                        title: 'URL',
+                        name: 'url',
+                        parentName: 'dataSource',
+                        isExtra: true,
+                        setters: [{ 
+                            name: 'StringSetter'
+                        }]
+                    },
+                    {
+                        type: 'field',
+                        title: '请求方式',
+                        name: 'method',
+                        parentName: 'dataSource',
+                        isExtra: true,
+                        setters: [{ 
+                            name: 'RadioSetter',
+                            props: {
+                                options: [{label: 'GET', value: 'GET'}, {label: 'POST', value: 'POST'}]
+                            }
+                        }]
+                    }
+                ]
+            })
         }
     }
 
-    getPropsConfig = (): FieldGroupConfig => {
+    private getPropsConfig = (): FieldGroupConfig => {
         const getSettersName = (setterConfig: SetterConfig | SetterConfig[]) => {
             if (!Array.isArray(setterConfig)) {
                 setterConfig = [setterConfig]
@@ -104,25 +169,56 @@ export default class ComponentSpec {
             }))
         }
 
+        const getExtraPropsConfig = () => {
+            const extraPropsConfig: FieldSingleConfig[] = []
+            extraPropsConfig.push({
+                type: 'field',
+                title: 'ID',
+                name: 'id',
+                isExtra: true,
+                setters: [{ 
+                    name: 'TextSetter', 
+                    props: {
+                        style: {
+                            color: '#999'
+                        }
+                    }
+                 }] as FieldSingleConfig['setters']
+            })
+
+            if (this.rawData.advanced?.component?.containerType !== 'Page') {
+                extraPropsConfig.push({
+                    type: 'field',
+                    title: '取值路径',
+                    name: 'pathToVal',
+                    isExtra: true,
+                    setters: [{ 
+                        name: 'StringSetter',
+                     }] as FieldSingleConfig['setters']
+                })
+            }
+
+            if (this.rawData.advanced?.component?.isFormControl) {
+                extraPropsConfig.push({
+                    type: 'field',
+                    title: 'name',
+                    name: 'name',
+                    isExtra: true,
+                    setters: [{ 
+                        name: 'StringSetter',
+                     }] as FieldSingleConfig['setters']
+                })
+            }
+
+            return extraPropsConfig
+        }
+
         return {
             type: 'group',
             title: '属性',
             name: 'props',
             fields: [
-                {
-                    type: 'field',
-                    title: 'ID',
-                    name: 'id',
-                    isExtra: true,
-                    setters: [{ 
-                        name: 'TextSetter', 
-                        props: {
-                            style: {
-                                color: '#999'
-                            }
-                        }
-                     }] as FieldSingleConfig['setters']
-                },
+                ...getExtraPropsConfig(),
                 ...this.rawData.props.filter(prop => prop.name !== 'style').map(prop => ({
                     type: 'field' as 'field',
                     name: prop.name,

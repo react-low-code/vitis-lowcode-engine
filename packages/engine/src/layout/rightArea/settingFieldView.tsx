@@ -17,7 +17,7 @@ export default observer(function SettingFieldView(props: Props) {
     const { field } = props
     
     const setter = field.setters ? getSetter(field.setters[0].name): undefined
-
+    const val = field.getValue()
     return (
         <div className='vitis-setting-field-view'>
             {!field.hiddenTitle && <div className='field-view-title'>{field.title}</div>}
@@ -26,8 +26,9 @@ export default observer(function SettingFieldView(props: Props) {
                  setter ? createElement(setter,{
                     ...field.setters![0].props,
                     field,
-                    value: field.getValue(),
+                    value: val !== undefined ? val: field.setters![0].props?.value,
                     onChange: field.setValue,
+                    key: field.id,
                  }) : <div className='placeholder'>无可用的设置器</div>
                 }
             </div>

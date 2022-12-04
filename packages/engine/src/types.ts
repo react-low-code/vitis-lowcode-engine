@@ -1,6 +1,6 @@
 import type ComponentSpec from './project/componentSpec'
 import type Node from './node';
-import { JSFunction, SetterConfig } from 'vitis-lowcode-types'
+import { SetterConfig } from 'vitis-lowcode-types'
 
 export enum DragObjectType {
     // eslint-disable-next-line no-shadow
@@ -41,10 +41,11 @@ export interface FieldConfig {
   fields?: FieldConfig[];
   setters?: {
     name: string;
-    props: SetterConfig['props']
+    props?: SetterConfig['props']
   }[];
   name: string;
-  initialValue?: JSFunction | string | number
+  // 如果字段直接位于 props 或 extraProps 下，就不需要配置 parentName，其他情况要配置
+  parentName?:string;
 }
 
 export interface FieldGroupConfig extends FieldConfig {

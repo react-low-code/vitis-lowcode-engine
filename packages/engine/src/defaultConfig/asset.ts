@@ -20,7 +20,7 @@ export const PageComponentsSpec: ComponentSpecRaw = {
         component: {
             isContainer: true,
             containerType: 'Page',
-            isFormControl: true
+            isFormControl: false
         }
     }
 }

@@ -26,8 +26,6 @@ export interface DataContainerSchema extends ContainerSchema {
 export interface ContainerSchema extends NodeSchema{
     isContainer: true;
     containerType: 'Layout'|'Data'|'Page'
-    // pathToVal 和 dataSource 必须二选一
-    dataSource?: DataSource;
     lifeCycles?: LifeCycles;
     children: ComponentSchema[] | ContainerSchema[]
 }
@@ -48,7 +46,9 @@ export interface NodeSchema {
     extraProps: {[key: string]: PropValue;}
     isContainer: boolean;
     children: NodeSchema[];
+    // 容器节点的 pathToVal 和 dataSource 必须二选一
     pathToVal?: string;
+    dataSource?: DataSource;
     isFormControl?: boolean;
     isHidden?: JSFunction;
     containerType?: 'Layout'|'Data'|'Page';
@@ -74,4 +74,16 @@ export interface LifeCycles {
     unload?: JSFunction;
     visibilitychange?: JSFunction;
     beforeunload?: JSFunction;
+}
+
+// 它在设置面板中会运行得到函数的结果
+export interface JSRunFunction {
+    type: 'JSRunFunction',
+    // 字符串形式的函数
+    value: string
+}
+
+export interface JSDataSource {
+    type: 'DataSource',
+    value: DataSource
 }
