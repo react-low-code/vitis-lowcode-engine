@@ -18,7 +18,6 @@ function transformStringToCSSProperties(str: string) {
 interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
     value: string
-    [attr: string]: any;
 }
 
 function StyleSetter(props: Props) {

@@ -9,7 +9,13 @@ export interface Props extends SetterCommonProps {
 
 
 function StringSetter(props: Props) {
-    return <Input value={props.value} onChange={props.onChange}/>
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (props.onChange) {
+            props.onChange(event.target.value)
+        }
+    }
+
+    return <Input value={props.value} onChange={onChange}/>
 }
 
 export default {

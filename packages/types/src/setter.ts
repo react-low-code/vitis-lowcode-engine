@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 
 
 export interface RegisteredSetter {
-    view: ComponentType<SetterCommonProps & {}>;
+    view: ComponentType<SetterCommonProps & {[attr: string]: any}>;
     name: string
 }
 
@@ -17,5 +17,4 @@ export interface SetterCommonProps {
     value: any;
     onChange?: (val: any) => void;
     field: any;
-    defaultValue?: any;
 }

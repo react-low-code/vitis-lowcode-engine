@@ -75,7 +75,6 @@ export default class SettingField {
 
     setValue = (value: PropValue) => {
         const {name, subName} = this.PropKey
-
         if (!this.isExtra) {
             this.owner.getPropValue(name)?.setValue(value, subName)
         } else {
