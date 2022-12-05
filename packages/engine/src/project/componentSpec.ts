@@ -146,10 +146,30 @@ export default class ComponentSpec {
                         parentName: 'dataSource',
                         isExtra: true,
                         setters: [{ 
-                            name: 'RadioSetter',
+                            name: 'RadioGroupSetter',
                             props: {
                                 options: [{label: 'GET', value: 'GET'}, {label: 'POST', value: 'POST'}]
                             }
+                        }]
+                    },
+                    {
+                        type: 'field',
+                        title: '请求处理器',
+                        parentName: 'dataSource',
+                        name: 'requestHandler',
+                        isExtra: true,
+                        setters: [{
+                            name: 'FunctionSetter',
+                        }]
+                    },
+                    {
+                        type: 'field',
+                        title: '返回值处理器',
+                        parentName: 'dataSource',
+                        name: 'responseHandler',
+                        isExtra: true,
+                        setters: [{
+                            name: 'FunctionSetter',
                         }]
                     }
                 ]

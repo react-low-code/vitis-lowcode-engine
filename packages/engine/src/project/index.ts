@@ -24,11 +24,11 @@ const defaultPageSchema: PageSchema = {
                 method: 'GET',
                 requestHandler: {
                     type: 'JSFunction',
-                    value: 'function(params){return params}'
+                    value: 'function requestHandler(params){return params}'
                 },
                 responseHandler: {
                     type: 'JSFunction',
-                    value: 'function(response) { return response.data }'
+                    value: 'function responseHandler(response) { return response.data }'
                 }
             }
         }

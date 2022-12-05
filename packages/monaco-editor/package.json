@@ -17,18 +17,25 @@
       "react": "^17.0.2",
       "react-dom": "^17.0.2",
       "@monaco-editor/loader": "1.3.2",
-      "monaco-editor": "^0.34.1"
+      "monaco-editor": "^0.34.1",
+      "js-beautify": "^1.14.7"
     },
     "devDependencies": {
       "build-scripts": "^1.1.1",
       "@types/react": "^17.0.14",
       "@types/react-dom": "^17.0.9",
+      "@types/js-beautify": "^1.13.3",
       "build-plugin-component": "^0.2.10",
       "classnames": "^2.3.2"
     },
     "publishConfig": {
       "access": "public",
       "registry": "https://registry.npmjs.org/"
+    },
+    "peerDependencies": {
+      "antd": "*",
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2"
     }
   }
   

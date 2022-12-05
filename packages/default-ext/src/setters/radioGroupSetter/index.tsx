@@ -9,7 +9,7 @@ export interface Props extends SetterCommonProps {
 }
 
 
-function RadioSetter(props: Props) {
+function RadioGroupSetter(props: Props) {
     const onChange = (event: RadioChangeEvent) => {
         if (props.onChange) {
             props.onChange(event.target.value)
@@ -24,6 +24,6 @@ function RadioSetter(props: Props) {
 }
 
 export default {
-    view: RadioSetter,
-    name: "RadioSetter"
+    view: RadioGroupSetter,
+    name: "RadioGroupSetter"
 }
