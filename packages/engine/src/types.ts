@@ -33,11 +33,10 @@ export interface DropLocation {
 
 export interface FieldConfig {
   type: 'group' | 'field';
-  hiddenTitle?: boolean;
   // 当 type 为 'field' 时才可能给 isExtra 赋值
   // isExtra 为 true，意味着这个字段的值不会传给组件 props
   isExtra?: boolean;
-  title: string;
+  title?: string;
   fields?: FieldConfig[];
   setters?: {
     name: string;

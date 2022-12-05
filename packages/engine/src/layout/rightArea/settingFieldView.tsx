@@ -21,7 +21,7 @@ export default observer(function SettingFieldView(props: Props) {
 
     return (
         <div className='vitis-setting-field-view'>
-            {!field.hiddenTitle && <div className='field-view-title'>{field.title}</div>}
+            {field.title && <div className='field-view-title'>{field.title}</div>}
             <div className='field-view-main'>
                 {
                  setter ? createElement(setter,{

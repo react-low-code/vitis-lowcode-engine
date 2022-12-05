@@ -12,7 +12,7 @@ export default function SettingPanel(props: Props) {
     return (
         <div className='vitis-settings-pane'>
             {props.target.fields.map(field => {
-                return <SettingFieldView field={field}/>
+                return <SettingFieldView field={field} key={field.id}/>
             })}
         </div>
     )

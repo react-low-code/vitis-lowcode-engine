@@ -39,6 +39,10 @@ export default class ComponentSpec {
         return this.rawData.title
     }
 
+    private get hasDataSource() {
+        return this.rawData.advanced?.component?.isContainer && this.rawData.advanced?.component?.containerType !== 'Layout'
+    }
+
     /**
      * 这个组件的初始 schema
      */
@@ -84,6 +88,24 @@ export default class ComponentSpec {
         if (this.rawData.advanced?.component?.isFormControl) {
             this.extraProps.name = ''
         }
+
+        if (this.hasDataSource) {
+            this.extraProps.dataSource = {
+                type: 'DataSource',
+                value: {
+                    url: '',
+                    method: 'GET',
+                    requestHandler: {
+                        type: 'JSFunction',
+                        value: 'function requestHandler(params){return params}'
+                    },
+                    responseHandler: {
+                        type: 'JSFunction',
+                        value: 'function responseHandler(response) { return response.data }'
+                    }
+                }
+            }
+        }
     }
 
     private genConfigure = () => {
@@ -97,16 +119,14 @@ export default class ComponentSpec {
                 fields: [
                     {
                         type: 'field',
-                        title: '样式',
                         name: 'style',
-                        hiddenTitle: true,
                         setters: [{ name: 'StyleSetter' }] as FieldSingleConfig['setters']
                     }
                 ]
             })
         }
 
-        if (this.rawData.advanced?.component?.isContainer) {
+        if (this.hasDataSource) {
             this.configure.push({
                 type: 'group',
                 title: '数据源',
@@ -114,7 +134,6 @@ export default class ComponentSpec {
                 fields: [
                     {
                         type: 'field',
-                        hiddenTitle: true,
                         title: 'tip',
                         name: 'tip',
                         isExtra: true,

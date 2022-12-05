@@ -37,10 +37,6 @@ export default class SettingField {
         return this.config.parentName
     }
 
-    get hiddenTitle() {
-        return this.config.hiddenTitle === true
-    }
-
     get setters() {
         return this.config.setters
     }

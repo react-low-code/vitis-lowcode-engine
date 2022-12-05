@@ -4,7 +4,7 @@ import MonacoEditor from 'vitis-lowcode-monaco-editor'
 
 export interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
-    value: JSFunction;
+    value: JSFunction | undefined;
     onChange?: (value: JSFunction) => void
 }
 
@@ -17,6 +17,10 @@ function FunctionSetter(props: Props) {
                 value
             })
         }
+    }
+
+    if (!props.value) {
+        return null
     }
 
     return (
