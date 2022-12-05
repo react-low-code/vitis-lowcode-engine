@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import Designer from './designer';
 import DocumentModel from './documentModel'
-import { PageSchema, ObservableProjectSpec } from 'vitis-lowcode-types'
+import { PageSchema, ObservableProjectSpec, LifeCycles, JSFunction } from 'vitis-lowcode-types'
 
 const defaultPageSchema: PageSchema = {
     componentName: 'Page',
@@ -33,6 +33,7 @@ const defaultPageSchema: PageSchema = {
             }
         }
     },
+    lifeCycles: {}
 }
 
 export default class Project  implements ObservableProjectSpec{
@@ -58,5 +59,13 @@ export default class Project  implements ObservableProjectSpec{
 
     setSchema(schema: PageSchema) {
         this.documentModel.open(schema)
+    }
+
+    updateLifeCycles = (name: keyof LifeCycles, value: JSFunction) => {
+        this.documentModel.updateLifeCycles(name, value)
+    }
+
+    getLifeCycles = () => {
+        return this.documentModel.lifeCycles
     }
 }

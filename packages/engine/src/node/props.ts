@@ -14,7 +14,8 @@ export default class Props {
 
     constructor(owner: Node, values: NodeSchema['props'] = {}) {
         makeAutoObservable(this, {
-            owner: false
+            owner: false,
+            id: false
         })
 
         this.owner = owner

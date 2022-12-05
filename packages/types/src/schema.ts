@@ -9,6 +9,7 @@ export interface ProjectSchema {
 export interface PageSchema extends ContainerSchema {
     containerType: 'Page';
     componentName: 'Page';
+    lifeCycles: LifeCycles;
     children: LayoutSchema[]
 }
 
@@ -26,7 +27,6 @@ export interface DataContainerSchema extends ContainerSchema {
 export interface ContainerSchema extends NodeSchema{
     isContainer: true;
     containerType: 'Layout'|'Data'|'Page'
-    lifeCycles?: LifeCycles;
     children: ComponentSchema[] | ContainerSchema[]
 }
 
@@ -43,12 +43,15 @@ export interface NodeSchema {
     componentName: string;
     packageName: string;
     props: {[key: string]: PropValue;}
-    extraProps: {[key: string]: PropValue;}
+    extraProps: {
+        // 容器节点的 pathToVal 和 dataSource 必须二选一
+        pathToVal?: string;
+        dataSource?: JSDataSource;
+        name?: string;
+        [key: string]: PropValue;
+    }
     isContainer: boolean;
     children: NodeSchema[];
-    // 容器节点的 pathToVal 和 dataSource 必须二选一
-    pathToVal?: string;
-    dataSource?: DataSource;
     isFormControl?: boolean;
     isHidden?: JSFunction;
     containerType?: 'Layout'|'Data'|'Page';

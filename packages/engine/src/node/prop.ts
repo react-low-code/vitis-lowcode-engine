@@ -5,6 +5,7 @@ import { uniqueId } from '../utils'
 
 import type Node from './index'
 import type Props from './props'
+import type Project from '../project'
 
 function isComplexProp(prop: any): boolean {
     return prop.value && typeof prop.value === 'object'
@@ -16,17 +17,22 @@ export default class Prop {
     parent: Props
     name: string
     value: PropValue
+    project: Project
 
     constructor(parent: Props, value: PropValue, name: string) {
         makeAutoObservable(this, {
-            id: false
+            id: false,
+            parent: false,
+            owner: false,
+            name: false,
+            project: false
         })
 
         this.parent = parent
         this.owner = parent.owner
         this.name = name
         this.value = value
-
+        this.project = this.owner.owner.project
     }
 
     export() {
@@ -43,6 +49,8 @@ export default class Prop {
         } else {
             this.value = value
         }
+
+        this.project.designer.rerender()
     }
 
     getValue(subName?: string) {

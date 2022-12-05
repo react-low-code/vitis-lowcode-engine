@@ -1,4 +1,4 @@
-import { NodeSchema, ContainerSchema, PropValue } from 'vitis-lowcode-types'
+import { NodeSchema, ContainerSchema } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import type ComponentSpec from '../project/componentSpec'
 import Props from './props'
@@ -70,7 +70,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
             id: false,
             componentName: false,
             isContainer: false,
-            owner: false
+            owner: false,
         })
 
         this.parent = parent
