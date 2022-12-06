@@ -43,6 +43,19 @@ export default class ComponentSpec {
         return this.rawData.advanced?.component?.isContainer && this.rawData.advanced?.component?.containerType !== 'Layout'
     }
 
+    private get hasLinkage() {
+        return this.hasHiddenRule
+        || this.isFormControl
+    }
+
+    private get isFormControl() {
+        return this.rawData.advanced?.component?.isFormControl
+    }
+
+    private get hasHiddenRule() {
+        return this.rawData.advanced?.component?.isContainer && this.rawData.advanced.component.containerType !== 'Page' 
+    }
+
     /**
      * 这个组件的初始 schema
      */
@@ -105,6 +118,22 @@ export default class ComponentSpec {
                     }
                 }
             }
+        }
+
+        if (this.hasHiddenRule) {
+            this.extraProps.isHidden = {
+                type: 'JSFunction',
+                value: 'function isHidden(pageData, formData){return false}'
+            }
+        }
+
+        if (this.isFormControl) {
+            this.extraProps.isDisabled = {
+                type: 'JSFunction',
+                value: 'function isHidden(pageData, formData){return false}'
+            }
+
+            this.extraProps.getValue = undefined
         }
     }
 
@@ -194,6 +223,11 @@ export default class ComponentSpec {
                 ]
             })
         }
+
+        if (this.hasLinkage) {
+            this.configure.push(this.getLinkageConfig())
+        }
+
     }
 
     private getPropsConfig = (): FieldGroupConfig => {
@@ -266,6 +300,65 @@ export default class ComponentSpec {
                 }))
             ]
         }
+    }
+
+    private getLinkageConfig = (): FieldGroupConfig => {
+        const getHiddenRule = (): FieldSingleConfig | undefined => {
+            if (this.hasHiddenRule) {
+                return {
+                    type: 'field',
+                    title: '隐藏',
+                    name: 'isHidden',
+                    isExtra: true,
+                    setters: [{name: 'FunctionSetter'}]
+                }
+            }
+        }
+
+        const getDisableRule = (): FieldSingleConfig | undefined => {
+            if (this.isFormControl) {
+                return {
+                    type: 'field',
+                    title: '禁用',
+                    name: 'isDisabled',
+                    isExtra: true,
+                    setters: [{name: 'FunctionSetter'}]
+                }
+            } 
+        }
+
+        const getValueRule = (): FieldSingleConfig | undefined => {
+            if (this.isFormControl) {
+                return {
+                    type: 'field',
+                    title: '求值',
+                    name: 'getValue',
+                    isExtra: true,
+                    setters: [{name: 'FunctionSetter'}]
+                }
+            } 
+        }
+
+        const hiddenRule = getHiddenRule()
+        const disableRule = getDisableRule()
+        const valueRule = getValueRule()
+        const config: FieldGroupConfig = {
+            type: 'group',
+            title: '联动',
+            name: 'linkage',
+            fields: []
+        }
+
+        if (hiddenRule) {
+            config.fields.push(hiddenRule)
+        }
+        if (disableRule) {
+            config.fields.push(disableRule)
+        }
+        if (valueRule) {
+            config.fields.push(valueRule)
+        }
+        return config
     }
 
     isCanInclude(componentSpec: ComponentSpec) {

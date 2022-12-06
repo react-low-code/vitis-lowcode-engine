@@ -54,8 +54,8 @@ export interface FieldGroupConfig extends FieldConfig {
 
 export interface FieldSingleConfig extends FieldConfig {
   type: 'field';
-  setters?: {
+  setters: {
     name: string;
-    props: SetterConfig['props']
+    props?: SetterConfig['props']
   }[];
 }
