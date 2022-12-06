@@ -4,6 +4,10 @@ export function isLayoutComponent(schema: NodeSchema): schema is LayoutSchema {
     return schema.isContainer && schema.containerType === 'Layout'
 }
 
+export function isBUComponent(schema: NodeSchema): schema is NodeSchema {
+  return !schema.isContainer
+}
+
 export function transformStringToCSSProperties(str: string) {
     const result: any = {}
     str = str.replace(/\S\s/g,'')

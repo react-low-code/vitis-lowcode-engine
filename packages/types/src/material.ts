@@ -38,10 +38,6 @@ export interface ComponentSpecRaw {
     supports?: {
       // 是否能配置样式
       styles?: boolean;
-      // 是否能配置校验规则
-      validation?: boolean;
-      // 是否能配置联动规则
-      linkage?: boolean;
       // 支持的事件列表，空数组意味着不支持任何事件
       events?: string[]
     },

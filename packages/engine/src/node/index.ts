@@ -18,6 +18,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
     readonly containerType?: ContainerSchema['containerType']
     readonly packageName: string
     private _settingEntry: SettingTopEntry | undefined
+    readonly isFormControl: boolean
 
     get componentSpec(): ComponentSpec {
         const result = this.owner.project.designer.componentSpecMap.get(this.packageName)
@@ -71,6 +72,8 @@ export default class Node<S extends NodeSchema = NodeSchema> {
             componentName: false,
             isContainer: false,
             owner: false,
+            isFormControl: false,
+            containerType: false
         })
 
         this.parent = parent
@@ -79,6 +82,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.packageName = initSchema.packageName
         this.isContainer = initSchema.isContainer
         this.containerType = initSchema.containerType
+        this.isFormControl = !!initSchema.isFormControl
         this.owner = owner
 
         this.children = initSchema.children.map(child => this.owner.createNode(child, this))
@@ -106,6 +110,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
             extraProps: this.extraProps.export(),
             containerType: this.containerType,
             children: this.children.map(child => child.export()),
+            isFormControl: this.isFormControl
         }
     }
 

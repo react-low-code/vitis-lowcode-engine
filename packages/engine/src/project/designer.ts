@@ -29,7 +29,8 @@ export default class Designer implements DesignerSpec {
             project: false,
             viewport: false,
             host: false,
-            settingMain: false
+            settingMain: false,
+            componentImplMap: false
         });
 
         this.project = project
@@ -51,8 +52,6 @@ export default class Designer implements DesignerSpec {
         for (const [name, component ] of componentMap) {
             this.addComponentImpl(name, component)
         }
-
-        this.componentImplMap = new Map(this.componentImplMap)
     }
 
     private addComponentImpl = (name: string, component: ComponentType) => {

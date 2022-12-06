@@ -76,7 +76,8 @@ export default class ComponentSpec {
             isContainer: !!this.rawData.advanced?.component?.isContainer,
             children: [],
             containerType: this.rawData.advanced?.component?.containerType || undefined,
-            packageName: this.rawData.packageName
+            packageName: this.rawData.packageName,
+            isFormControl: this.rawData.advanced?.component?.isFormControl
         }
     }
 
@@ -237,7 +238,7 @@ export default class ComponentSpec {
             }
 
             return setterConfig.map(config => ({
-                name: config.isUseSelf ? this.rawData.packageName + '/' + config.setterName : config.setterName,
+                name: config.isUseSelf ? this.rawData.packageName + '/' + config.name : config.name,
                 props: config.props
             }))
         }

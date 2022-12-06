@@ -18,8 +18,39 @@ export default class Host implements HostSpec {
 
     }
 
-    onAssetUpdated = (additionalPackageNames: string[]) => {
-        // todo
+    onAssetUpdated = async (additionalPackageNames: string[]) => {
+        const materialMap = new Map<string, ComponentSpecRaw>()
+        additionalPackageNames.forEach(name => {
+            if (material.has(name)) {
+                materialMap.set(name, material.get(name)!)
+            }
+        })
+        const assetBundles = this.getSimulatorComponentAssets(materialMap);
+        await Promise.allSettled(assetBundles.map(asset => {
+            return new Promise<void>((res, rej) => {
+                if (this.frameDocument) {
+                    const script = this.frameDocument.createElement('script')
+                    script.onload = () => {
+                        script.onload = null
+                        script.onerror = null
+                        res()
+                    }
+                    script.onerror = () => {
+                        script.onload = null
+                        script.onerror = null
+                        rej()
+                    }
+                    this.frameDocument.body.append(script)
+                    script.src = asset.url
+                } else {
+                    res() 
+                }
+            })
+        }))
+
+        this.registerComponentSetters(assetBundles)
+        this.collectComponentImpl(assetBundles)
+        this.rerender()
     }
 
     mountContentFrame = async (frame: HTMLIFrameElement | null) => {
@@ -37,7 +68,6 @@ export default class Host implements HostSpec {
         this.setupEvent()
 
         render.run()
-
     }
 
     private setupEvent = () => {
