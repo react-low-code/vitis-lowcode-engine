@@ -1,13 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Breadcrumb, Tabs } from 'antd';
-import type SettingMain  from '../../setting'
+import type Designer  from '../../project/designer'
 import SettingPanel from './settingPanel';
 
 import './index.less'
 
 interface Props {
-    settingMain?: SettingMain
+    designer?: Designer
 }
 
 interface State {
@@ -24,13 +24,13 @@ export default class RightArea extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prev: Props) {
-        if (prev.settingMain?.settingEntry !== this.props.settingMain?.settingEntry) {
+        if (prev.designer?.settingTopEntry !== this.props.designer?.settingTopEntry) {
             this.setDefaultActiveTab()
         }
     }
 
     setDefaultActiveTab() {
-        const settingEntry = this.props.settingMain?.settingEntry
+        const settingEntry = this.props.designer?.settingTopEntry
         if (settingEntry && settingEntry.fields.length) {
             this.setState({
                 activeTab: settingEntry.fields[0].id
@@ -46,7 +46,7 @@ export default class RightArea extends React.Component<Props, State> {
 
 
     render(){
-        const settingEntry = this.props.settingMain?.settingEntry
+        const settingEntry = this.props.designer?.settingTopEntry
         if (!settingEntry) {
             return <div className='rightArea'>请在画布上选中节点</div>
         }
@@ -76,7 +76,7 @@ export default class RightArea extends React.Component<Props, State> {
 
     renderBreadcrumb() {
         const items: {label: string; key: string}[] = []
-        let node = this.props.settingMain?.settingEntry?.owner
+        let node = this.props.designer?.settingTopEntry?.owner
         while (node) {
             items.push({
                 label: node.title,

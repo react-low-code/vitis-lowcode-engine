@@ -29,7 +29,7 @@ export default class Workbench extends React.Component<Props, {}>{
                         <ToolBarArea items={this.props.skeleton.toolbarArea.items}/>
                         <MainArea componentSpecMap={this.props.project.designer.componentSpecMap}/>
                     </div>
-                    <RightArea settingMain={this.props.project.designer.settingMain}/>
+                    <RightArea designer={this.props.project.designer}/>
                 </div>
                 <BottomBar items={this.props.skeleton.bottomArea.items}/>
             </div>

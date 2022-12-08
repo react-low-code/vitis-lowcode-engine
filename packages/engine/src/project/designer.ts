@@ -10,7 +10,7 @@ import Detection from './detection';
 import type Project from './index'
 import Viewport from './viewport'
 import { LocationEvent } from '../types'
-import SettingMain from '../setting';
+import SettingTopEntry from '../setting/SettingTopEntry'
 
 export default class Designer implements DesignerSpec {
     componentSpecMap: Map<string, ComponentSpec> = new Map()
@@ -21,7 +21,7 @@ export default class Designer implements DesignerSpec {
     project: Project
     viewport: Viewport
     detection: Detection = new Detection(this)
-    settingMain: SettingMain = new SettingMain()
+    settingTopEntry?: SettingTopEntry
 
     constructor(project: Project) {
         makeAutoObservable(this, {
@@ -29,7 +29,6 @@ export default class Designer implements DesignerSpec {
             project: false,
             viewport: false,
             host: false,
-            settingMain: false,
             componentImplMap: false
         });
 
@@ -106,7 +105,7 @@ export default class Designer implements DesignerSpec {
     selectNode = (nodeId?: string) => {
         this.project.documentModel.selectNode(nodeId)
         this.detection.computeSelectedPosition(nodeId)
-        this.settingMain.setup(nodeId ? this.project.documentModel.getNode(nodeId)?.settingEntry: undefined)
+        this.settingTopEntry = nodeId ? this.project.documentModel.getNode(nodeId)?.settingEntry: undefined
     }
 
     rerender = () => {
