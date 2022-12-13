@@ -27,4 +27,4 @@ export interface SetterConfig {
     };
 }
 
-export type PropValue = string | number | JSFunction | undefined | JSDataSource | JSRunFunction
+export type PropValue = string | number | JSFunction | undefined | JSDataSource | JSRunFunction | object

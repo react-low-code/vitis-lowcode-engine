@@ -12,7 +12,6 @@ export default function FormControl(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const context = useContext(Context)
     const Com = context.components.get(props.schema.componentName)
-    console.log(context.components, 'context.components')
     return (
     <div 
         ref={rootRef} 

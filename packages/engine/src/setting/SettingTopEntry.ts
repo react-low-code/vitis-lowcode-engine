@@ -16,17 +16,17 @@ export default class SettingTopEntry {
         this.setupFields()
     }
 
-    setupFields = () => {
+    private setupFields = () => {
         this.owner.componentSpec.configure.forEach(conf => {
             this.fields.push(new SettingField(this, conf))
         })
     }
 
-    getPropValue = (propName: string) => {
+    getProp = (propName: string) => {
         return this.owner.getProp(propName)
     }
 
-    getExtraPropValue = (propName: string) => {
+    getExtraProp = (propName: string) => {
         return this.owner.getExtraProp(propName)
     }
 }

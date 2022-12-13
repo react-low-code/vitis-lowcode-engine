@@ -22,8 +22,16 @@ export default function MonacoEditor(props: Props) {
                     props.onBlur(editor.getValue())
                 }
             })
+
+            editor.setValue(props.value)
         }
     }, [editor, isReady])
+
+    useEffect(() => {
+        if (editor) {
+            editor.setValue(props.value)
+        }
+    }, [ props.value])
 
     return <>
         <div ref={containerRef}></div>

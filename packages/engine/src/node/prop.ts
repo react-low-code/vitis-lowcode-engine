@@ -17,7 +17,6 @@ export default class Prop {
     parent: Props
     name: string
     value: PropValue
-    project: Project
 
     constructor(parent: Props, value: PropValue, name: string) {
         makeAutoObservable(this, {
@@ -32,14 +31,17 @@ export default class Prop {
         this.owner = parent.owner
         this.name = name
         this.value = value
-        this.project = this.owner.owner.project
+    }
+
+    get project() {
+        return this.owner.owner.project
     }
 
     export() {
         return this.value
     }
 
-    setValue(value: PropValue, subName?: string) {
+    setValue = (value: PropValue, subName?: string) => {
         if (subName) {
             if (isComplexProp(this.value)) {
                 (this.value as any).value[subName] = value
@@ -53,7 +55,7 @@ export default class Prop {
         this.project.designer.rerender()
     }
 
-    getValue(subName?: string) {
+    getValue = (subName?: string) => {
         if (!subName) {
             return this.export()
         } else {

@@ -56,9 +56,9 @@ export default class SettingField {
        const {name, subName} = this.PropKey
 
         if (!this.isExtra) {
-            value = this.owner.getPropValue(name)?.getValue(subName)
+            value = this.owner.getProp(name)?.getValue(subName)
         } else {
-            value = this.owner.getExtraPropValue(name)?.getValue(subName)
+            value = this.owner.getExtraProp(name)?.getValue(subName)
         }
 
         if (isJsRunFunction(value)) {
@@ -72,10 +72,9 @@ export default class SettingField {
     setValue = (value: PropValue) => {
         const {name, subName} = this.PropKey
         if (!this.isExtra) {
-            this.owner.getPropValue(name)?.setValue(value, subName)
+            this.owner.getProp(name)?.setValue(value, subName)
         } else {
-            this.owner.getExtraPropValue(name)?.setValue(value, subName)
+            this.owner.getExtraProp(name)?.setValue(value, subName)
         }
-        
     }
 }

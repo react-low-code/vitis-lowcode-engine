@@ -48,12 +48,14 @@ export interface NodeSchema {
         pathToVal?: string;
         dataSource?: JSDataSource;
         name?: string;
+        isDisabled?: JSFunction;
+        getValue?: JSFunction;
+        isHidden?: JSFunction;
         [key: string]: PropValue;
     }
     isContainer: boolean;
     children: NodeSchema[];
     isFormControl?: boolean;
-    isHidden?: JSFunction;
     containerType?: 'Layout'|'Data'|'Page';
 }
 
