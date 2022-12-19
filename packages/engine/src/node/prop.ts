@@ -5,7 +5,6 @@ import { uniqueId } from '../utils'
 
 import type Node from './index'
 import type Props from './props'
-import type Project from '../project'
 
 function isComplexProp(prop: any): boolean {
     return prop.value && typeof prop.value === 'object'
