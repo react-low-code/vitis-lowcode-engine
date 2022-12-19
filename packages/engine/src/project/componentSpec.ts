@@ -170,7 +170,7 @@ export default class ComponentSpec {
                         setters: [{ 
                             name: 'TextSetter', 
                             props: {
-                                value: '这里的配置将发送网络请求，它返回的数据优先级高于取值',
+                                defaultValue: '这里的配置将发送网络请求，它返回的数据优先级高于取值',
                                 style: {
                                     color: 'red',
                                     fontSize: '12px'

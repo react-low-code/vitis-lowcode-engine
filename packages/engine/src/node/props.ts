@@ -33,7 +33,12 @@ export default class Props {
         return result
     }
 
-    getProp(propName: string) {
-        return this.items.find(prop => prop.name === propName)
+    getProp(propName: string, createIfNone = true) {
+        let prop = this.items.find(prop => prop.name === propName)
+        if (createIfNone && !prop) {
+            prop = new Prop(this, undefined,propName)
+            this.items.push(prop)
+        }
+        return prop
     }
 }

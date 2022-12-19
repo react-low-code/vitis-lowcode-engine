@@ -142,11 +142,11 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.children = this.children.filter(item => item !== child)
     }
 
-    getProp = (propName: string) => {
-        return this.props.getProp(propName)
+    getProp = (propName: string, createIfNone = true) => {
+        return this.props.getProp(propName, createIfNone)
     }
 
-    getExtraProp = (propName: string) => {
-        return this.extraProps.getProp(propName)
+    getExtraProp = (propName: string, createIfNone = true) => {
+        return this.extraProps.getProp(propName, createIfNone)
     }
 }

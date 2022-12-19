@@ -23,7 +23,9 @@ export default observer(function SettingFieldView(props: Props) {
     const val = field.getValue()
     const multiSetter = !!field.setters?.length && field.setters.length > 1
     const onChangeMenu = ({key}: {key: string}) => {
-        setIndex(field.setters!.findIndex(item => item.name === key))
+        const newIndex = field.setters!.findIndex(item => item.name === key)
+        setIndex(newIndex)
+        field.setValue(field.setters![newIndex].props?.defaultValue)
     }
 
     return (
@@ -34,7 +36,7 @@ export default observer(function SettingFieldView(props: Props) {
                  setter ? createElement(setter,{
                     ...field.setters![0].props,
                     field,
-                    value: val !== undefined ? val: field.setters![index].props?.value,
+                    value: val !== undefined ? val: field.setters![index].props?.defaultValue,
                     onChange: field.setValue,
                     key: field.id,
                  }) : <div className='placeholder'>无可用的设置器</div>

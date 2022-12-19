@@ -23,6 +23,7 @@ export interface SetterConfig {
     isUseSelf?: boolean;
     /**传递给设置器的属性 */
     props?: {
+        defaultValue?: any;
         [attr: string]: any
     };
 }

@@ -17,13 +17,13 @@ function transformStringToCSSProperties(str: string) {
 
 interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
-    value: string
+    value: string | undefined
 }
 
 function StyleSetter(props: Props) {
     const [formatVal, setFormatVal] = useState<React.CSSProperties>({})
     useEffect(() => {
-        setFormatVal(transformStringToCSSProperties(props.value))
+        setFormatVal(props.value?transformStringToCSSProperties(props.value):{})
     }, [props.value]);
 
     const onChange = (name: string) => (value?: string | number) => {
