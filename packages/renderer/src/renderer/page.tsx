@@ -23,7 +23,7 @@ export default function PageRenderer(props: Props) {
             style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined}
         >{
             !props.schema.children.length ? 
-            context.emptyPageComponent: 
+            context.customEmptyElement ? context.customEmptyElement(props.schema): null: 
             <>{props.schema.children.map(child => <BaseComponentRenderer schema={child} key={child.id}/>)}</>
         }</div>
     )

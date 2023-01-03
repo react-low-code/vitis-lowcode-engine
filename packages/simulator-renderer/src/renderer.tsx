@@ -2,7 +2,7 @@ import { NodeSchema, SimulatorSpec, Point } from 'vitis-lowcode-types'
 import { createElement } from 'react'
 import { RendererMode } from 'vitis-lowcode-renderer'
 import reactInstanceCollector, { DomNode } from './reactInstanceCollector'
-import { emptyPageComponent } from './emptyComponent/page'
+import { EmptyComponent } from './emptyComponent/page'
 import SimulatorRendererView from './view'
 import observerData from './store'
 
@@ -77,7 +77,13 @@ class SimulatorRenderer implements SimulatorSpec {
                     // todo
                     return <div></div>
                 },
-                emptyPageComponent
+                customEmptyElement: (schema: NodeSchema) => {
+                    if (schema.containerType === 'Page') {
+                        return <EmptyComponent text='将布局组件拖拽到这里'/>
+                    } else if (schema.containerType === 'Layout') {
+                        return <EmptyComponent text='拖入组件'/>
+                    }
+                },
             },null),
             container
         )

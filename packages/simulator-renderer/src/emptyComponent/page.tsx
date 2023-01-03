@@ -1,4 +1,4 @@
 import React from 'react'
 import './page.less'
 
-export const emptyPageComponent = <div className='emptyPageComponent'>将布局组件拖到这里</div>
+export const EmptyComponent = (props: {text: string}) => <div className='emptyComponent'>{props.text}</div>

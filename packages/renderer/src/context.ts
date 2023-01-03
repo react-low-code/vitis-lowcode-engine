@@ -9,7 +9,7 @@ export interface ContextSpec {
     onCompGetRef?: (schema: NodeSchema, domElement: HTMLElement | null) => void;
     customCreateElement?: (schema: NodeSchema) => React.ReactNode;
     rendererMode?: RendererMode;
-    emptyPageComponent?: React.ReactNode
+    customEmptyElement?: (schema: NodeSchema) => React.ReactNode;
 }
 
 export const Context = React.createContext<ContextSpec>({

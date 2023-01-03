@@ -23,7 +23,7 @@ export default function LayoutComponent(props: Props) {
         style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined}
     >
         {!props.schema.children.length ?
-        <div style={{color: '#999', textAlign: 'center', height: '100px', lineHeight: '100px'}}>拖入组件</div>
+        context.customEmptyElement ? context.customEmptyElement(props.schema): null
         :
         <>
         {props.schema.children.map(child => <BaseComponentRenderer schema={child} key={child.id}/>)}
