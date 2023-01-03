@@ -1,8 +1,8 @@
-import type { ComponentType } from 'react'
+import type { ElementType } from 'react'
 
 
 export interface RegisteredSetter {
-    view: ComponentType<SetterCommonProps & {[attr: string]: any}>;
+    view: ElementType<SetterCommonProps & {[attr: string]: any}>;
     name: string
 }
 

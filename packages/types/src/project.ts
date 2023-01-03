@@ -1,5 +1,5 @@
 import type EventEmitter from 'eventemitter3';
-import { ComponentType } from 'react'
+import { ElementType } from 'react'
 import { PageSchema, LifeCycles, JSFunction } from 'vitis-lowcode-types'
 
 export interface ProjectSpec extends EventEmitter {
@@ -13,5 +13,5 @@ export interface ObservableProjectSpec {
 }
 
 export interface DesignerSpec {
-    componentImplMap: Map<string, ComponentType>
+    componentImplMap: Map<string, ElementType>
 }

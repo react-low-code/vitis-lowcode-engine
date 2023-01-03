@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react'
+import type { ElementType, ReactNode } from 'react'
 
 export interface SkeletonSpec {
     add(config: WidgetConfig): WidgetSpec | undefined;
@@ -8,7 +8,7 @@ export interface SkeletonSpec {
 export interface WidgetConfig {
     name: string;
     area: WidgetConfigArea;
-    content: ComponentType<any>;
+    content: ElementType<any>;
     contentProps?: Record<string, any>;
     [extra: string]: any;
 }

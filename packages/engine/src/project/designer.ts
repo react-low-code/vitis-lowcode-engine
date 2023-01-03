@@ -1,5 +1,5 @@
 import { makeAutoObservable,  } from 'mobx';
-import { ComponentType } from 'react'
+import { ElementType } from 'react'
 import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
@@ -14,7 +14,7 @@ import SettingTopEntry from '../setting/SettingTopEntry'
 
 export default class Designer implements DesignerSpec {
     componentSpecMap: Map<string, ComponentSpec> = new Map()
-    componentImplMap: Map<string, ComponentType> = new Map()
+    componentImplMap: Map<string, ElementType> = new Map()
 
     dragon = new Dragon(this)
     host: Host
@@ -47,13 +47,13 @@ export default class Designer implements DesignerSpec {
         })
     }
 
-    addComponentsImpl = (componentMap: Map<string,ComponentType >) => {
+    addComponentsImpl = (componentMap: Map<string,ElementType >) => {
         for (const [name, component ] of componentMap) {
             this.addComponentImpl(name, component)
         }
     }
 
-    private addComponentImpl = (name: string, component: ComponentType) => {
+    private addComponentImpl = (name: string, component: ElementType) => {
         if (this.componentImplMap.has(name)) {
             console.error(`${name} 的实现已经存在，即将重置！！！`)
         }

@@ -14,21 +14,25 @@ export default function LayoutComponent(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const context = useContext(Context)
     const { style } = props.schema.props
+    const Component = context.components.get(props.schema.componentName)
+    if (!Component) {
+        return <div>组件正在加载...</div>
+    }
 
     return (
     <div 
         ref={rootRef} 
         data-node-id={props.schema.id} 
         draggable={context.rendererMode === RendererMode.design}
-        style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined}
     >
-        {!props.schema.children.length ?
-        context.customEmptyElement ? context.customEmptyElement(props.schema): null
-        :
-        <>
-        {props.schema.children.map(child => <BaseComponentRenderer schema={child} key={child.id}/>)}
-        </>
-        }
+        <Component style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined}>
+            {!props.schema.children.length ?
+            context.customEmptyElement ? context.customEmptyElement(props.schema): null
+            :
+            props.schema.children.map(child => <BaseComponentRenderer schema={child} key={child.id}/>)
+            }
+        </Component>
+        
     </div>
     )
 }
