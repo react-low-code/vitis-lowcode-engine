@@ -24,6 +24,7 @@ export * from './eventType'
 
     setters.register(defaultSetters)
 
+    // Page 组件是页面的 root，它不会显示在组件面板中
     material.addComponentSpec('Page', PageComponentsSpec)
     observableProject.designer.buildComponentSpecMap(['Page'])
 })()

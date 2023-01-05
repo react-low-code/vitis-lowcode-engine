@@ -37,7 +37,7 @@ export default class Material extends EventEmitter implements MaterialSpec  {
 
       for (const [key, spec] of componentSpecRawMap) {
         const component = spec.advanced?.component
-        if (!component?.isContainer || component?.containerType !== 'Page') {
+        if (component?.containerType !== 'Page') {
           result.set(key, spec)
         }
       }

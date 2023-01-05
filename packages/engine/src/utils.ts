@@ -1,4 +1,5 @@
 import { JSFunction, NpmInfo, PropValue, JSRunFunction } from 'vitis-lowcode-types'
+import { ElementType } from 'react'
 
 let guid = Date.now();
 export function uniqueId(prefix = '') {
@@ -29,17 +30,17 @@ export function getComponentSetterMap(win: Window, bundle: {packageName: string,
     return m.toUpperCase()
   })
 
-  return (win as any)[name].setters || {}
+  return ((win as any)[name]||{}).setters || {}
 }
 
-export function getComponentImplFromWin(win: Window, bundle: {packageName: string, componentName: string}) {
+export function getComponentImplFromWin(win: Window, bundle: {packageName: string, componentName: string}): ElementType | undefined {
   const name: string = bundle.packageName.replace(/-(\w)/g, (s,m) => {
     return m.toUpperCase()
   })
 
   //如果组件包中存在设置器
-  if ((win as any)[name].setters) {
-    return (win as any)[name].default
+  if (((win as any)[name]||{}).setters) {
+    return ((win as any)[name]||{}).default
   } else {
     return (win as any)[name]
   }

@@ -12,7 +12,7 @@ export const PageComponentsSpec: ComponentSpecRaw = {
     advanced: {
         nestingRule: {
             parentWhitelist: [],
-            childWhitelist: ['Layout*']
+            childWhitelist: ['Layout*','Row']
         },
         supports: {
             styles: true,

@@ -18,6 +18,7 @@ interface State {
     layoutComponents: ComponentItem[];
     baseComponents: ComponentItem[];
     subjoinComponents: ComponentItem[];
+    templates: ComponentItem[];
     height: number
 
 }
@@ -28,6 +29,7 @@ export default class ComponentsPane extends React.Component<{},State>{
         layoutComponents: [],
         subjoinComponents: [],
         baseComponents: [],
+        templates: [],
         height: 300
     }
 
@@ -45,6 +47,7 @@ export default class ComponentsPane extends React.Component<{},State>{
             const layoutComponents: ComponentItem[] = []
             const subjoinComponents: ComponentItem[] = []
             const baseComponents: ComponentItem[] = []
+            const templates: ComponentItem[] = []
             for(const [key,componentSpecRaw] of componentSpecRawMap) {
                 const seg: ComponentItem = {
                     componentName: componentSpecRaw.componentName,
@@ -58,13 +61,16 @@ export default class ComponentsPane extends React.Component<{},State>{
                     baseComponents.push(seg)
                 } else if (componentSpecRaw.group === 'subjoin') {
                     subjoinComponents.push(seg)
+                } else if (componentSpecRaw.group === 'template') {
+                    templates.push(seg)
                 }
             }
 
             this.setState({
                 layoutComponents,
                 subjoinComponents,
-                baseComponents
+                baseComponents,
+                templates
             })
             
         }
@@ -133,6 +139,7 @@ export default class ComponentsPane extends React.Component<{},State>{
                 trigger="click"
                 placement="rightTop"
                 content={<div className='components-pane-body' style={{height: this.state.height + 'px'}}>
+                {this.renderComponentGroup('模板', this.state.templates)}
                 {this.renderComponentGroup('布局组件', this.state.layoutComponents)}
                 {this.renderComponentGroup('基础组件', this.state.baseComponents)}
                 {this.renderComponentGroup('高级组件', this.state.subjoinComponents)}

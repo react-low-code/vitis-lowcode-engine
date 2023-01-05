@@ -103,10 +103,24 @@ export default class Host implements HostSpec {
             const {dragObject, dropLocation} = this.project.designer.dragon
             if (dragObject && dropLocation) {
                 if (isDragDataNode(dragObject)) {
-                    const node = this.project.documentModel.createNode(dragObject.data.schema, dropLocation.containerNode)
-                    dropLocation.containerNode.inertChildAtIndex(node, dropLocation.index)
-                    await this.rerender()
-                    this.project.designer.selectNode(node.id)
+                    let schema = dragObject.data.schema
+                    console.log(schema,'schema')
+                    if (!Array.isArray(schema)) {
+                        schema = [schema]
+                    }
+                    let start = dropLocation.index
+                    let lastNodeId: string | undefined
+                    schema.forEach(item => {
+                        const node = this.project.documentModel.createNode(item, dropLocation.containerNode)
+                        dropLocation.containerNode.inertChildAtIndex(node, start)
+                        start ++
+                        lastNodeId = node.id
+                    })
+                    if (lastNodeId) {
+                        await this.rerender()
+                        this.project.designer.selectNode(lastNodeId)
+                    }
+                   
                 } else {
                     dragObject.node.parent?.delChild(dragObject.node)
                     dropLocation.containerNode.inertChildAtIndex(dragObject.node, dropLocation.index)
@@ -135,11 +149,14 @@ export default class Host implements HostSpec {
         const result: {packageName: string, componentName: string, url: string}[] = []
 
         for (const [key, spec] of assetMap) {
-            result.push({
-                packageName: spec.packageName,
-                componentName: spec.componentName,
-                url: getComponentImplUrl({npm: spec.packageName, version: spec.version})
-            })
+            // 模板没有组件实现，只有组件规格
+            if (spec.group !== 'template') {
+                result.push({
+                    packageName: spec.packageName,
+                    componentName: spec.componentName,
+                    url: getComponentImplUrl({npm: spec.packageName, version: spec.version})
+                })
+            }
         }
 
         return result
@@ -168,7 +185,10 @@ export default class Host implements HostSpec {
         const componentMap = new Map()
 
         assetBundles.forEach(bundle => {
-            componentMap.set(bundle.componentName, getComponentImplFromWin(this.frameWindow!, bundle))
+            const impl = getComponentImplFromWin(this.frameWindow!, bundle)
+            if (impl) {
+                componentMap.set(bundle.componentName, impl)
+            }
         })
 
         this.project.designer.addComponentsImpl(componentMap)
