@@ -68,7 +68,6 @@ export default class Designer implements DesignerSpec {
     getDropContainer = (locateEvent: LocationEvent) => {
         let containerNode = this.host.getClosestNodeByLocation({clientX: locateEvent.clientX, clientY: locateEvent.clientY})
         const thisComponentSpec: ComponentSpec = isDragDataNode(locateEvent.dragObject) ? locateEvent.dragObject.data: locateEvent.dragObject.node.componentSpec
-        
         while(containerNode) {
             if (containerNode.componentSpec.isCanInclude(thisComponentSpec)) {
                 return containerNode

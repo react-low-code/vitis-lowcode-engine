@@ -139,7 +139,7 @@ export default class Host implements HostSpec {
 
     private getNodeByDOMElem = (domElem: HTMLElement | null) => {
         if (domElem) {
-            const noId = domElem.getAttribute('data-node-id')
+            const noId = this.renderer.getNodeIdByDOMElem(domElem)
 
             return noId ? this.project.documentModel.getNode(noId): undefined
         }

@@ -7,12 +7,12 @@ interface Props {
     schema: NodeSchema
 }
 
-export default function FormControl(props: Props) {
+export default function UIComponent(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const context = useContext(Context)
     const Com = context.components.get(props.schema.componentName)
     if (!Com) {
-        return <div>未知的表单组件</div>
+        return <div>未知的组件</div>
     }
     return (
         <Com {...props.schema.props} ref={rootRef} />

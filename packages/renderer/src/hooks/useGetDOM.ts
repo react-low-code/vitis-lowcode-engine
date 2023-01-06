@@ -11,6 +11,13 @@ export default function useGetDOM(schema: NodeSchema) {
         if (context.rendererMode === RendererMode.design && context.onCompGetRef) {
             context.onCompGetRef(schema, rootRef.current)
         }
+        if (rootRef.current) {
+            rootRef.current.draggable = context.rendererMode === RendererMode.design
+
+            if (schema.id) {
+                rootRef.current.setAttribute('data-node-id', schema.id)
+            }
+        }
         return () => {
             if (context.rendererMode === RendererMode.design && context.onCompGetRef) {
                 context.onCompGetRef(schema, null)

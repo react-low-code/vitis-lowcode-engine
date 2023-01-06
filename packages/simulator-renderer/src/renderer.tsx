@@ -50,6 +50,10 @@ class SimulatorRenderer implements SimulatorSpec {
         return reactInstanceCollector.domNodeMap.get(nodeId)?.node.getBoundingClientRect()
     }
 
+    getNodeIdByDOMElem = (elem: HTMLElement) => {
+        return elem.getAttribute('data-node-id') || undefined
+    }
+
     rerender = async () => {
         observerData.components = host.project.designer.componentImplMap,
         observerData.schema = host.project.schema

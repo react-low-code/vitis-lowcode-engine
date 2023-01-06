@@ -23,6 +23,11 @@ export interface SimulatorSpec {
      * 重新渲染
      */
     rerender(): Promise<void>
+    /**
+     * 获取 DOM 元素的 Node id
+     * @param elem 
+     */
+    getNodeIdByDOMElem(elem: HTMLElement): string | undefined
 }
 
 /**这是设计器器要给模拟器提供的方法 */
