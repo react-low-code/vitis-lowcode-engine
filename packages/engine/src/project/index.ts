@@ -35,7 +35,12 @@ const defaultPageSchema: PageSchema = {
     },
     lifeCycles: {},
     // 网络请求拦截器
-    interceptors: {}
+    interceptors: {
+        response: {
+            type: 'JSFunction',
+            value: "function responseInterceptor(responseData){ if (responseData.code !== '0') {return Promise.reject(responseData.msg)} else {return responseData.data}}"
+        }
+    }
 }
 
 export default class Project  implements ObservableProjectSpec{

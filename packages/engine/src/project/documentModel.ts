@@ -18,6 +18,7 @@ export default class DocumentModel {
         })
         this.open(schema)
         this.project = project
+        this.interceptors = schema.interceptors
     }
 
     get schema() {

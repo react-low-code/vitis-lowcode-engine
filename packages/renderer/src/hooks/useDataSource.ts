@@ -79,7 +79,7 @@ export default function useDataSource(dataSourceConfig: JSDataSource | undefined
                     }, 
                     (reason: AxiosError) => {
                         let errorHandler:  (reason: AxiosError) => void = () => {
-                            message.error(reason.message || '网络错误，请稍后再试')
+                            message.error(reason.message || reason || '网络错误，请稍后再试')
                         }
                         if (dataSourceConfig.value.errorHandler) {
                             errorHandler = transformStringToFunction(dataSourceConfig.value.errorHandler.value)

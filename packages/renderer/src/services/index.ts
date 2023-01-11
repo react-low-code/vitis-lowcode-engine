@@ -26,9 +26,13 @@ export function createRequest(interceptors: PageSchema['interceptors']) {
             let data = value.data
             if (interceptors && interceptors.response) {
                 const responseInterceptor: (responseData: AxiosResponse['data']) => AxiosResponse['data'] = transformStringToFunction(interceptors.response.value)
-                data = await responseInterceptor(data)
+                try {
+                    data = await responseInterceptor(data)
+                } catch (error) {
+                    return Promise.reject(error)
+                }
             }
-
+           
             return {
                 ...value,
                 data
