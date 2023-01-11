@@ -10,6 +10,7 @@ export default class DocumentModel {
     hoveredNodeId?: string
     readonly project: Project
     lifeCycles: LifeCycles = {}
+    interceptors: PageSchema['interceptors'] = {}
 
     constructor(project: Project,schema: PageSchema) {
         makeAutoObservable(this, {
@@ -20,7 +21,11 @@ export default class DocumentModel {
     }
 
     get schema() {
-        return this.rootNode.export()
+        return {
+            ...this.rootNode.export(), 
+            lifeCycles: this.lifeCycles,
+            interceptors: this.interceptors
+        }
     }
 
     get currentNode() {

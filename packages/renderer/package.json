@@ -21,7 +21,9 @@
     "mobx": "^6.5.0",
     "mobx-react": "^7.3.0",
     "eventemitter3": "^4.0.7",
-    "vitis-lowcode-types": "^1.0.0"
+    "vitis-lowcode-types": "^1.0.0",
+    "qs": "^6.11.0",
+    "axios": "^1.2.2"
   },
   "devDependencies": {
     "build-scripts": "^1.1.1",
@@ -33,7 +35,9 @@
     "webpack": "^5.52.0",
     "webpack-dev-server": "^4.0.0",
     "@svgr/webpack": "^5.5.0",
-    "@babel/plugin-transform-typescript": "^7.20.2"
+    "@babel/plugin-transform-typescript": "^7.20.2",
+    "@types/qs": "^6.9.7",
+    "@types/axios": "^0.14.0"
   },
   "publishConfig": {
     "access": "public",

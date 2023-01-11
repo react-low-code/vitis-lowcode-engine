@@ -33,7 +33,9 @@ const defaultPageSchema: PageSchema = {
             }
         }
     },
-    lifeCycles: {}
+    lifeCycles: {},
+    // 网络请求拦截器
+    interceptors: {}
 }
 
 export default class Project  implements ObservableProjectSpec{

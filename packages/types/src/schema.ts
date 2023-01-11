@@ -10,7 +10,12 @@ export interface PageSchema extends ContainerSchema {
     containerType: 'Page';
     componentName: 'Page';
     lifeCycles: LifeCycles;
-    children: LayoutSchema[]
+    children: LayoutSchema[];
+    // 网络请求拦截器
+    interceptors?: {
+        request?: JSFunction,
+        response?: JSFunction
+    }
 }
 
 export interface LayoutSchema extends ContainerSchema {
@@ -62,9 +67,9 @@ export interface NodeSchema {
 export interface DataSource {
     url: string;
     params?: object;
-    method: string;
-    requestHandler: JSFunction
-    responseHandler: JSFunction
+    method: "GET" | "POST";
+    requestHandler?: JSFunction
+    responseHandler?: JSFunction
     errorHandler?: JSFunction
 }
 

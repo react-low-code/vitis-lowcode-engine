@@ -3,6 +3,7 @@ import { PageSchema } from 'vitis-lowcode-types'
 import { Context } from '../context'
 import BaseComponentRenderer from './baseComponentRenderer'
 import useGetDOM from '../hooks/useGetDOM'
+import useDataSource from '../hooks/useDataSource'
 import { transformStringToCSSProperties } from '../utils'
 import './page.less'
 
@@ -13,6 +14,7 @@ interface Props {
 export default function PageRenderer(props: Props) {
     const context = useContext(Context)
     const rootRef = useGetDOM(props.schema)
+    const { loading, data } = useDataSource(props.schema.extraProps.dataSource)
     const { style } = props.schema.props
 
     return (

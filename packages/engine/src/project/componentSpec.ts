@@ -4,7 +4,7 @@ import { FieldConfig, FieldGroupConfig, FieldSingleConfig } from '../types'
 export default class ComponentSpec {
     configure: FieldConfig[] = [];
     rawData: ComponentSpecRaw
-    extraProps: any
+    extraProps: NodeSchema['extraProps']
 
     constructor(componentSpecRaw: ComponentSpecRaw) {
         this.rawData = componentSpecRaw

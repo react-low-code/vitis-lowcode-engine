@@ -11,17 +11,13 @@ export interface Props extends ContextSpec{
 
 export default class Renderer extends React.Component<Props, {}> {
 
-    get defaultConfig() {
-        return {
-        }
-    }
 
     render() {
         const { schema } = this.props
 
         if (schema.isContainer && schema.containerType === 'Page') {
             return (
-                <Context.Provider value={{...this.defaultConfig,...this.props}}>
+                <Context.Provider value={{...this.props, interceptors: this.props.schema.interceptors}}>
                     <PageRenderer schema={schema}/>
                 </Context.Provider>
             )

@@ -20,3 +20,7 @@ export function transformStringToCSSProperties(str: string) {
     
     return result as React.CSSProperties
 }
+
+export function transformStringToFunction(str: string) {
+  return new Function(`"use strict"; return ${str}`)();
+}

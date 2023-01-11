@@ -7,9 +7,9 @@ export interface ContextSpec {
     schema?: PageSchema;
     components: Map<string, ElementType>;
     onCompGetRef?: (schema: NodeSchema, domElement: HTMLElement | null) => void;
-    customCreateElement?: (schema: NodeSchema) => React.ReactNode;
     rendererMode?: RendererMode;
     customEmptyElement?: (schema: NodeSchema) => React.ReactNode;
+    interceptors?: PageSchema['interceptors']
 }
 
 export const Context = React.createContext<ContextSpec>({

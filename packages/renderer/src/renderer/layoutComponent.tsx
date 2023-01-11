@@ -12,14 +12,16 @@ interface Props {
 export default function LayoutComponent(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const context = useContext(Context)
-    const { style } = props.schema.props
+    const { style, ...reset } = props.schema.props
     const Component = context.components.get(props.schema.componentName)
-    if (!Component) {
-        return <div>组件正在加载...</div>
-    }
+    if (!Component) { return <div>未知的布局组件</div> }
 
     return (
-    <Component style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined} ref={rootRef}>
+    <Component 
+        style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined} 
+        ref={rootRef}
+        {...reset}
+    >
         {!props.schema.children.length ?
         context.customEmptyElement ? context.customEmptyElement(props.schema): null
         :
