@@ -14,6 +14,6 @@ function ComponentsPane(ctx: PluginContext) {
     }
 }
 
-ComponentsPane.pluginName = 'ComponentsPanePlugin'
+ComponentsPane.pluginName = 'defaultComponentsPanePlugin'
 
 export default ComponentsPane

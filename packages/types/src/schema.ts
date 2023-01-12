@@ -12,10 +12,7 @@ export interface PageSchema extends ContainerSchema {
     lifeCycles: LifeCycles;
     children: LayoutSchema[];
     // 网络请求拦截器
-    interceptors?: {
-        request?: JSFunction,
-        response?: JSFunction
-    }
+    interceptors?: Interceptors
 }
 
 export interface LayoutSchema extends ContainerSchema {
@@ -96,4 +93,9 @@ export interface JSRunFunction {
 export interface JSDataSource {
     type: 'DataSource',
     value: DataSource
+}
+
+export interface Interceptors {
+    request?: JSFunction,
+    response?: JSFunction
 }

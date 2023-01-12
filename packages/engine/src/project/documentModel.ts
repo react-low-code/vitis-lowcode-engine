@@ -1,4 +1,4 @@
-import { PageSchema, NodeSchema, LifeCycles, JSFunction } from 'vitis-lowcode-types'
+import { PageSchema, NodeSchema, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import Node from '../node'
 import type Project from './index'
@@ -74,5 +74,13 @@ export default class DocumentModel {
 
     updateLifeCycles(name: keyof LifeCycles, value: JSFunction) {
         this.lifeCycles[name] = value
+    }
+
+    updateInterceptors(name: keyof Interceptors, value: JSFunction) {
+        if (!this.interceptors) {
+            this.interceptors = {}
+        }
+        this.interceptors[name] = value
+        this.project.designer.rerender()
     }
 }

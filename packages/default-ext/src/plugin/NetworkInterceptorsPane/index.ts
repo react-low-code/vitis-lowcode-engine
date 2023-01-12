@@ -1,11 +1,11 @@
 import { PluginContext } from 'vitis-lowcode-types'
 import Pane from './component'
 
-function LifeCyclesPane(ctx: PluginContext) {
+function NetworkInterceptorsPane(ctx: PluginContext) {
     return {
         init() {
             ctx.skeleton.add({
-                name: "LifeCyclesPane",
+                name: "NetworkInterceptorsPane",
                 content: Pane,
                 area: "left"
             })
@@ -13,6 +13,6 @@ function LifeCyclesPane(ctx: PluginContext) {
     }
 }
 
-LifeCyclesPane.pluginName = 'defaultLifeCyclesPane'
+NetworkInterceptorsPane.pluginName = 'defaultNetworkInterceptorsPane'
 
-export default LifeCyclesPane
+export default NetworkInterceptorsPane

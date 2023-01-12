@@ -1,9 +1,9 @@
 import { EventEmitter } from 'eventemitter3';
 import type InterProject from '../project';
-import { ProjectSpec, LifeCycles, JSFunction } from 'vitis-lowcode-types'
+import { ProjectSpec, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
 
-export default class Project extends EventEmitter implements ProjectSpec{
-    readonly project: InterProject
+export default class Project extends EventEmitter implements ProjectSpec {
+    private readonly project: InterProject
     constructor(project: InterProject) {
         super()
         this.project = project
@@ -15,5 +15,13 @@ export default class Project extends EventEmitter implements ProjectSpec{
 
     getLifeCycles = () => {
         return this.project.getLifeCycles()
+    }
+
+    updateInterceptors = (name: keyof Interceptors, value: JSFunction) => {
+        this.project.updateInterceptors(name, value)
+    }
+
+    getInterceptors(): Interceptors | undefined {
+        return this.project.getInterceptors()
     }
 }

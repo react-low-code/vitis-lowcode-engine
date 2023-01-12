@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import Designer from './designer';
 import DocumentModel from './documentModel'
-import { PageSchema, ObservableProjectSpec, LifeCycles, JSFunction } from 'vitis-lowcode-types'
+import { PageSchema, ObservableProjectSpec, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
 
 const defaultPageSchema: PageSchema = {
     componentName: 'Page',
@@ -38,7 +38,18 @@ const defaultPageSchema: PageSchema = {
     interceptors: {
         response: {
             type: 'JSFunction',
-            value: "function responseInterceptor(responseData){ if (responseData.code !== '0') {return Promise.reject(responseData.msg)} else {return responseData.data}}"
+            value: `
+            /**
+             * axios 响应拦截器
+             * @responseData： AxiosResponse['data']
+            */
+            function responseInterceptor(responseData){ 
+                if (responseData.code !== '0') {
+                    return Promise.reject(responseData.msg)
+                } else {
+                    return responseData.data
+                }
+            }`
         }
     }
 }
@@ -74,5 +85,13 @@ export default class Project  implements ObservableProjectSpec{
 
     getLifeCycles = () => {
         return this.documentModel.lifeCycles
+    }
+
+    updateInterceptors = (name: keyof Interceptors, value: JSFunction) => {
+        this.documentModel.updateInterceptors(name, value)
+    }
+
+    getInterceptors = () => {
+        return this.documentModel.interceptors
     }
 }
