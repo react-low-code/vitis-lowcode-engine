@@ -17,8 +17,13 @@ const defaultConfig = {
         `,
         body: `
         function requestInterceptor(config) {
-            // todo
-
+            const token = localStorage.getItem('token')
+            if (token) {
+                if (!config.headers) {
+                    config.headers = {}
+                }
+                config.headers.authorization = token;
+            }
             return config;
         }
         `
@@ -36,6 +41,9 @@ const defaultConfig = {
             if (responseData.code !== '0') {
                 return Promise.reject(responseData.msg)
             } else {
+                if (responseData.data.token) {
+                    localStorage.setItem('token', responseData.data.token)
+                }
                 return responseData.data
             }
         }

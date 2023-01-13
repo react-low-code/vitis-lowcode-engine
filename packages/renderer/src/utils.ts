@@ -22,5 +22,14 @@ export function transformStringToCSSProperties(str: string) {
 }
 
 export function transformStringToFunction(str: string) {
+  const reg = /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n|$))|(\/\*(\n|.)*?\*\/)/g;
+  // 去掉代码中的注释，代码开头有注释会导致 new Function 返回 undefined
+  str = str.replace(reg, function(word) { 
+      // 去除注释后的文本 
+    return /^\/{2,}/.test(word) || /^\/\*/.test(word) ? "" : word; 
+  });
+  // 去掉代码前后的空格，
+  str = str.trim()
+
   return new Function(`"use strict"; return ${str}`)();
 }

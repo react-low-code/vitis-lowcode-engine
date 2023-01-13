@@ -18,7 +18,10 @@ export function createRequest(interceptors: PageSchema['interceptors']) {
         instance.interceptors.request.use(function(config: AxiosRequestConfig): AxiosRequestConfig {
             if (interceptors && interceptors.request) {
                 const requestInterceptor: (config: AxiosRequestConfig) => AxiosRequestConfig = transformStringToFunction(interceptors.request.value)
-                return requestInterceptor(config)
+                if (requestInterceptor) {
+                    return requestInterceptor(config)
+                }
+                
             }
             return config
         })

@@ -72,9 +72,8 @@ export default function useDataSource(dataSourceConfig: JSDataSource | undefined
                     (response) => {
                         let responseHandler:  (response: AxiosResponse) => any = (response) => response.data
                         if (dataSourceConfig.value.responseHandler) {
-                            responseHandler = transformStringToFunction(dataSourceConfig.value.responseHandler.value)
+                            responseHandler = transformStringToFunction(dataSourceConfig.value.responseHandler.value) || responseHandler
                         }
-
                         setData(responseHandler(response))
                     }, 
                     (reason: AxiosError) => {
@@ -82,7 +81,7 @@ export default function useDataSource(dataSourceConfig: JSDataSource | undefined
                             message.error(reason.message || reason || '网络错误，请稍后再试')
                         }
                         if (dataSourceConfig.value.errorHandler) {
-                            errorHandler = transformStringToFunction(dataSourceConfig.value.errorHandler.value)
+                            errorHandler = transformStringToFunction(dataSourceConfig.value.errorHandler.value) || errorHandler
                         }
 
                         errorHandler(reason)

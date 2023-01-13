@@ -43,13 +43,31 @@ const defaultPageSchema: PageSchema = {
              * axios 响应拦截器
              * @responseData： AxiosResponse['data']
             */
-            function responseInterceptor(responseData){ 
+             function responseInterceptor(responseData){ 
                 if (responseData.code !== '0') {
                     return Promise.reject(responseData.msg)
                 } else {
+                    if (responseData.data.token) {
+                        localStorage.setItem('token', responseData.data.token)
+                    }
                     return responseData.data
                 }
             }`
+        },
+        request: {
+            type: "JSFunction",
+            value: `
+            function requestInterceptor(config) {
+                const token = localStorage.getItem('token')
+                if (token) {
+                    if (!config.headers) {
+                        config.headers = {}
+                    }
+                    config.headers.authorization = token;
+                }
+                return config;
+            }
+            `
         }
     }
 }
