@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef } from 'react'
 import { NodeSchema } from 'vitis-lowcode-types'
-import { Context } from '../context'
+import { PropsContext } from '../context'
 import { RendererMode } from '../types'
 
 export default function useGetDOM(schema: NodeSchema) {
-    const context = useContext(Context)
+    const context = useContext(PropsContext)
     const rootRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {

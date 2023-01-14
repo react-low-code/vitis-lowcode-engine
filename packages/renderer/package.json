@@ -23,7 +23,8 @@
     "eventemitter3": "^4.0.7",
     "vitis-lowcode-types": "^1.0.0",
     "qs": "^6.11.0",
-    "axios": "^1.2.2"
+    "axios": "^1.2.2",
+    "depath": "^1.0.6"
   },
   "devDependencies": {
     "build-scripts": "^1.1.1",

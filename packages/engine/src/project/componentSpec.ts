@@ -40,7 +40,7 @@ export default class ComponentSpec {
     }
 
     private get hasDataSource() {
-        return this.rawData.advanced?.component?.isContainer && this.rawData.advanced?.component?.containerType !== 'Layout'
+        return this.rawData.advanced?.component?.isContainer
     }
 
     private get hasLinkage() {

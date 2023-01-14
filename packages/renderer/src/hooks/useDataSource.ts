@@ -1,11 +1,12 @@
 import { useEffect, useState, useContext } from 'react'
 import { JSDataSource, Record } from 'vitis-lowcode-types'
 import qs from 'qs';
+import { Path } from 'depath'
 import { AxiosResponse, AxiosError } from 'axios'
 import { message } from 'antd';
 import { createRequest } from '../services'
 import { transformStringToFunction } from '../utils'
-import { Context } from '../context'
+import { PropsContext, ContainerDataContextSpec } from '../context'
 
 /**
  * 解析 url，取出查询字符串中的参数，orderId 只是一个占位符，用 location.search 上的同名参数填充 orderId
@@ -54,17 +55,29 @@ function generateRequestConfig(dataSourceConfigValue: JSDataSource['value']) {
     }
 }
 
-export default function useDataSource(dataSourceConfig: JSDataSource | undefined) {
+/**
+ * 为容器类组件获取数据源，组件只能从当前容器获取数据
+ * @param dataSourceConfig 通过网络请求获取数据源
+ * @param pathToVal 从所属容器中获取数据源
+ * @param containerData 容器所属容器的数据源
+ * @returns 
+ */
+export default function useDataSource(dataSourceConfig?: JSDataSource, pathToVal?: string, containerData?: ContainerDataContextSpec['data']) {
     const [loading, setLoading] = useState<boolean>(() => {
         return !!dataSourceConfig
     })
     const [data, setData] = useState<object | undefined>()
-    const { interceptors } = useContext(Context)
+    const { interceptors } = useContext(PropsContext)
 
     useEffect(() => {
+        // 当不需要发网络请求取数据时，从所属容器中去数据
         if (!dataSourceConfig || !dataSourceConfig.value.url.trim()) {
-            setData(undefined)
             setLoading(false)
+            if (!pathToVal || !pathToVal.trim()) { 
+                setData(undefined) 
+            } else {
+                return Path.getIn(containerData, pathToVal)
+            }
         } else {
             setLoading(true)
             createRequest(interceptors)(generateRequestConfig(dataSourceConfig.value))
@@ -91,7 +104,7 @@ export default function useDataSource(dataSourceConfig: JSDataSource | undefined
                     setLoading(false)
                 })
         }
-    }, [dataSourceConfig])
+    }, [dataSourceConfig, pathToVal, containerData])
 
     return {loading, data}
 }
