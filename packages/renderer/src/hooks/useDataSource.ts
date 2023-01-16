@@ -59,24 +59,25 @@ function generateRequestConfig(dataSourceConfigValue: JSDataSource['value']) {
  * 为容器类组件获取数据源，组件只能从当前容器获取数据
  * @param dataSourceConfig 通过网络请求获取数据源
  * @param pathToVal 从所属容器中获取数据源
- * @param containerData 容器所属容器的数据源
+ * @param containerData 所属容器的数据源
  * @returns 
  */
 export default function useDataSource(dataSourceConfig?: JSDataSource, pathToVal?: string, containerData?: ContainerDataContextSpec['data']) {
     const [loading, setLoading] = useState<boolean>(() => {
         return !!dataSourceConfig
     })
-    const [data, setData] = useState<object | undefined>()
+    const [data, setData] = useState<ContainerDataContextSpec['data']>()
     const { interceptors } = useContext(PropsContext)
 
     useEffect(() => {
-        // 当不需要发网络请求取数据时，从所属容器中去数据
+        // 当不需要发网络请求取数据时，从所属容器中取数据
         if (!dataSourceConfig || !dataSourceConfig.value.url.trim()) {
             setLoading(false)
+            // 透传所属容器的数据源
             if (!pathToVal || !pathToVal.trim()) { 
-                setData(undefined) 
+                setData(containerData) 
             } else {
-                return Path.getIn(containerData, pathToVal)
+                return setData(Path.getIn(containerData, pathToVal))
             }
         } else {
             setLoading(true)
