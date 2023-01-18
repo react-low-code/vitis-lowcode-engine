@@ -189,7 +189,7 @@ export default class ComponentSpec {
                         setters: [{ 
                             name: 'TextSetter', 
                             props: {
-                                defaultValue: '这里的配置将发送网络请求，它返回的数据优先级高于取值',
+                                defaultValue: '这里的配置将发送网络请求，它返回的数据优先级高于从父容器取值',
                                 style: {
                                     color: 'red',
                                     fontSize: '12px'
@@ -232,7 +232,7 @@ export default class ComponentSpec {
                     },
                     {
                         type: 'field',
-                        title: '返回值处理器',
+                        title: '响应处理器',
                         parentName: 'dataSource',
                         name: 'responseHandler',
                         isExtra: true,
