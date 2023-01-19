@@ -11,10 +11,10 @@ interface Props {
 
 export default function BaseRenderer(props: Props){
     if (isLayoutComponent(props.schema)) {
-        return <LayoutComponent schema={props.schema}/>
+        return <LayoutComponent schema={props.schema} key={props.schema.id}/>
     }  else if (props.schema.isFormControl){
-        return <FormControl schema={props.schema}/>
+        return <FormControl schema={props.schema} key={props.schema.id}/>
     } else {
-        return <UIComponent schema={props.schema}/>
+        return <UIComponent schema={props.schema} key={props.schema.id}/>
     }
 }

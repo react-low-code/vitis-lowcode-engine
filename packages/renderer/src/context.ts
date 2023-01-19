@@ -25,12 +25,17 @@ export interface GlobalDataContextSpec {
     pageLoading: boolean;
     // 这是用户填写的表单数据
     formData: undefined | null | {[attr: string]: any}
+    // 更新 formData 的值
+    updateFormData: (path: string, value: any) => void
 }
 
 export const GlobalDataContext = React.createContext<GlobalDataContextSpec>({
     page: undefined,
     pageLoading: false,
-    formData: undefined
+    formData: undefined,
+    updateFormData() {
+        console.error('你还没有实现 updateFormData 方法')
+    }
 })
 
 // 这是容器类组件提供给子孙组件的数据
