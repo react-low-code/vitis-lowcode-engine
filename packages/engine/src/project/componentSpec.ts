@@ -53,7 +53,7 @@ export default class ComponentSpec {
     }
 
     private get hasHiddenRule() {
-        return this.rawData.advanced?.component?.isContainer && this.rawData.advanced.component.containerType !== 'Page' 
+        return !this.rawData.advanced?.component?.isContainer || this.rawData.advanced.component.containerType !== 'Page'
     }
 
     private get type () {
@@ -143,17 +143,20 @@ export default class ComponentSpec {
         if (this.hasHiddenRule) {
             this.extraProps.isHidden = {
                 type: 'JSFunction',
-                value: 'function isHidden(pageData, formData){return false}'
+                value: 'function isHidden(pageData, containerData, formData){ return false }'
             }
         }
 
         if (this.isFormControl) {
             this.extraProps.isDisabled = {
                 type: 'JSFunction',
-                value: 'function isHidden(pageData, formData){return false}'
+                value: 'function isDisabled(pageData, containerData, formData){ return false }'
             }
 
-            this.extraProps.getValue = undefined
+            this.extraProps.getValue = {
+                type: 'JSFunction',
+                value: ''
+            }
         }
     }
 

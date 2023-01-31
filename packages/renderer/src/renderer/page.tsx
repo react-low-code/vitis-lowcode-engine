@@ -25,7 +25,7 @@ export default function PageRenderer(props: Props) {
 
     return (
         <GlobalDataContext.Provider value={{
-            page: data,
+            pageData: data,
             pageLoading: loading,
             formData,
             updateFormData

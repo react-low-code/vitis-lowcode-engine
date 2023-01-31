@@ -3,12 +3,14 @@ import { NodeSchema } from 'vitis-lowcode-types'
 import useGetDOM from '../hooks/useGetDOM'
 import { PropsContext, GlobalDataContext, ContainerDataContext } from '../context'
 import { Path } from 'depath'
+import useHidden from '../hooks/useHidden'
+import { RendererMode } from '../types'
 
 interface Props {
     schema: NodeSchema
 }
 
-export default function FormControl(props: Props) {
+function Content(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const { extraProps } = props.schema
     const propsContext = useContext(PropsContext)
@@ -29,7 +31,8 @@ export default function FormControl(props: Props) {
         }
     }, [Com, dataLoading])
     if (!Com) { return <div>未知的表单组件</div> }
-    const value = extraProps.name ? Path.getIn(formData, extraProps.name): undefined
+    const name = extraProps.name && extraProps.name.replace(/\s/g,'')
+    const value = name ? Path.getIn(formData, name): undefined
     const onChange = (value: any) => {
         if (extraProps.name) { 
             updateFormData(extraProps.name, value) 
@@ -38,4 +41,20 @@ export default function FormControl(props: Props) {
     return (
         <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange}/>
     )
+}
+
+export default function(props: Props) {
+    const { formData, pageData } = useContext(GlobalDataContext)
+    const {data} = useContext(ContainerDataContext)
+    const propsContext = useContext(PropsContext)
+    const isHidden = useHidden({pageData, formData, containerData: data}, props.schema.extraProps.isHidden)
+    if (isHidden && propsContext.rendererMode !== RendererMode.design) {
+        return null
+    }
+
+    if (isHidden && propsContext.rendererMode === RendererMode.design) {
+        return <div style={{opacity: 0.1}} ><Content {...props}/></div>
+    }
+
+    return <Content {...props}/>
 }
