@@ -4,6 +4,7 @@ import useGetDOM from '../hooks/useGetDOM'
 import { PropsContext, GlobalDataContext, ContainerDataContext } from '../context'
 import { Path } from 'depath'
 import useHidden from '../hooks/useHidden'
+import useDisabled from "../hooks/useDisabled";
 import { RendererMode } from '../types'
 
 interface Props {
@@ -14,8 +15,9 @@ function Content(props: Props) {
     const rootRef = useGetDOM(props.schema)
     const { extraProps } = props.schema
     const propsContext = useContext(PropsContext)
-    const { updateFormData, formData } = useContext(GlobalDataContext)
+    const { updateFormData, formData, pageData } = useContext(GlobalDataContext)
     const {data, dataLoading} = useContext(ContainerDataContext)
+    const isDisabled = useDisabled({pageData, formData, containerData: data}, props.schema.extraProps.isDisabled)
     
     const Com = propsContext.components.get(props.schema.componentName)
     useEffect(() => {
@@ -39,7 +41,7 @@ function Content(props: Props) {
         }
     }
     return (
-        <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange}/>
+        <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange} disabled={isDisabled}/>
     )
 }
 
