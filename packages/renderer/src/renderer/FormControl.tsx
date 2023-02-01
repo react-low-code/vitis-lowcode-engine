@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { NodeSchema } from 'vitis-lowcode-types'
 import useGetDOM from '../hooks/useGetDOM'
 import { PropsContext, GlobalDataContext, ContainerDataContext } from '../context'
-import { Path } from 'depath'
 import useHidden from '../hooks/useHidden'
 import useDisabled from "../hooks/useDisabled";
 import { RendererMode } from '../types'
+import useSetFormControlVal from '../hooks/useSetFormControlVal'
 
 interface Props {
     schema: NodeSchema
@@ -16,28 +16,17 @@ function Content(props: Props) {
     const { extraProps } = props.schema
     const propsContext = useContext(PropsContext)
     const { updateFormData, formData, pageData } = useContext(GlobalDataContext)
-    const {data, dataLoading} = useContext(ContainerDataContext)
+    const {data} = useContext(ContainerDataContext)
     const isDisabled = useDisabled({pageData, formData, containerData: data}, props.schema.extraProps.isDisabled)
+    const name = extraProps.name && extraProps.name.replace(/\s/g,'')
     
     const Com = propsContext.components.get(props.schema.componentName)
-    useEffect(() => {
-        function getInitValue() {
-            if (!dataLoading) {
-                return data && extraProps.pathToVal ? Path.getIn(data, extraProps.pathToVal): props.schema.props.defaultValue
-            } else {
-                return undefined
-            }
-        }
-        if (Com && extraProps.name) {
-            updateFormData(extraProps.name, getInitValue())
-        }
-    }, [Com, dataLoading])
     if (!Com) { return <div>未知的表单组件</div> }
-    const name = extraProps.name && extraProps.name.replace(/\s/g,'')
-    const value = name ? Path.getIn(formData, name): undefined
-    const onChange = (value: any) => {
-        if (extraProps.name) { 
-            updateFormData(extraProps.name, value) 
+    
+    const value = useSetFormControlVal(props.schema.extraProps, props.schema.props.defaultValue)
+    const onChange = (val: any) => {
+        if (name) { 
+            updateFormData(name, val) 
         }
     }
     return (
