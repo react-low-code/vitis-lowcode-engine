@@ -251,6 +251,10 @@ export default class ComponentSpec {
             this.configure.push(this.getLinkageConfig())
         }
 
+        if (this.isFormControl) {
+            this.configure.push(this.getVerifyConfig())
+        }
+
     }
 
     private getPropsConfig = (): FieldGroupConfig => {
@@ -381,6 +385,22 @@ export default class ComponentSpec {
         if (valueRule) {
             config.fields.push(valueRule)
         }
+        return config
+    }
+
+    private getVerifyConfig = (): FieldGroupConfig => {
+        const config: FieldGroupConfig = {
+            type: 'group',
+            title: '校验',
+            name: 'verify',
+            fields: [{
+                type: 'field',
+                isExtra: true,
+                name: 'verifyRules',
+                setters: [{name: 'VerifyRulesSetter'}]
+            }]
+        }
+
         return config
     }
 

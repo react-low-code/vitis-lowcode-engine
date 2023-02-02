@@ -50,9 +50,13 @@ export interface NodeSchema {
         pathToVal?: string;
         dataSource?: JSDataSource;
         name?: string;
+        // 禁用联动规则
         isDisabled?: JSFunction;
+        // 求值联动规则
         getValue?: JSFunction;
+        // 隐藏联动规则
         isHidden?: JSFunction;
+        verifyRules?: Rule[],
         [key: string]: PropValue;
     }
     isContainer: boolean;
@@ -98,4 +102,14 @@ export interface JSDataSource {
 export interface Interceptors {
     request?: JSFunction,
     response?: JSFunction
+}
+
+export interface Rule {
+    max?: string;
+    min?: string;
+    required?: boolean;
+    //  校验没有通过时的提示语
+    message?: string;
+    // 自定义的校验规则
+    customized?: JSFunction;
 }

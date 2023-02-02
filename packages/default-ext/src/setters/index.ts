@@ -4,6 +4,7 @@ import StyleSetter from "./styleSetter";
 import RadioGroupSetter from './radioGroupSetter'
 import FunctionSetter from "./functionSetter";
 import JsonSetter from "./jsonSetter";
+import VerifyRulesSetter from "./verifyRulesSetter";
 
 import { RegisteredSetter } from 'vitis-lowcode-types'
 
@@ -13,5 +14,6 @@ export const defaultSetters: RegisteredSetter[] =  [
     StyleSetter,
     RadioGroupSetter,
     FunctionSetter,
-    JsonSetter
+    JsonSetter,
+    VerifyRulesSetter
 ]
