@@ -4,26 +4,15 @@ import { transformStringToFunction } from '../utils'
 import { GlobalDataContext, ContainerDataContext } from '../context'
 import { Path } from 'depath'
 import usePrevVal from './usePrevVal'
+import useGetInitVal from './useGetInitVal'
 
 export default function useSetFormControlVal(extraProps: NodeSchema['extraProps'], defaultValue: any) {
     const { updateFormData, formData, pageData } = useContext(GlobalDataContext)
     const {data: containerData, dataLoading} = useContext(ContainerDataContext)
     const [linkageValue, setLinkageValue] = useState<any>()
     const name = extraProps.name && extraProps.name.replace(/\s/g,'')
-    const pathToVal = extraProps.pathToVal && extraProps.pathToVal.replace(/\s/g,'')
-    const [initVal, setInitVal] = useState<any>()
     const prevFormData = usePrevVal(formData)
-
-    useEffect(() => {
-        function getInitValue() {
-            if (!dataLoading) {
-                return containerData && pathToVal ? Path.getIn(containerData, pathToVal): defaultValue
-            } else {
-                return undefined
-            }
-        }
-        setInitVal(getInitValue)
-    },[dataLoading, containerData, pathToVal])
+    const initVal = useGetInitVal(extraProps, defaultValue)
 
     useEffect(() => {
         function computedVal() {
@@ -46,7 +35,7 @@ export default function useSetFormControlVal(extraProps: NodeSchema['extraProps'
         if (extraProps.getValue && extraProps.getValue.value) {
             if (name && JSON.stringify(Path.deleteIn({...formData}, name)) !== JSON.stringify(Path.deleteIn({...prevFormData}, name))) {
                 const val = computedVal()
-                if (val) {
+                if (val !== undefined) {
                     setLinkageValue(val)
                 }
             }
@@ -55,13 +44,13 @@ export default function useSetFormControlVal(extraProps: NodeSchema['extraProps'
     }, [extraProps.getValue?.value, pageData, formData, containerData, prevFormData, name])
 
     useEffect(() => {
-        if (name) {
+        if (name && initVal !== undefined) {
             updateFormData(name, initVal)
         }
     }, [initVal, name])
 
     useEffect(() => {
-        if (name) {
+        if (name && linkageValue !== undefined) {
             updateFormData(name, linkageValue)
         }
     }, [linkageValue, name])

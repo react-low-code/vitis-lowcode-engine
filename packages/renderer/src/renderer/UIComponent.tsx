@@ -4,6 +4,7 @@ import useGetDOM from '../hooks/useGetDOM'
 import { PropsContext, GlobalDataContext, ContainerDataContext } from '../context'
 import useHidden from '../hooks/useHidden'
 import { RendererMode } from '../types'
+import useGetInitVal from '../hooks/useGetInitVal'
 
 interface Props {
     schema: NodeSchema
@@ -14,12 +15,13 @@ function Content(props: Props) {
     const context = useContext(PropsContext)
     const Com = context.components.get(props.schema.componentName)
     if (!Com) { return <div>未知的组件</div> }
+    const value = useGetInitVal(props.schema.extraProps, props.schema.props.defaultValue)
     return (
-        <Com {...props.schema.props} ref={rootRef} />
+        <Com {...props.schema.props} ref={rootRef} value={value}/>
     )
 }
 
-export default function(props: Props) {
+export default function UIComponent(props: Props) {
     const { formData, pageData } = useContext(GlobalDataContext)
     const {data} = useContext(ContainerDataContext)
     const propsContext = useContext(PropsContext)

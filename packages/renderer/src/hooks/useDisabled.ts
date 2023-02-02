@@ -8,6 +8,7 @@ export default function useDisabled(dataGroup: DataGroup, isDisabled?: JSFunctio
         if (!isDisabled || !isDisabled.value) {
             return false
         }
+        // 将字符串形式的函数转换成函数
         const func = transformStringToFunction(isDisabled.value)
         if (typeof func === 'function') {
             try {

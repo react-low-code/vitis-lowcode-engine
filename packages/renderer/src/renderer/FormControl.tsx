@@ -34,7 +34,7 @@ function Content(props: Props) {
     )
 }
 
-export default function(props: Props) {
+export default function FormControl(props: Props) {
     const { formData, pageData } = useContext(GlobalDataContext)
     const {data} = useContext(ContainerDataContext)
     const propsContext = useContext(PropsContext)

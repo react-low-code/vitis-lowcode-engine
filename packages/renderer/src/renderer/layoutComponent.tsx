@@ -44,7 +44,7 @@ function Content(props: Props) {
     )
 }
 
-export default function(props: Props) {
+export default function LayoutComponent(props: Props) {
     const { rendererMode } = useContext(PropsContext)
     const { formData, pageData } = useContext(GlobalDataContext)
     const containerData = useContext(ContainerDataContext)
