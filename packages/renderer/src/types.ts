@@ -21,8 +21,12 @@ export interface GlobalDataContextSpec {
     pageLoading: boolean;
     // 这是用户填写的表单数据
     formData: undefined | null | {[attr: string]: any}
+    // 表单数据错误提示语
+    formErrors: undefined | {[attr: string]: any}
     // 更新 formData 的值
     updateFormData: (path: string, value: any) => void
+    // 更新 formErrors 的值
+    updateFormErrors: (path: string, value: any) => void
 }
 
 export interface ContainerDataContextSpec {

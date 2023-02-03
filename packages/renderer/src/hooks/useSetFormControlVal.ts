@@ -8,7 +8,7 @@ import useGetInitVal from './useGetInitVal'
 
 export default function useSetFormControlVal(extraProps: NodeSchema['extraProps'], defaultValue: any) {
     const { updateFormData, formData, pageData } = useContext(GlobalDataContext)
-    const {data: containerData, dataLoading} = useContext(ContainerDataContext)
+    const {data: containerData} = useContext(ContainerDataContext)
     const [linkageValue, setLinkageValue] = useState<any>()
     const name = extraProps.name && extraProps.name.replace(/\s/g,'')
     const prevFormData = usePrevVal(formData)

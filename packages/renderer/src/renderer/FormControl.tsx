@@ -6,6 +6,7 @@ import useHidden from '../hooks/useHidden'
 import useDisabled from "../hooks/useDisabled";
 import { RendererMode } from '../types'
 import useSetFormControlVal from '../hooks/useSetFormControlVal'
+import useSetFormErrors from '../hooks/useSetFormErrors'
 
 interface Props {
     schema: NodeSchema
@@ -16,9 +17,10 @@ function Content(props: Props) {
     const { extraProps } = props.schema
     const propsContext = useContext(PropsContext)
     const { updateFormData, formData, pageData } = useContext(GlobalDataContext)
-    const {data} = useContext(ContainerDataContext)
+    const { data } = useContext(ContainerDataContext)
     const isDisabled = useDisabled({pageData, formData, containerData: data}, props.schema.extraProps.isDisabled)
     const name = extraProps.name && extraProps.name.replace(/\s/g,'')
+    const error = useSetFormErrors(props.schema.extraProps)
     
     const Com = propsContext.components.get(props.schema.componentName)
     if (!Com) { return <div>未知的表单组件</div> }
@@ -30,7 +32,10 @@ function Content(props: Props) {
         }
     }
     return (
-        <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange} disabled={isDisabled}/>
+        <div>
+            <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange} disabled={isDisabled}/>
+            {error && <div style={{color: 'red', fontSize: '14px'}}>{error}</div>}
+        </div>
     )
 }
 

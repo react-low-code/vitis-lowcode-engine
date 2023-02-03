@@ -16,6 +16,7 @@ export default function PageRenderer(props: Props) {
     const propsContext = useContext(PropsContext)
     const rootRef = useGetDOM(props.schema)
     const [formData, setFormData] = useState({})
+    const [formErrors, setFormErrors] = useState({})
     const { loading, data } = useDataSource(props.schema.extraProps.dataSource)
     const { style } = props.schema.props
 
@@ -23,12 +24,18 @@ export default function PageRenderer(props: Props) {
         setFormData(Path.setIn(Object.assign({}, formData), path, value))
     }
 
+    const updateFormErrors = (path: string, value: any) => {
+        setFormErrors(Path.setIn(Object.assign({}, formErrors), path, value))
+    }
+
     return (
         <GlobalDataContext.Provider value={{
             pageData: data,
             pageLoading: loading,
             formData,
-            updateFormData
+            formErrors,
+            updateFormData,
+            updateFormErrors
         }}>
             <ContainerDataContext.Provider value={{
                 data,
