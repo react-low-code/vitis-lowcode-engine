@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "target": "es2018"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["./tests", "./test-cases", "../types", "node_modules"]
+}
