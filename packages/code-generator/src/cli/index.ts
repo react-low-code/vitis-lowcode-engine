@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import JSON5 from 'json5';
 import { jsonc } from 'jsonc';
 
-import { createProjectBuilder } from '../index';
+import { generateProject } from '../index';
 import type { ProjectSchema } from 'vitis-lowcode-types';
 
 /**
@@ -32,11 +32,8 @@ export async function run(
     // 读取 Schema
     const schema = await loadSchemaFile(schemaFile);
 
-    // 创建一个项目构建器
-    const builder = createProjectBuilder();
-
     // 生成代码
-    const generatedSourceCodes = await builder.generateProject(schema);
+    const generatedSourceCodes = await generateProject(schema);
 
     // 输出到磁盘
     // const publisher = CodeGenerator.publishers.disk();

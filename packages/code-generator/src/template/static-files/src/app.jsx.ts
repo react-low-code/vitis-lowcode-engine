@@ -1,7 +1,7 @@
 import { ResultFile } from '../../../types/file'
 
 export default function getFile(): [string[], ResultFile] {
-    return [[], {
+    return [['src'], {
         name: 'app',
         ext: 'jsx',
         content: `

@@ -11,6 +11,7 @@ import tsconfig from './tsconfig.json'
 import app from './src/app.jsx'
 import global from './src/global.css'
 import typings from './src/typings.d.ts'
+import router from './src/routes.ts'
 
 import {ResultDir} from '../../types/file'
 import { createResultDir, runFileGenerator } from '../../utils/templateHelper'
@@ -29,6 +30,7 @@ export function generateStaticFiles(root = createResultDir('.')): ResultDir {
     runFileGenerator(root, app)
     runFileGenerator(root, global)
     runFileGenerator(root, typings)
+    runFileGenerator(root, router)
 
     return root
 }

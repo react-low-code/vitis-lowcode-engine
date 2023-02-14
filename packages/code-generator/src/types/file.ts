@@ -33,4 +33,4 @@ export interface ResultDir {
      * 文件夹内文件
      */
     files: ResultFile[];
-  }
+}

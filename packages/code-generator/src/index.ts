@@ -1,9 +1,8 @@
 import { ProjectSchema } from 'vitis-lowcode-types'
+import { ProjectBuilder } from './generator/ProjectBuilder'
 
-export function createProjectBuilder() {
-    return {
-        generateProject(schema: ProjectSchema) {
-            console.log(schema,'sssss')
-        }
-    }
+export function generateProject(schema: ProjectSchema) {
+    const builder = new ProjectBuilder(schema)
+
+    builder.start()
 }

@@ -1,7 +1,7 @@
 import { ResultFile } from '../../../types/file'
 
 export default function getFile(): [string[], ResultFile] {
-    return [[], {
+    return [['src'], {
         name: 'typings.d',
         ext: 'ts',
         content: `
@@ -19,7 +19,6 @@ export default function getFile(): [string[], ResultFile] {
             const classes: { [key: string]: string };
             export default classes;
           }
-          
           `
     }]
 }
