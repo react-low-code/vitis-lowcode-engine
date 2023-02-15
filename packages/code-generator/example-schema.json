@@ -1,5 +1,23 @@
 {
     "componentsTree": {
-        "componentName": "Page"
-    }
+        "containerType": "Page",
+        "componentName": "Page",
+        "children": [],
+        "lifeCycles": {}
+    },
+    "componentsMap": {
+        "vitis-lowcode-row": {
+            "name": "vitis-lowcode-row",
+            "version": "1.1.0"
+        },
+        "vitis-lowcode-column": {
+            "name": "vitis-lowcode-column",
+            "version": "1.1.0"
+        },
+        "vitis-lowcode-input": {
+            "name": "vitis-lowcode-input",
+            "version": "1.1.0"
+        }
+    },
+    "projectName": "eg"
 }

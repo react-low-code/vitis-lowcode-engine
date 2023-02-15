@@ -13,11 +13,13 @@ const template: IProjectTemplate = {
     htmlEntry: {
       path: ['public'],
       fileName: 'index',
+      ext: 'html',
       plugins: [pluginHtmlEntry]
     },
     packageJSON: {
       path: [],
       fileName: 'package',
+      ext: 'json',
       plugins: [pluginPackageJSON]
     },
   },

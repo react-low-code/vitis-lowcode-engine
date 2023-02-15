@@ -34,3 +34,21 @@ export interface ResultDir {
      */
     files: ResultFile[];
 }
+
+export enum FileType {
+  CSS = 'css',
+  SCSS = 'scss',
+  LESS = 'less',
+  HTML = 'html',
+  JS = 'js',
+  JSX = 'jsx',
+  TS = 'ts',
+  TSX = 'tsx',
+  JSON = 'json',
+}
+
+export enum ChunkType {
+  AST = 'ast',
+  STRING = 'string',
+  JSON = 'json',
+}
