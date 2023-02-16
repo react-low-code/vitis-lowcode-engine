@@ -31,8 +31,12 @@ export class ProjectBuilder {
             insertFile(projectRoot, builders.htmlEntry.path, builders.htmlEntry.generateModule(this.schemaParser.schema))
         }
 
+        if (builders.service) {
+            insertFile(projectRoot, builders.service.path, builders.service.generateModule(this.schemaParser.schema))
+        }
+
         if (builders.pages) {
-            builders.pages.generatePage(this.schemaParser.schema)
+            builders.pages.generatePage(this.schemaParser.schema, projectRoot,'Home')
         }
     }
 

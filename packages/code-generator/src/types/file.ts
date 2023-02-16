@@ -52,3 +52,19 @@ export enum ChunkType {
   STRING = 'string',
   JSON = 'json',
 }
+
+export enum ChunkName {
+  FileMainContent,
+  ImportExternalJSModules,
+  ImportInternalJSModules,
+  ComponentDefaultExportStart,
+  ComponentDefaultExportEnd,
+  ImportStyle,
+  GlobalDataContextProviderStart,
+  GlobalDataContextProviderEnd,
+  ContainerDataContextProviderStart,
+  ContainerDataContextProviderEnd,
+  ComponentRenderContent,
+  ReactHooksUse,
+  ComponentInternalFunc
+}

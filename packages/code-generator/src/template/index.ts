@@ -3,6 +3,7 @@ import { generateStaticFiles } from './static-files';
 
 import pluginPackageJSON from '../plugins/packageJSON'
 import pluginHtmlEntry from '../plugins/htmlEntry'
+import pluginService from '../plugins/service'
 
 const template: IProjectTemplate = {
   slots: {
@@ -22,6 +23,12 @@ const template: IProjectTemplate = {
       ext: 'json',
       plugins: [pluginPackageJSON]
     },
+    service: {
+      path: ['src','service'],
+      fileName: 'index',
+      ext: 'ts',
+      plugins: [pluginService]
+    }
   },
 
   generateTemplate(): ResultDir {

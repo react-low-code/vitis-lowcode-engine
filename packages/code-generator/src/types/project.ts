@@ -1,11 +1,11 @@
-import { ResultDir, ChunkType, FileType } from './file'
+import { ResultDir, ChunkType, FileType, ChunkName } from './file'
 
 export interface IProjectTemplate {
     slots: Record<Modules, IProjectSlot>;
     generateTemplate: () => ResultDir | Promise<ResultDir>;
 }
 
-export type Modules = 'pages' | 'htmlEntry' | 'packageJSON'
+export type Modules = 'pages' | 'htmlEntry' | 'packageJSON' | 'service'
   
 export interface IProjectSlot {
     path: string[]; 
@@ -23,8 +23,9 @@ export interface CodeStruct {
     chunks: {
         chunkType: ChunkType;
         fileType: FileType;
+        chunkName: ChunkName;
         content: string;
-        linkAfter: string[];
+        linkAfter: ChunkName[];
     }[]
 }
 

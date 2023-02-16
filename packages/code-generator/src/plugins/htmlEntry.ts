@@ -1,4 +1,4 @@
-import { CodeStruct, FileType, ChunkType } from '../types'
+import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
 import { ProjectSchema } from 'vitis-lowcode-types'
 
 export default function plugin(struct: CodeStruct) {
@@ -7,6 +7,7 @@ export default function plugin(struct: CodeStruct) {
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.HTML,
+        chunkName: ChunkName.FileMainContent,
         content: `<!DOCTYPE html>
         <html>
           <head>

@@ -1,4 +1,4 @@
-import { CodeStruct, FileType, ChunkType } from '../types'
+import { CodeStruct, FileType, ChunkType, ChunkName} from '../types'
 import { ProjectSchema } from 'vitis-lowcode-types'
 
 export default function plugin(struct: CodeStruct) {
@@ -11,6 +11,7 @@ export default function plugin(struct: CodeStruct) {
     struct.chunks.push({
         chunkType: ChunkType.JSON,
         fileType: FileType.JSON,
+        chunkName: ChunkName.FileMainContent,
         content: `{
             "name": "${input.projectName}",
             "version": "1.0.0",
@@ -34,10 +35,12 @@ export default function plugin(struct: CodeStruct) {
                 "build-plugin-ignore-style": "^0.1.0",
                 "eslint": "^7.30.0",
                 "ice.js": "^2.0.0",
-                "stylelint": "^13.1.0"
+                "stylelint": "^13.1.0",
+                "@types/axios": "^0.14.0"
             },
             "dependencies": {
                 "qs": "^6.11.0",
+                "axios": "^1.2.2",
                 ${dependencies}
             },
         }`,

@@ -3,7 +3,17 @@
         "containerType": "Page",
         "componentName": "Page",
         "children": [],
-        "lifeCycles": {}
+        "lifeCycles": {},
+        "interceptors": {
+            "request": {
+                "type": "JSFunction",
+                "value": "function request(config) {config.dd = '344'; return config}"
+            },
+            "response": {
+                "type": "JSFunction",
+                "value": "function responseInterceptor(responseData){if (responseData.code !== '0') { return Promise.reject(responseData.msg)} else {if (responseData.data.token) {localStorage.setItem('token', responseData.data.token)} return responseData.data}}"
+            }
+        }
     },
     "componentsMap": {
         "vitis-lowcode-row": {
