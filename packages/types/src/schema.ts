@@ -3,7 +3,10 @@ import { PropValue } from './Props'
 
 export interface ProjectSchema {
     componentsTree: PageSchema,
-    componentsMap: Record<string,NpmInfo>
+    componentsMap: Record<string,NpmInfo>,
+    projectName: string,
+    title: string,
+    description: string
 }
 
 export interface PageSchema extends ContainerSchema {

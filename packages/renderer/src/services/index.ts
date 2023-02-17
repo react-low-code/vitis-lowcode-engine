@@ -11,7 +11,6 @@ export const request = axiosInstance.request
 
 export function createRequest(interceptors: PageSchema['interceptors']) {
     const instance = axios.create({
-        // withCredentials: true,
         responseType: "json"
     })
     if (interceptors) {

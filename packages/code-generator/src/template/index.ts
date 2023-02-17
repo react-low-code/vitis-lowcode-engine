@@ -28,7 +28,7 @@ const template: IProjectTemplate = {
       fileName: 'index',
       ext: 'ts',
       plugins: [pluginService]
-    }
+    },
   },
 
   generateTemplate(): ResultDir {

@@ -41,6 +41,7 @@ export default function plugin(struct: CodeStruct) {
             "dependencies": {
                 "qs": "^6.11.0",
                 "axios": "^1.2.2",
+                "antd": "^5.2.1",
                 ${dependencies}
             },
         }`,
