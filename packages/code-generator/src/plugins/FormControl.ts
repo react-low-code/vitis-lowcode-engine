@@ -34,7 +34,6 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ImportInternalJSModules,
         content: `
         import { GlobalDataContext, ContainerDataContext } from '../../context'
-        import { ContainerDataContext, GlobalDataContext } from '../../context'
         import useHidden from '../../hooks/useHidden'
         import useSetFormControlVal from '../../hooks/useSetFormControlVal'
         import useSetFormErrors from '../../hooks/useSetFormErrors'
@@ -47,7 +46,7 @@ export default function plugin(struct: CodeStruct) {
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentDefaultExportStart,
-        content: ` interface Props {}
+        content: `interface Props {}
 
         export default function Layout(props: Props) {`,
         linkAfter: [

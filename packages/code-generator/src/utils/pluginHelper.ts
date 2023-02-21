@@ -14,11 +14,11 @@ export function generateUseDataSource(dataSourceConf: DataSourceConfig, pathToVa
         return ''
     }
     return `const { loading, data } = useDataSource({
-        url: '${dataSource.url}',
+        url: ${dataSource.url},
         params: ${dataSource.params},
-        method: '${dataSource.method}',
-        requestHandler: ${dataSource.requestHandler?.value? dataSource.requestHandler?.value: 'undefined'},
-        responseHandler: ${dataSource.responseHandler?.value? dataSource.responseHandler?.value: 'undefined'},
-        errorHandler: ${dataSource.errorHandler?.value? dataSource.errorHandler?.value: 'undefined'},
-    }, '${pathToVal}', ${containerData? containerData: 'undefined'})`
+        method: ${dataSource.method},
+        requestHandler: ${dataSource.requestHandler?.value? dataSource.requestHandler?.value: undefined},
+        responseHandler: ${dataSource.responseHandler?.value? dataSource.responseHandler?.value: undefined},
+        errorHandler: ${dataSource.errorHandler?.value? dataSource.errorHandler?.value: undefined},
+    }, ${pathToVal}, ${containerData? containerData: undefined})`
 }

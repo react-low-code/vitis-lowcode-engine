@@ -19,18 +19,19 @@ export default function plugin(struct: CodeStruct) {
     }
 
     const childrenRef = schema.children.map(child => {
+        const id = child.id!
         if (child.isContainer) {
             if (child.containerType === 'Layout') {
                 return {
-                    path: './components/LayoutContainer.tsx',
-                    name: 'LayoutContainer',
-                    key: child.id!
+                    path: `./components/LayoutContainer${id}.tsx`,
+                    name: `LayoutContainer${id}`,
+                    key: id
                 }
             } else if (child.containerType === 'Data') {
                 return {
-                    path: `'./components/DataContainer.tsx'`,
-                    name: `DataContainer`,
-                    key: child.id!
+                    path: `./components/DataContainer${id}.tsx`,
+                    name: `DataContainer${id}`,
+                    key: id
                 }
             } else {
                 return undefined
@@ -38,15 +39,15 @@ export default function plugin(struct: CodeStruct) {
         } else {
             if (child.isFormControl) {
                 return {
-                    path: './components/FormControl.tsx',
-                    name: 'FormControl',
-                    key: child.id!
+                    path: `./components/FormControl${id}.tsx`,
+                    name: `FormControl${id}`,
+                    key: id
                 }
             } else {
                 return {
-                    path: './components/UIControl.tsx',
-                    name: 'UIControl',
-                    key: child.id!
+                    path: `./components/UIControl${id}.tsx`,
+                    name: `UIControl${id}`,
+                    key: id
                 }
             }
             
@@ -70,7 +71,6 @@ export default function plugin(struct: CodeStruct) {
         content: `
         import { GlobalDataContext, ContainerDataContext } from '../../context'
         import useDataSource from '../../hooks/useDataSource'
-        import { ContainerDataContext, GlobalDataContext } from '../../context'
         import useHidden from '../../hooks/useHidden'
 
         ${childrenRef.map(ref => 'import ' + ref.name + ' from ' + ref.path).join('\n')}
