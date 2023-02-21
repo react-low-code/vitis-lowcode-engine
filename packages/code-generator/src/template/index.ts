@@ -4,12 +4,16 @@ import { generateStaticFiles } from './static-files';
 import pluginPackageJSON from '../plugins/packageJSON'
 import pluginHtmlEntry from '../plugins/htmlEntry'
 import pluginService from '../plugins/service'
+import pluginPage from '../plugins/page'
+import pluginLayoutContainer from '../plugins/LayoutContainer'
+import pluginFormControl from '../plugins/FormControl'
+import pluginUIControl from '../plugins/UIControl';
 
 const template: IProjectTemplate = {
-  slots: {
+  fixedSlots: {
     pages: {
       path: ['src', 'pages'],
-      plugins: []
+      plugins: [pluginPage]
     },
     htmlEntry: {
       path: ['public'],
@@ -29,6 +33,21 @@ const template: IProjectTemplate = {
       ext: 'ts',
       plugins: [pluginService]
     },
+  },
+
+  dynamicSlots: {
+    layoutContainer: {
+      plugins: [pluginLayoutContainer]
+    },
+    dataContainer: {
+      plugins: [pluginLayoutContainer]
+    },
+    UIControl: {
+      plugins: [pluginUIControl]
+    },
+    formControl: {
+      plugins: [pluginFormControl]
+    }
   },
 
   generateTemplate(): ResultDir {

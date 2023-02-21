@@ -1,13 +1,15 @@
 import { ResultDir, ChunkType, FileType, ChunkName } from './file'
+import { NpmInfo, NodeSchema } from 'vitis-lowcode-types'
 
 export interface IProjectTemplate {
-    slots: Record<Modules, IProjectSlot>;
+    fixedSlots: Record<Modules, IProjectFixedSlot>;
+    dynamicSlots: Record<DynamicModules, {plugins: BuilderComponentPlugin[]}>;
     generateTemplate: () => ResultDir | Promise<ResultDir>;
 }
 
 export type Modules = 'pages' | 'htmlEntry' | 'packageJSON' | 'service'
-  
-export interface IProjectSlot {
+export type DynamicModules = 'layoutContainer' | 'dataContainer' | 'UIControl' | 'formControl'  
+export interface IProjectFixedSlot {
     path: string[]; 
     fileName?: string;
     ext?: string;
@@ -19,14 +21,22 @@ export interface IProjectPlugins {
 }
 
 export interface CodeStruct {
-    input: any,
+    input: CodeStructInput;
     chunks: {
         chunkType: ChunkType;
         fileType: FileType;
         chunkName: ChunkName;
         content: string;
         linkAfter: ChunkName[];
-    }[]
+    }[];
+}
+
+export interface CodeStructInput {
+    componentsMap: Record<string,NpmInfo>;
+    projectName: string;
+    title: string;
+    description: string;
+    schema: NodeSchema;
 }
 
 export type BuilderComponentPlugin = (initStruct: CodeStruct) => CodeStruct;

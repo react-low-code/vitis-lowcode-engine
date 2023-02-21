@@ -13,7 +13,7 @@ export default function getFile(): [string[], ResultFile] {
 
         interface Params {
             name?: string;
-            verifyRules:  {
+            verifyRules?:  {
                 max?: string;
                 min?: string;
                 required?: boolean;

@@ -2,8 +2,8 @@ import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
 import { ProjectSchema } from 'vitis-lowcode-types'
 
 export default function plugin(struct: CodeStruct) {
-    const input = struct.input as ProjectSchema
-    const interceptors = input.componentsTree.interceptors
+    const input = struct.input
+    const interceptors = input.schema.interceptors
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,

@@ -1,8 +1,7 @@
 import { CodeStruct, FileType, ChunkType, ChunkName} from '../types'
-import { ProjectSchema } from 'vitis-lowcode-types'
 
 export default function plugin(struct: CodeStruct) {
-    const input = struct.input as ProjectSchema
+    const input = struct.input
     const componentsMap = input.componentsMap || {}
     const dependencies = Object.keys(componentsMap).map(packageName => {
         return `"${packageName}": "${componentsMap[packageName].version}"`

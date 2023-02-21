@@ -64,7 +64,9 @@ export enum ChunkName {
   GlobalDataContextProviderEnd,
   ContainerDataContextProviderStart,
   ContainerDataContextProviderEnd,
-  ComponentRenderContent,
+  ComponentRenderContentStart,
+  ComponentRenderContentEnd,
+  ComponentRenderContentMain,
   ReactHooksUse,
   ComponentInternalFunc
 }

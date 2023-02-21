@@ -42,9 +42,9 @@ export class ProjectBuilder {
 
     createModuleBuilders() {
         let builders: Record<string, ModuleBuilder> = {}
-        const slotNames: Modules[]  = Object.keys(this.template.slots) as Modules[]
+        const slotNames: Modules[]  = Object.keys(this.template.fixedSlots) as Modules[]
         for (const slotName of slotNames) {
-            builders[slotName] = new ModuleBuilder(this.template.slots[slotName])
+            builders[slotName] = new ModuleBuilder(this.template.fixedSlots[slotName])
         }
 
         return builders as Record<Modules, ModuleBuilder>

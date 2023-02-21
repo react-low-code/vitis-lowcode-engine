@@ -1,4 +1,4 @@
-import { IProjectSlot, BuilderComponentPlugin, ResultFile, CodeStruct, ResultDir } from '../types'
+import { IProjectFixedSlot, BuilderComponentPlugin, ResultFile, CodeStruct, ResultDir } from '../types'
 import { createResultDir, insertDirectory } from '../utils/templateHelper'
 
 export default class ModuleBuilder {
@@ -7,7 +7,7 @@ export default class ModuleBuilder {
     fileName?: string
     ext?: string
 
-    constructor(projectSlot: IProjectSlot) {
+    constructor(projectSlot: IProjectFixedSlot) {
         this.path = projectSlot.path
         this.fileName = projectSlot.fileName
         this.plugins = projectSlot.plugins
@@ -33,6 +33,6 @@ export default class ModuleBuilder {
     generatePage(input: any, projectRoot: ResultDir, pageName: string = 'Home') {
         const parentDir = insertDirectory(projectRoot, this.path)
         const pageDir = createResultDir(pageName)
-        
+        this.generateModule(input)
     }
 }

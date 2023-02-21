@@ -14,8 +14,6 @@ export interface PageSchema extends ContainerSchema {
     componentName: 'Page';
     lifeCycles: LifeCycles;
     children: LayoutSchema[];
-    // 网络请求拦截器
-    interceptors?: Interceptors
 }
 
 export interface LayoutSchema extends ContainerSchema {
@@ -66,6 +64,8 @@ export interface NodeSchema {
     children: NodeSchema[];
     isFormControl?: boolean;
     containerType?: 'Layout'|'Data'|'Page';
+    // 网络请求拦截器，只有页面容器才有
+    interceptors?: Interceptors
 }
 
 export interface DataSource {
