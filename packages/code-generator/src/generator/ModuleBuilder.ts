@@ -1,4 +1,4 @@
-import { IProjectFixedSlot, BuilderComponentPlugin, ResultFile, CodeStruct, ResultDir, CodeStructInput, IProjectTemplate } from '../types'
+import { IProjectFixedSlot, BuilderComponentPlugin, CodeStruct, ResultDir, CodeStructInput, IProjectTemplate } from '../types'
 import { insertFile } from '../utils/templateHelper'
 import { generateComponentRef } from '../utils/pluginHelper'
 import { NodeSchema } from 'vitis-lowcode-types';
@@ -43,8 +43,6 @@ export default class ModuleBuilder {
 
             currentChunk = chunks.find(chunk => chunk.linkAfter.includes(currentChunk!.chunkName))
         }
-
-        console.log(codeContent,'codeContent')
         return codeContent
     }
 
