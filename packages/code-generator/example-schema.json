@@ -2,7 +2,50 @@
     "componentsTree": {
         "containerType": "Page",
         "componentName": "Page",
-        "children": [],
+        "isContainer": true,
+        "id": "def1367",
+        "children": [
+            {
+                "componentName": "Row",
+                "packageName": "vitis-lowcode-row",
+                "containerType": "Layout",
+                "isContainer": true,
+                "id": "def134",
+                "props": {},
+                "children": [
+                    {
+                      "componentName": "Column",
+                      "packageName": "vitis-lowcode-column",
+                      "props": {},
+                      "isContainer": true,
+                      "id": "def135",
+                      "containerType": "Layout",
+                      "extraProps": {},
+                      "children": [
+                        {
+                          "componentName": "Select",
+                          "packageName": "vitis-lowcode-select",
+                          "props": {"label": "性别"},
+                          "extraProps": {"name": "sex"},
+                          "isFormControl": true,
+                          "id": "def136"
+                        }
+                      ]
+                    },
+                    {
+                      "componentName": "Column",
+                      "packageName": "vitis-lowcode-column",
+                      "props": {},
+                      "isContainer": true,
+                      "containerType": "Layout",
+                      "children": [],
+                      "id": "def137",
+                      "extraProps": {}
+                    }
+                ],
+                "extraProps": {}
+            }
+        ],
         "lifeCycles": {},
         "interceptors": {
             "request": {
@@ -13,7 +56,8 @@
                 "type": "JSFunction",
                 "value": "function responseInterceptor(responseData){if (responseData.code !== '0') { return Promise.reject(responseData.msg)} else {if (responseData.data.token) {localStorage.setItem('token', responseData.data.token)} return responseData.data}}"
             }
-        }
+        },
+        "extraProps": {}
     },
     "componentsMap": {
         "vitis-lowcode-row": {
@@ -27,7 +71,13 @@
         "vitis-lowcode-input": {
             "name": "vitis-lowcode-input",
             "version": "1.1.0"
+        },
+        "vitis-lowcode-select": {
+            "name": "vitis-lowcode-select",
+            "version": "1.1.0"
         }
     },
-    "projectName": "eg"
+    "projectName": "eg",
+    "description": "description",
+    "title": "dddd"
 }

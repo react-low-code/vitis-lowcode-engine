@@ -1,13 +1,19 @@
 import { ProjectSchema } from 'vitis-lowcode-types'
+import { CodeStructInput } from '../types'
 
 export default class SchemaParser {
-    readonly schema: ProjectSchema
+    readonly schema: CodeStructInput
 
     constructor(schema: ProjectSchema | string) {
-        this.schema = typeof schema === 'string' ? JSON.parse(schema) : schema;
+        const schemaFormatted = typeof schema === 'string' ? JSON.parse(schema) : schema;
+
+        this.schema = {
+            ...schemaFormatted,
+            schema: schemaFormatted.componentsTree || {}
+        }
     }
 
     validate() {
-        return this.schema.componentsTree.componentName === 'Page'
+        return this.schema.schema.componentName === 'Page'
     }
 }

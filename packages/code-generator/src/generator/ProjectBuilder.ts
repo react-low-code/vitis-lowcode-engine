@@ -4,7 +4,6 @@ import SchemaParser from './SchemaParser'
 import { ProjectSchema } from 'vitis-lowcode-types'
 import { CodeGeneratorError } from '../utils/error'
 import ModuleBuilder from './ModuleBuilder'
-import { insertFile } from '../utils/templateHelper'
 
 export class ProjectBuilder {
     private template: IProjectTemplate;
@@ -24,19 +23,19 @@ export class ProjectBuilder {
         const builders = this.createModuleBuilders()
 
         if (builders.packageJSON) {
-            insertFile(projectRoot, builders.packageJSON.path, builders.packageJSON.generateModule(this.schemaParser.schema))
+            builders.packageJSON.generateModule(this.schemaParser.schema, projectRoot)
         }
 
         if (builders.htmlEntry) {
-            insertFile(projectRoot, builders.htmlEntry.path, builders.htmlEntry.generateModule(this.schemaParser.schema))
+            builders.htmlEntry.generateModule(this.schemaParser.schema, projectRoot)
         }
 
         if (builders.service) {
-            insertFile(projectRoot, builders.service.path, builders.service.generateModule(this.schemaParser.schema))
+            builders.service.generateModule(this.schemaParser.schema, projectRoot)
         }
 
         if (builders.pages) {
-            builders.pages.generatePage(this.schemaParser.schema, projectRoot,'Home')
+            builders.pages.generatePage(this.schemaParser.schema, projectRoot)
         }
     }
 
@@ -44,7 +43,7 @@ export class ProjectBuilder {
         let builders: Record<string, ModuleBuilder> = {}
         const slotNames: Modules[]  = Object.keys(this.template.fixedSlots) as Modules[]
         for (const slotName of slotNames) {
-            builders[slotName] = new ModuleBuilder(this.template.fixedSlots[slotName])
+            builders[slotName] = new ModuleBuilder(this.template.fixedSlots[slotName], this.template.dynamicSlots)
         }
 
         return builders as Record<Modules, ModuleBuilder>

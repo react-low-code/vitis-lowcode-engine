@@ -23,7 +23,7 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportExternalJSModules,
         content: `import React, { useContext, useState } from 'react'
-        ${'import ' + thisComponent.name + ' from ' + thisComponent.path}
+        ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
         linkAfter: []
     })
@@ -48,7 +48,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportStart,
         content: `interface Props {}
 
-        export default function Layout(props: Props) {`,
+        export default function FormControl(props: Props) {`,
         linkAfter: [
             ChunkName.ImportInternalJSModules
         ]
@@ -92,7 +92,7 @@ export default function plugin(struct: CodeStruct) {
 
         const isHidden = useHidden({pageData, formData, containerData}, isHiddenFunc)
         const isDisabled = useDisabled({pageData, formData, containerData}, isDisabledFunc)
-        const name = ${schema.extraProps.name ? schema.extraProps.name.replace(/\s/g,''): undefined}
+        const name = '${schema.extraProps.name ? schema.extraProps.name.replace(/\s/g,''): undefined}'
         const value = useSetFormControlVal({
             name,
             pathToVal: ${schema.extraProps.pathToVal},

@@ -1,5 +1,5 @@
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
-import { generateTagProps, generateUseDataSource } from '../utils/pluginHelper'
+import { generateTagProps, generateUseDataSource, generateComponentRef } from '../utils/pluginHelper'
 
 interface ComponentRef {
     path: string;
@@ -18,48 +18,14 @@ export default function plugin(struct: CodeStruct) {
         name: toLocaleStartUpperCase(schema.componentName)
     }
 
-    const childrenRef = schema.children.map(child => {
-        const id = child.id!
-        if (child.isContainer) {
-            if (child.containerType === 'Layout') {
-                return {
-                    path: `./components/LayoutContainer${id}.tsx`,
-                    name: `LayoutContainer${id}`,
-                    key: id
-                }
-            } else if (child.containerType === 'Data') {
-                return {
-                    path: `./components/DataContainer${id}.tsx`,
-                    name: `DataContainer${id}`,
-                    key: id
-                }
-            } else {
-                return undefined
-            }
-        } else {
-            if (child.isFormControl) {
-                return {
-                    path: `./components/FormControl${id}.tsx`,
-                    name: `FormControl${id}`,
-                    key: id
-                }
-            } else {
-                return {
-                    path: `./components/UIControl${id}.tsx`,
-                    name: `UIControl${id}`,
-                    key: id
-                }
-            }
-            
-        }
-    }).filter(c => !c) as {path: string, name: string, key: string}[]
+    const childrenRef = schema.children.map(generateComponentRef).filter(c => !c) as {path: string, name: string, key: string}[]
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportExternalJSModules,
         content: `import React, { useContext, useState } from 'react'
-        ${'import ' + thisComponent.name + ' from ' + thisComponent.path}
+        ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
         linkAfter: []
     })
@@ -84,7 +50,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportStart,
         content: ` interface Props {}
 
-        export default function Layout(props: Props) {`,
+        export default function Container(props: Props) {`,
         linkAfter: [
             ChunkName.ImportInternalJSModules
         ]

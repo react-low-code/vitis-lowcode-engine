@@ -12,7 +12,7 @@ import pluginUIControl from '../plugins/UIControl';
 const template: IProjectTemplate = {
   fixedSlots: {
     pages: {
-      path: ['src', 'pages'],
+      path: ['src', 'pages','Home'],
       plugins: [pluginPage]
     },
     htmlEntry: {

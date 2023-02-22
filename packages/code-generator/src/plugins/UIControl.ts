@@ -23,7 +23,7 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportExternalJSModules,
         content: `import React, { useContext, useState } from 'react'
-        ${'import ' + thisComponent.name + ' from ' + thisComponent.path}
+        ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
         linkAfter: []
     })
@@ -46,7 +46,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportStart,
         content: ` interface Props {}
 
-        export default function Layout(props: Props) {`,
+        export default function UIControl(props: Props) {`,
         linkAfter: [
             ChunkName.ImportInternalJSModules
         ]

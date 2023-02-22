@@ -55,7 +55,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ReactHooksUse,
         content: `const [formData, setFormData] = useState({})
         const [formErrors, setFormErrors] = useState({})
-        ${generateUseDataSource(schema.extraProps.dataSource)}
+        ${generateUseDataSource(schema.extraProps?.dataSource)}
         `,
         linkAfter: [ChunkName.ComponentDefaultExportStart]
     })
