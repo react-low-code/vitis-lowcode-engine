@@ -1,13 +1,16 @@
-import { IProjectTemplate, Modules } from '../types'
+import { IProjectTemplate, Modules, ResultDir } from '../types'
 import template from '../template'
 import SchemaParser from './SchemaParser'
 import { ProjectSchema } from 'vitis-lowcode-types'
 import { CodeGeneratorError } from '../utils/error'
 import ModuleBuilder from './ModuleBuilder'
+import { writeFolder } from '../utils/disk'
+import fs from 'fs'
 
 export class ProjectBuilder {
     private template: IProjectTemplate;
     private schemaParser: SchemaParser
+    private projectRoot: ResultDir = {name: '.', dirs: [], files: []}
 
     constructor(schema: ProjectSchema | string) {
         this.template = template
@@ -37,6 +40,10 @@ export class ProjectBuilder {
         if (builders.pages) {
             builders.pages.generatePage(this.schemaParser.schema, projectRoot)
         }
+
+        this.projectRoot = projectRoot
+
+        return this
     }
 
     createModuleBuilders() {
@@ -47,5 +54,9 @@ export class ProjectBuilder {
         }
 
         return builders as Record<Modules, ModuleBuilder>
+    }
+
+    writeToDisk(path: string, createProjectFolder: boolean = true) {
+        writeFolder(this.projectRoot,path, createProjectFolder, fs)
     }
 }

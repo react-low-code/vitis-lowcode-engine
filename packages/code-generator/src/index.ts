@@ -5,4 +5,6 @@ export function generateProject(schema: ProjectSchema) {
     const builder = new ProjectBuilder(schema)
 
     builder.start()
+
+    return builder
 }

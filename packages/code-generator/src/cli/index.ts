@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import * as fs from 'fs-extra';
 import JSON5 from 'json5';
 import { jsonc } from 'jsonc';
+import { resolve } from 'path'
 
 import { generateProject } from '../index';
 import type { ProjectSchema } from 'vitis-lowcode-types';
@@ -33,7 +34,10 @@ export async function run(
     const schema = await loadSchemaFile(schemaFile);
 
     // 生成代码
-    const generatedSourceCodes = await generateProject(schema);
+    const builder = await generateProject(schema);
+
+    builder.writeToDisk(options.output || resolve(process.cwd(), '../../hello'))
+
 
     // 输出到磁盘
     // const publisher = CodeGenerator.publishers.disk();
