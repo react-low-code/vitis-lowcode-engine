@@ -5,15 +5,14 @@ export default function getFile(): [string[], ResultFile] {
         name: 'useDataSource',
         ext: 'ts',
         content: `
-        import { useEffect, useState, useContext } from 'react'
-import { JSDataSource, Record } from 'vitis-lowcode-types'
+        import { useEffect, useState } from 'react'
 import qs from 'qs';
 import { Path } from 'depath'
 import { AxiosResponse, AxiosError } from 'axios'
 import { message } from 'antd';
-import instanceAxios from '../services'
+import instanceAxios from '../service'
 import { ContainerDataContextSpec } from '../context'
-import { DataSourceConfig } '../types'
+import { DataSourceConfig } from '../types'
 
 /**
  * 解析 url，取出查询字符串中的参数，orderId 只是一个占位符，用 location.search 上的同名参数填充 orderId
@@ -23,7 +22,7 @@ import { DataSourceConfig } '../types'
 function parseUrl(url: string) {
     const queries = qs.parse(window.location.search, { ignoreQueryPrefix: true })
     const [realUrl, searchStr] = url.split('?')
-    const params: Record = {}
+    const params: {[attr: string]: string | undefined | number} = {}
     if (searchStr) {
         const urlParams = qs.parse(searchStr, { ignoreQueryPrefix: true })
         for (const key of Object.keys(urlParams)) {
@@ -51,9 +50,9 @@ function generateRequestConfig(dataSourceConfig: DataSourceConfig) {
 
     return {
         url,
-        method: dataSourceConfigValue.method,
-        params: dataSourceConfigValue.method.toLocaleUpperCase() === 'GET' ? params: undefined,
-        data: dataSourceConfigValue.method.toLocaleUpperCase() === 'POST' ? params: undefined,
+        method: dataSourceConfig.method,
+        params: dataSourceConfig.method.toLocaleUpperCase() === 'GET' ? params: undefined,
+        data: dataSourceConfig.method.toLocaleUpperCase() === 'POST' ? params: undefined,
 
     }
 }
@@ -86,11 +85,11 @@ export default function useDataSource(dataSourceConfig?: DataSourceConfig, pathT
             instanceAxios.request(generateRequestConfig(dataSourceConfig))
                 .then(
                     (response: AxiosResponse) => {
-                        const responseHandler = dataSourceConfig.responseHandler || (response) => response.data
+                        const responseHandler = dataSourceConfig.responseHandler || function (response){return response.data} 
                         setData(responseHandler(response))
                     }, 
                     (reason: AxiosError) => {
-                        let errorHandler:  (reason: AxiosError) => void = dataSourceConfig.errorHandler || () => {
+                        let errorHandler:  (reason: AxiosError) => void = dataSourceConfig.errorHandler || function () {
                             message.error(reason.message || reason || '网络错误，请稍后再试')
                         }
 

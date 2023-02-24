@@ -8,7 +8,7 @@ export default function getFile(): [string[], ResultFile] {
         import { ContainerDataContext } from '../context'
         import { Path } from 'depath'
         
-        export default function useGetInitVal(pathToVal?: string, defaultValue: any) {
+        export default function useGetInitVal(pathToVal?: string, defaultValue?: any) {
             const {data: containerData, dataLoading} = useContext(ContainerDataContext)
             pathToVal = pathToVal && pathToVal.replace(/\s/g,'')
             const [initVal, setInitVal] = useState<any>()

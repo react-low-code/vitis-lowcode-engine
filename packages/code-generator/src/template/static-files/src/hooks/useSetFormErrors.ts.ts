@@ -6,8 +6,6 @@ export default function getFile(): [string[], ResultFile] {
         name: 'useSetFormErrors',
         ext: 'ts',
         content: `import { useContext, useEffect, useState } from 'react'
-        import { NodeSchema } from 'vitis-lowcode-types'
-        import { transformStringToFunction } from '../utils'
         import { GlobalDataContext, GlobalDataContextSpec } from '../context'
         import { Path } from 'depath'
 
@@ -48,7 +46,7 @@ export default function getFile(): [string[], ResultFile] {
                     }
             
                     if (maxLenRule && typeof value === 'string' && value.length > Number(maxLenRule.max)) {
-                        updateFormErrors(name, maxLenRule.message || 最多maxLenRule.max个字符)
+                        updateFormErrors(name, maxLenRule.message || '最多maxLenRule.max个字符')
                         return
                     }
             

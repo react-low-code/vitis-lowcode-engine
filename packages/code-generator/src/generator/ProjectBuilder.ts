@@ -24,7 +24,6 @@ export class ProjectBuilder {
         const projectRoot = await this.template.generateTemplate()
 
         const builders = this.createModuleBuilders()
-
         if (builders.packageJSON) {
             builders.packageJSON.generateModule(this.schemaParser.schema, projectRoot)
         }

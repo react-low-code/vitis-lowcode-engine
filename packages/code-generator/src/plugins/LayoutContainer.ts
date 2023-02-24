@@ -35,9 +35,9 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportInternalJSModules,
         content: `
-        import { GlobalDataContext, ContainerDataContext } from '../../context'
-        import useDataSource from '../../hooks/useDataSource'
-        import useHidden from '../../hooks/useHidden'
+        import { GlobalDataContext, ContainerDataContext } from '../../../context'
+        import useDataSource from '../../../hooks/useDataSource'
+        import useHidden from '../../../hooks/useHidden'
 
         ${childrenRef.map(ref => 'import ' + ref.name + ' from ' + ref.path).join('\n')}
         `,

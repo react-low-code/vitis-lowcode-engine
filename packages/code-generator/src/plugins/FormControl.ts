@@ -33,11 +33,11 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportInternalJSModules,
         content: `
-        import { GlobalDataContext, ContainerDataContext } from '../../context'
-        import useHidden from '../../hooks/useHidden'
-        import useSetFormControlVal from '../../hooks/useSetFormControlVal'
-        import useSetFormErrors from '../../hooks/useSetFormErrors'
-        import useDisabled from '../../hooks/useDisabled'
+        import { GlobalDataContext, ContainerDataContext } from '../../../context'
+        import useHidden from '../../../hooks/useHidden'
+        import useSetFormControlVal from '../../../hooks/useSetFormControlVal'
+        import useSetFormErrors from '../../../hooks/useSetFormErrors'
+        import useDisabled from '../../../hooks/useDisabled'
         `,
         linkAfter: [ChunkName.ImportExternalJSModules]
     })

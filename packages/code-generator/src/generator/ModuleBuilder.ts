@@ -15,6 +15,7 @@ export default class ModuleBuilder {
         this.fileName = projectSlot.fileName
         this.plugins = projectSlot.plugins
         this.dynamicSlots = dynamicSlots
+        this.ext = projectSlot.ext
     }
 
     generateModule(input: CodeStructInput, projectRoot: ResultDir) {
@@ -28,7 +29,7 @@ export default class ModuleBuilder {
         }, initCodeStruct)
 
         insertFile(projectRoot, this.path, {
-            ext: this.ext || 'jsx',
+            ext: this.ext || 'tsx',
             name: this.fileName || 'index',
             content: this.linkChunks(finalCodeStruct)
         })

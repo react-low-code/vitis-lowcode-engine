@@ -1,17 +1,12 @@
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
-import { generateTagProps, generateUseDataSource } from '../utils/pluginHelper'
+import { generateTagProps, generateUseDataSource, generateComponentRef } from '../utils/pluginHelper'
 
 export default function plugin(struct: CodeStruct) {
     const input = struct.input
     const schema = input.schema
 
     // 只有布局容器才能作为 page 的 children
-    const childrenRef: {path: string, name: string}[] = schema.children.map(() => {
-        return {
-            path: `'./components/LayoutContainer.tsx'`,
-            name: `LayoutContainer`
-        }
-    })
+    const childrenRef = schema.children.map(generateComponentRef).filter(c => !!c) as  {path: string, name: string, key: string}[]
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
@@ -28,10 +23,10 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportInternalJSModules,
         content: `
-        import { GlobalDataContext, ContainerDataContext } from '../context'
-        import useDataSource from '../hooks/useDataSource'
+        import { GlobalDataContext, ContainerDataContext } from '../../context'
+        import useDataSource from '../../hooks/useDataSource'
 
-        ${childrenRef.map(ref => 'import ' + ref.name + ' from ' + ref.path).join('\n')}
+        ${childrenRef.map(ref => 'import ' + ref.name + ' from "' + ref.path + '"').join('\n')}
         `,
         linkAfter: [ChunkName.ImportExternalJSModules]
     })
@@ -78,7 +73,9 @@ export default function plugin(struct: CodeStruct) {
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentRenderContentStart,
-        content: `return (`,
+        content: `
+        return (
+        `,
         linkAfter: [ChunkName.ComponentInternalFunc]
     })
 

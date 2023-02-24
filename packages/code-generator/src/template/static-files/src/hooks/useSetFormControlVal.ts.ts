@@ -13,7 +13,7 @@ export default function getFile(): [string[], ResultFile] {
 
         interface Params {
             name?: string;
-            getValue: HiddenLinkageRule;
+            getValue?: HiddenLinkageRule;
             pathToVal?: string
         }
         
@@ -37,7 +37,7 @@ export default function getFile(): [string[], ResultFile] {
                     }
                 }
         
-                if (params.getValue ) {
+                if (params.getValue) {
                     if (name && JSON.stringify(Path.deleteIn({...formData}, name)) !== JSON.stringify(Path.deleteIn({...prevFormData}, name))) {
                         const val = computedVal()
                         if (val !== undefined) {

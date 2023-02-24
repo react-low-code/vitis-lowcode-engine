@@ -33,9 +33,9 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportInternalJSModules,
         content: `
-        import { GlobalDataContext, ContainerDataContext } from '../../context'
-        import useHidden from '../../hooks/useHidden'
-        import useGetInitVal from '../../hooks/useGetInitVal'
+        import { GlobalDataContext, ContainerDataContext } from '../../../context'
+        import useHidden from '../../../hooks/useHidden'
+        import useGetInitVal from '../../../hooks/useGetInitVal'
         `,
         linkAfter: [ChunkName.ImportExternalJSModules]
     })

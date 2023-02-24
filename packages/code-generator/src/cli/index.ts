@@ -37,17 +37,6 @@ export async function run(
     const builder = await generateProject(schema);
 
     builder.writeToDisk(options.output || resolve(process.cwd(), '../../hello'))
-
-
-    // 输出到磁盘
-    // const publisher = CodeGenerator.publishers.disk();
-
-    // await publisher.publish({
-    //   project: generatedSourceCodes,
-    //   outputPath: options.output || 'generated',
-    //   projectSlug: 'example',
-    //   createProjectFolder: false,
-    // });
     return 0;
   } catch (e) {
     if (typeof e === 'object' && (e as { stack: string } | null)?.stack && options.verbose) {

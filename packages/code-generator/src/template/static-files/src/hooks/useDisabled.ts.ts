@@ -23,7 +23,7 @@ export default function useDisabled(dataGroup: DataGroup, isDisabled?: DisabledL
 
     useEffect(() => {
         setDisabled(computedDisabled())
-    }, [isDisabled?.value, dataGroup.pageData, dataGroup.formData, dataGroup.containerData])
+    }, [isDisabled, dataGroup.pageData, dataGroup.formData, dataGroup.containerData])
 
     return disabled
 }
