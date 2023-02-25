@@ -7,7 +7,7 @@ interface ComponentRef {
 }
 
 function toLocaleStartUpperCase(name: string) {
-    return name[0].toLocaleUpperCase() + name.slice(1,-1)
+    return name[0].toLocaleUpperCase() + name.slice(1)
 }
 
 export default function plugin(struct: CodeStruct) {
@@ -22,7 +22,7 @@ export default function plugin(struct: CodeStruct) {
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportExternalJSModules,
-        content: `import React, { useContext, useState } from 'react'
+        content: `import React, { useContext } from 'react'
         ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
         linkAfter: []

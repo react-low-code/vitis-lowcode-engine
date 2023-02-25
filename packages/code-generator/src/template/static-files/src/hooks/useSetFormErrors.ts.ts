@@ -1,5 +1,7 @@
 import { ResultFile } from '../../../../types/file'
 
+const defaultMinLen = '`至少${minLenRule.min}个字符`'
+const defaultManLen = '`最多${maxLenRule.max}个字符`'
 
 export default function getFile(): [string[], ResultFile] {
     return [['src','hooks'], {
@@ -41,12 +43,12 @@ export default function getFile(): [string[], ResultFile] {
                     }
             
                     if (minLenRule && (!value || typeof value === 'string' && value.length < Number(minLenRule.min))) {
-                        updateFormErrors(name, minLenRule.message || '至少minLenRule.min个字符')
+                        updateFormErrors(name, minLenRule.message || ${defaultMinLen})
                         return
                     }
             
                     if (maxLenRule && typeof value === 'string' && value.length > Number(maxLenRule.max)) {
-                        updateFormErrors(name, maxLenRule.message || '最多maxLenRule.max个字符')
+                        updateFormErrors(name, maxLenRule.message || ${defaultManLen})
                         return
                     }
             

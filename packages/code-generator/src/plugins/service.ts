@@ -1,5 +1,4 @@
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
-import { ProjectSchema } from 'vitis-lowcode-types'
 
 export default function plugin(struct: CodeStruct) {
     const input = struct.input
@@ -15,7 +14,8 @@ export default function plugin(struct: CodeStruct) {
 
     function generateRequestInterceptor() {
         if (interceptors && interceptors.request) {
-            const config = interceptors.request.value ? `const requestInterceptor: (config: AxiosRequestConfig) => AxiosRequestConfig = ${interceptors.request.value}
+            const config = interceptors.request.value ? `
+            const requestInterceptor: (config: AxiosRequestConfig) => AxiosRequestConfig = ${interceptors.request.value}
             return requestInterceptor(config)`: 'return config'
 
             return `instance.interceptors.request.use(function(config: AxiosRequestConfig): AxiosRequestConfig {
