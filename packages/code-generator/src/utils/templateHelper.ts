@@ -12,14 +12,14 @@ export function createResultDir(name: string): ResultDir {
 }
 
 export function addDirectory(target: ResultDir, dir: ResultDir): void {
-    if (target.dirs.findIndex((d) => d.name === dir.name) < 0) {
-      target.dirs.push(dir);
-    } else {
-      throw new CodeGeneratorError(
-        `Adding same directory to one directory: ${dir.name} -> ${target.name}`,
-      );
-    }
+  if (target.dirs.findIndex((d) => d.name === dir.name) < 0) {
+    target.dirs.push(dir);
+  } else {
+    throw new CodeGeneratorError(
+      `Adding same directory to one directory: ${dir.name} -> ${target.name}`,
+    );
   }
+}
   
   export function addFile(target: ResultDir, file: ResultFile): void {
     if (target.files.findIndex((f) => f.name === file.name && f.ext === file.ext) < 0) {
@@ -63,12 +63,12 @@ export function insertDirectory(root: ResultDir, path: string[]) {
   return current
 }
 
-export function runFileGenerator(root: ResultDir, fun: FuncFileGenerator) {
+export function runFileGenerator(root: ResultDir, getFile: FuncFileGenerator) {
   try {
-    const result = fun();
+    const result = getFile();
     const [path, file] = result;
     insertFile(root, path, file);
   } catch (error) {
-    throw new Error(`Error: ${typeof fun}`);
+    throw new Error(`Error: ${typeof getFile}`);
   }
 }

@@ -3,7 +3,7 @@ import { ResultFile } from '../../../types/file'
 export default function getFile(): [string[], ResultFile] {
     return [['src'], {
         name: 'app',
-        ext: 'jsx',
+        ext: 'tsx',
         content: `
         import { runApp, config } from 'ice';
         const appConfig = {
@@ -16,6 +16,6 @@ export default function getFile(): [string[], ResultFile] {
         };
         
         runApp(appConfig);
-          `
+        `
     }]
 }

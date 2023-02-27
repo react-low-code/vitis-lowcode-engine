@@ -3,7 +3,7 @@ import { ResultFile } from '../../../types/file'
 export default function getFile(): [string[], ResultFile] {
     return [['src'], {
         name: 'routes',
-        ext: 'js',
+        ext: 'ts',
         content: `
         import { lazy } from 'ice';
 
