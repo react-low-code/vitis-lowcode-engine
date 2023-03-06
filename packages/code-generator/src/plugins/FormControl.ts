@@ -25,7 +25,6 @@ export default function plugin(struct: CodeStruct) {
         content: `import React, { useContext } from 'react'
         ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
-        linkAfter: []
     })
 
     struct.chunks.push({
@@ -39,7 +38,7 @@ export default function plugin(struct: CodeStruct) {
         import useSetFormErrors from '../../../hooks/useSetFormErrors'
         import useDisabled from '../../../hooks/useDisabled'
         `,
-        linkAfter: [ChunkName.ImportExternalJSModules]
+        linkAfter: ChunkName.ImportExternalJSModules
     })
 
     struct.chunks.push({
@@ -48,18 +47,16 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportStart,
         content: `interface Props {}
 
-        export default function FormControl(props: Props) {`,
-        linkAfter: [
-            ChunkName.ImportInternalJSModules
-        ]
+        export default function FormControl(props: Props) {
+            `,
+        linkAfter: ChunkName.ImportInternalJSModules
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentInternalFunc,
-        content: `
-            const isHiddenFunc = ${schema.extraProps.isHidden?.value}
+        content: `const isHiddenFunc = ${schema.extraProps.isHidden?.value}
             const isDisabledFunc = ${schema.extraProps.isDisabled?.value}
             const getValue = ${schema.extraProps.getValue?.value}
 
@@ -79,15 +76,14 @@ export default function plugin(struct: CodeStruct) {
                 }
             }
         `,
-        linkAfter: [ChunkName.ComponentDefaultExportStart]
+        linkAfter: ChunkName.ComponentDefaultExportStart
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ReactHooksUse,
-        content: `
-        const {data: containerData} = useContext(ContainerDataContext)
+        content: `const {data: containerData} = useContext(ContainerDataContext)
         const { formData, pageData, updateFormData } = useContext(GlobalDataContext)
 
         const isHidden = useHidden({pageData, formData, containerData}, isHiddenFunc)
@@ -104,16 +100,16 @@ export default function plugin(struct: CodeStruct) {
             verifyRules,
         })
         `,
-        linkAfter: [ChunkName.ComponentInternalFunc]
+        linkAfter: ChunkName.ComponentInternalFunc
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentRenderContentStart,
-        content: `
-        return (`,
-        linkAfter: [ChunkName.ReactHooksUse]
+        content: `return (
+            `,
+        linkAfter: ChunkName.ReactHooksUse
     })
 
     struct.chunks.push({
@@ -128,7 +124,7 @@ export default function plugin(struct: CodeStruct) {
         {error && <div style={{color: 'red', fontSize: '14px'}}>{error}</div>}
         </>
         `,
-        linkAfter: [ChunkName.ComponentRenderContentStart]
+        linkAfter: ChunkName.ComponentRenderContentStart
     })
 
     struct.chunks.push({
@@ -136,7 +132,7 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentRenderContentEnd,
         content: `)`,
-        linkAfter: [ChunkName.ComponentRenderContentMain]
+        linkAfter: ChunkName.ComponentRenderContentMain
     })
 
     struct.chunks.push({
@@ -145,9 +141,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportEnd,
         content: `
         }`,
-        linkAfter: [
-            ChunkName.ComponentRenderContentEnd, 
-        ]
+        linkAfter: ChunkName.ComponentRenderContentEnd, 
     })
     
     return struct

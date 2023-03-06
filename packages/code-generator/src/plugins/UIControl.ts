@@ -25,7 +25,6 @@ export default function plugin(struct: CodeStruct) {
         content: `import React, { useContext } from 'react'
         ${'import ' + thisComponent.name + ' from ' + "'" +thisComponent.path + "'"}
         `,
-        linkAfter: []
     })
 
     struct.chunks.push({
@@ -37,7 +36,7 @@ export default function plugin(struct: CodeStruct) {
         import useHidden from '../../../hooks/useHidden'
         import useGetInitVal from '../../../hooks/useGetInitVal'
         `,
-        linkAfter: [ChunkName.ImportExternalJSModules]
+        linkAfter: ChunkName.ImportExternalJSModules
     })
 
     struct.chunks.push({
@@ -47,9 +46,7 @@ export default function plugin(struct: CodeStruct) {
         content: ` interface Props {}
 
         export default function UIControl(props: Props) {`,
-        linkAfter: [
-            ChunkName.ImportInternalJSModules
-        ]
+        linkAfter: ChunkName.ImportInternalJSModules
     })
 
     struct.chunks.push({
@@ -60,7 +57,7 @@ export default function plugin(struct: CodeStruct) {
             const isHiddenFunc = ${schema.extraProps.isHidden?.value}
 
         `,
-        linkAfter: [ChunkName.ComponentDefaultExportStart]
+        linkAfter: ChunkName.ComponentDefaultExportStart
     })
 
     struct.chunks.push({
@@ -74,7 +71,7 @@ export default function plugin(struct: CodeStruct) {
         const isHidden = useHidden({pageData, formData, containerData}, isHiddenFunc)
         const value = useGetInitVal(${schema.extraProps.pathToVal}, ${schema.props.defaultValue})
         `,
-        linkAfter: [ChunkName.ComponentInternalFunc]
+        linkAfter: ChunkName.ComponentInternalFunc
     })
 
     struct.chunks.push({
@@ -83,7 +80,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentRenderContentStart,
         content: `
         return (`,
-        linkAfter: [ChunkName.ReactHooksUse]
+        linkAfter: ChunkName.ReactHooksUse
     })
 
     struct.chunks.push({
@@ -94,7 +91,7 @@ export default function plugin(struct: CodeStruct) {
             <${thisComponent.name} ${generateTagProps(schema.props, schema.id!)} value={value} />
         }
         `,
-        linkAfter: [ChunkName.ComponentRenderContentStart]
+        linkAfter: ChunkName.ComponentRenderContentStart
     })
 
     struct.chunks.push({
@@ -102,7 +99,7 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentRenderContentEnd,
         content: `)`,
-        linkAfter: [ChunkName.ComponentRenderContentMain]
+        linkAfter: ChunkName.ComponentRenderContentMain
     })
 
     struct.chunks.push({
@@ -111,9 +108,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportEnd,
         content: `
         }`,
-        linkAfter: [
-            ChunkName.ComponentRenderContentEnd, 
-        ]
+        linkAfter: ChunkName.ComponentRenderContentEnd,
     })
     
     return struct

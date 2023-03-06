@@ -9,7 +9,6 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TS,
         chunkName: ChunkName.ImportExternalJSModules,
         content: `import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'`,
-        linkAfter: []
     })
 
     function generateRequestInterceptor() {
@@ -55,7 +54,7 @@ export default function plugin(struct: CodeStruct) {
         ${generateResponseInterceptor()}
         export default instance
         `,
-        linkAfter: [ChunkName.ImportExternalJSModules]
+        linkAfter: ChunkName.ImportExternalJSModules
     })
     return struct
 }

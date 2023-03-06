@@ -6,8 +6,8 @@ import { NodeSchema } from 'vitis-lowcode-types';
 export default class ModuleBuilder {
     plugins: BuilderComponentPlugin[];
     path: string[];
-    fileName?: string;
-    ext?: string;
+    fileName: string;
+    ext: string;
     dynamicSlots: IProjectTemplate['dynamicSlots'];
 
     constructor(projectSlot: IProjectFixedSlot, dynamicSlots: IProjectTemplate['dynamicSlots']) {
@@ -29,20 +29,20 @@ export default class ModuleBuilder {
         }, initCodeStruct)
 
         insertFile(projectRoot, this.path, {
-            ext: this.ext || 'tsx',
-            name: this.fileName || 'index',
+            ext: this.ext,
+            name: this.fileName,
             content: this.linkChunks(finalCodeStruct)
         })
     }
 
     private linkChunks(finalCodeStruct: CodeStruct): string {
         const { chunks } = finalCodeStruct
-        let currentChunk = chunks.find(chunk => chunk.linkAfter.length === 0)
+        let currentChunk = chunks.find(chunk => chunk.linkAfter === undefined)
         let codeContent = ''
         while(currentChunk) {
             codeContent += currentChunk.content
 
-            currentChunk = chunks.find(chunk => chunk.linkAfter.includes(currentChunk!.chunkName))
+            currentChunk = chunks.find(chunk => chunk.linkAfter === currentChunk!.chunkName)
         }
         return codeContent
     }

@@ -13,6 +13,8 @@ const template: IProjectTemplate = {
   fixedSlots: {
     pages: {
       path: ['src', 'pages','Home'],
+      fileName: 'index',
+      ext: 'tsx',
       plugins: [pluginPage]
     },
     htmlEntry: {

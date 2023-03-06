@@ -43,8 +43,7 @@ export default function plugin(struct: CodeStruct) {
                 "antd": "^5.2.1",
                 ${dependencies}
             },
-        }`,
-        linkAfter: [],
+        }`
     })
     return struct
 }

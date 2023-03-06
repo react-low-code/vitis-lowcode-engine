@@ -12,10 +12,9 @@ export default function plugin(struct: CodeStruct) {
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ImportExternalJSModules,
-        content: `import React, { useContext, useState } from 'react'
+        content: `import React, { useState } from 'react'
         import { Path } from 'depath'
         `,
-        linkAfter: []
     })
 
     struct.chunks.push({
@@ -25,23 +24,19 @@ export default function plugin(struct: CodeStruct) {
         content: `
         import { GlobalDataContext, ContainerDataContext } from '../../context'
         import useDataSource from '../../hooks/useDataSource'
-
         ${childrenRef.map(ref => 'import ' + ref.name + ' from "' + ref.path + '"').join('\n')}
         `,
-        linkAfter: [ChunkName.ImportExternalJSModules]
+        linkAfter: ChunkName.ImportExternalJSModules
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentDefaultExportStart,
-        content: ` interface Props {}
-
-        export default function Index(props: Props) {`,
-        linkAfter: [
-            ChunkName.ImportInternalJSModules, 
-            ChunkName.ImportExternalJSModules,
-        ]
+        content: `
+        export default function Index(props: {}) {
+            `,
+        linkAfter: ChunkName.ImportInternalJSModules, 
     })
 
     struct.chunks.push({
@@ -52,7 +47,7 @@ export default function plugin(struct: CodeStruct) {
         const [formErrors, setFormErrors] = useState({})
         ${generateUseDataSource(schema.extraProps?.dataSource)}
         `,
-        linkAfter: [ChunkName.ComponentDefaultExportStart]
+        linkAfter: ChunkName.ComponentDefaultExportStart
     })
 
     struct.chunks.push({
@@ -66,7 +61,7 @@ export default function plugin(struct: CodeStruct) {
         const updateFormErrors = (path: string, value: any) => {
             setFormErrors(Path.setIn(Object.assign({}, formErrors), path, value))
         }`,
-        linkAfter: [ChunkName.ReactHooksUse]
+        linkAfter: ChunkName.ReactHooksUse
     })
 
     struct.chunks.push({
@@ -76,7 +71,7 @@ export default function plugin(struct: CodeStruct) {
         content: `
         return (
         `,
-        linkAfter: [ChunkName.ComponentInternalFunc]
+        linkAfter: ChunkName.ComponentInternalFunc
     })
 
     struct.chunks.push({
@@ -90,8 +85,9 @@ export default function plugin(struct: CodeStruct) {
             formErrors,
             updateFormData,
             updateFormErrors
-        }}>`,
-        linkAfter: [ChunkName.ComponentRenderContentStart]
+        }}>
+        `,
+        linkAfter: ChunkName.ComponentRenderContentStart
     })
 
     struct.chunks.push({
@@ -101,8 +97,9 @@ export default function plugin(struct: CodeStruct) {
         content: `<ContainerDataContext.Provider value={{
             data,
             dataLoading: loading
-        }}>`,
-        linkAfter: [ChunkName.GlobalDataContextProviderStart]
+        }}>
+        `,
+        linkAfter: ChunkName.GlobalDataContextProviderStart
     })
 
     struct.chunks.push({
@@ -111,24 +108,27 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentRenderContentMain,
         content: `<div ${generateTagProps(schema.props, schema.id!)}>
             ${childrenRef.map(child => '<' + child.name +'/>').join('\n')}
-        </div>`,
-        linkAfter: [ChunkName.ContainerDataContextProviderStart]
+        </div>
+        `,
+        linkAfter: ChunkName.ContainerDataContextProviderStart
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.ContainerDataContextProviderEnd,
-        content: `</ContainerDataContext.Provider>`,
-        linkAfter: [ChunkName.ComponentRenderContentMain]
+        content: `</ContainerDataContext.Provider>
+        `,
+        linkAfter: ChunkName.ComponentRenderContentMain
     })
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
         chunkName: ChunkName.GlobalDataContextProviderEnd,
-        content: `</GlobalDataContext.Provider>`,
-        linkAfter: [ChunkName.ContainerDataContextProviderEnd]
+        content: `</GlobalDataContext.Provider>
+        `,
+        linkAfter: ChunkName.ContainerDataContextProviderEnd
     })
 
     struct.chunks.push({
@@ -136,7 +136,7 @@ export default function plugin(struct: CodeStruct) {
         fileType: FileType.TSX,
         chunkName: ChunkName.ComponentRenderContentEnd,
         content: `)`,
-        linkAfter: [ChunkName.GlobalDataContextProviderEnd]
+        linkAfter: ChunkName.GlobalDataContextProviderEnd
     })
 
     struct.chunks.push({
@@ -145,9 +145,7 @@ export default function plugin(struct: CodeStruct) {
         chunkName: ChunkName.ComponentDefaultExportEnd,
         content: `
         }`,
-        linkAfter: [
-            ChunkName.ComponentRenderContentEnd, 
-        ]
+        linkAfter: ChunkName.ComponentRenderContentEnd,
     })
     
     return struct

@@ -25,35 +25,20 @@ export function generateUseDataSource(dataSourceConf: DataSourceConfig, pathToVa
 
 export function generateComponentRef(schema: NodeSchema) {
     const id = schema.id!
-    if (schema.isContainer) {
-        if (schema.containerType === 'Layout') {
-            return {
-                path: `./components/LayoutContainer${id}.tsx`,
-                name: `LayoutContainer${id}`,
-                key: id
-            }
-        } else if (schema.containerType === 'Data') {
-            return {
-                path: `./components/DataContainer${id}.tsx`,
-                name: `DataContainer${id}`,
-                key: id
-            }
-        } else {
-            return undefined
-        }
-    } else {
-        if (schema.isFormControl) {
-            return {
-                path: `./components/FormControl${id}.tsx`,
-                name: `FormControl${id}`,
-                key: id
-            }
-        } else {
-            return {
-                path: `./components/UIControl${id}.tsx`,
-                name: `UIControl${id}`,
-                key: id
-            }
+    let name: string | undefined = undefined
+    if (schema.isContainer && schema.containerType === 'Layout') {
+        name = `LayoutContainer${id}`
+    } else if (schema.isFormControl) {
+        name = `FormControl${id}`
+    } else if (!schema.isContainer && !schema.isFormControl) {
+        name = `UIControl${id}`
+    }
+
+    if (name) {
+        return {
+            path: `./components/${name}`,
+            name,
+            key: id
         }
     }
 }

@@ -50,7 +50,7 @@
         "interceptors": {
             "request": {
                 "type": "JSFunction",
-                "value": "function request(config) {config.dd = '344'; return config}"
+                "value": "function request(config) {config.headers.dd = '344'; return config}"
             },
             "response": {
                 "type": "JSFunction",
@@ -77,7 +77,7 @@
             "version": "1.1.0"
         }
     },
-    "projectName": "eg",
-    "description": "description",
-    "title": "dddd"
+    "projectName": "demo",
+    "description": "这是一个demo",
+    "title": "这是一个demo"
 }

@@ -11,8 +11,8 @@ export type Modules = 'pages' | 'htmlEntry' | 'packageJSON' | 'service'
 export type DynamicModules = 'layoutContainer' | 'dataContainer' | 'UIControl' | 'formControl'  
 export interface IProjectFixedSlot {
     path: string[]; 
-    fileName?: string;
-    ext?: string;
+    fileName: string;
+    ext: string;
     plugins: BuilderComponentPlugin[]
 }
 
@@ -27,7 +27,7 @@ export interface CodeStruct {
         fileType: FileType;
         chunkName: ChunkName;
         content: string;
-        linkAfter: ChunkName[];
+        linkAfter?: ChunkName;
     }[];
 }
 

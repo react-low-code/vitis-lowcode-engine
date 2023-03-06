@@ -20,8 +20,7 @@ export default function plugin(struct: CodeStruct) {
             <div id="ice-container"></div>
           </body>
         </html>
-        `,
-        linkAfter: []
+        `
     })
     return struct
 }
