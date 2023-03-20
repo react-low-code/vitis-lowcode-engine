@@ -33,8 +33,8 @@ export interface DropLocation {
 
 export interface FieldConfig {
   type: 'group' | 'field';
-  // 当 type 为 'field' 时才可能给 isExtra 赋值
-  // isExtra 为 true，意味着这个字段的值不会传给组件 props
+  // 当 type 为 'field' 时 isExtra 才可能有值
+  // isExtra 为 true，意味着这个字段不会传给低代码组件的 props
   isExtra?: boolean;
   title?: string;
   fields?: FieldConfig[];

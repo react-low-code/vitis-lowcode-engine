@@ -28,32 +28,6 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         return result
     }
 
-    get nextSibling(): Node<NodeSchema> | undefined {
-        if (this.parent) {
-            const index = this.parent.children.findIndex(c => c === this)
-            if (index === -1) {
-                return undefined
-            } else {
-                return this.parent.children[index + 1] || undefined
-            }
-        } else {
-            return undefined
-        }
-    }
-
-    get prevSibling(): Node<NodeSchema> | undefined {
-        if (this.parent) {
-            const index = this.parent.children.findIndex(c => c === this)
-            if (index === -1) {
-                return undefined
-            } else {
-                return this.parent.children[index - 1] || undefined
-            }
-        } else {
-            return undefined
-        }
-    }
-
     get title() {
         return this.componentSpec.title
     }

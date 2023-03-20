@@ -5,7 +5,7 @@ import React from 'react';
 
 import { PropsContextSpec, PropsContext } from '../context'
 
-export interface Props extends PropsContextSpec{
+export interface Props extends PropsContextSpec {
     schema: PageSchema;
 }
 

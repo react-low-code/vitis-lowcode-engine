@@ -1,16 +1,12 @@
-import { ReactInstance } from "react"
-
 export interface DomNode {
     node: HTMLElement;
     rect: DOMRect
 }
 
-class ReactInstanceCollector {
-    // reactInstanceMap: Map<string, ReactInstance | null> = new Map()
+class ReactDomCollector {
     domNodeMap: Map<string, DomNode | null> = new Map()
 
     mount(id: string, domElement: HTMLElement | null){
-        // this.reactInstanceMap.set(id, instance)
         if (domElement) {
             this.domNodeMap.set(id, {
                 node: domElement,
@@ -23,4 +19,4 @@ class ReactInstanceCollector {
     }
 }
 
-export default new ReactInstanceCollector()
+export default new ReactDomCollector()

@@ -1,4 +1,4 @@
-import type { IReactionPublic, IReactionOptions } from 'mobx';
+import type { IReactionPublic } from 'mobx';
 import { ObservableProjectSpec } from './project'
 import { Point } from 'vitis-lowcode-types'
 
@@ -6,7 +6,7 @@ import { Point } from 'vitis-lowcode-types'
 /** 这是模拟器要提供给设计器的方法*/
 export interface SimulatorSpec {
     /**
-     * 装载渲染器
+     * 渲染画布
      */
     run(): void
     /**
@@ -40,8 +40,7 @@ export interface HostSpec {
      */
     connect(
         renderer: SimulatorSpec, 
-        effect: (reaction: IReactionPublic) => void,
-        options?: IReactionOptions<any, boolean>,
+        effect: (reaction: IReactionPublic) => void
     ): void
     
     /**

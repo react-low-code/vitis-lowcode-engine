@@ -54,7 +54,7 @@
             },
             "response": {
                 "type": "JSFunction",
-                "value": "function responseInterceptor(responseData){if (responseData.code !== '0') { return Promise.reject(responseData.msg)} else {if (responseData.data.token) {localStorage.setItem('token', responseData.data.token)} return responseData.data}}"
+                "value": "function responseInterceptor(responseData){ return responseData.data }"
             }
         },
         "extraProps": {}
@@ -79,5 +79,5 @@
     },
     "projectName": "demo",
     "description": "这是一个demo",
-    "title": "这是一个demo"
+    "title": "Demo"
 }

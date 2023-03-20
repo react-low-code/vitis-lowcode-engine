@@ -52,9 +52,8 @@ export class Dragon {
                 containerNode: container,
             }
 
-            const { childrenSize } = container
+            const { childrenSize, lastChild } = container
             const { clientY } = locateEvent
-            const lastChild = container.lastChild
             
             if (lastChild) {
                 const lastChildRect = this.designer.getNodeRect(lastChild.id)

@@ -41,25 +41,27 @@ export interface ComponentSchema extends NodeSchema {
     isFormControl?: boolean;
 }
 
+export interface ExtraProps {
+    // 容器节点的 pathToVal 和 dataSource 必须二选一
+    pathToVal?: string;
+    dataSource?: JSDataSource;
+    name?: string;
+    // 禁用联动规则
+    isDisabled?: JSFunction;
+    // 求值联动规则
+    getValue?: JSFunction;
+    // 隐藏联动规则
+    isHidden?: JSFunction;
+    verifyRules?: Rule[],
+    [key: string]: PropValue;
+}
+
 export interface NodeSchema {
     id?: string;
     componentName: string;
     packageName: string;
     props: {[key: string]: PropValue;}
-    extraProps: {
-        // 容器节点的 pathToVal 和 dataSource 必须二选一
-        pathToVal?: string;
-        dataSource?: JSDataSource;
-        name?: string;
-        // 禁用联动规则
-        isDisabled?: JSFunction;
-        // 求值联动规则
-        getValue?: JSFunction;
-        // 隐藏联动规则
-        isHidden?: JSFunction;
-        verifyRules?: Rule[],
-        [key: string]: PropValue;
-    }
+    extraProps: ExtraProps,
     isContainer: boolean;
     children: NodeSchema[];
     isFormControl?: boolean;

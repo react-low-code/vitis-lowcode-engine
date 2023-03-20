@@ -1,7 +1,7 @@
 import { NodeSchema, SimulatorSpec, Point } from 'vitis-lowcode-types'
 import { createElement } from 'react'
 import { RendererMode } from 'vitis-lowcode-renderer'
-import reactInstanceCollector, { DomNode } from './reactInstanceCollector'
+import reactDomCollector, { DomNode } from './reactInstanceCollector'
 import { EmptyComponent } from './emptyComponent/page'
 import SimulatorRendererView from './view'
 import observerData from './store'
@@ -22,7 +22,7 @@ class SimulatorRenderer implements SimulatorSpec {
     getClosestNodeIdByLocation = (point: Point): string | undefined => {
         // 第一步：找出包含 point 的全部 dom 节点
         const suitableContainer = new Map<string, DomNode>()
-        for (const [id, domNode] of reactInstanceCollector.domNodeMap) {
+        for (const [id, domNode] of reactDomCollector.domNodeMap) {
             const rect = this.getNodeRect(id)
             if (!domNode || !rect) continue
             const { width, height, left, top } = rect
@@ -47,7 +47,7 @@ class SimulatorRenderer implements SimulatorSpec {
     }
 
     getNodeRect = (nodeId: string): DOMRect | undefined => {
-        return reactInstanceCollector.domNodeMap.get(nodeId)?.node.getBoundingClientRect()
+        return reactDomCollector.domNodeMap.get(nodeId)?.node.getBoundingClientRect()
     }
 
     getNodeIdByDOMElem = (elem: HTMLElement) => {
@@ -75,11 +75,7 @@ class SimulatorRenderer implements SimulatorSpec {
             createElement(SimulatorRendererView, {
                 rendererMode: RendererMode.design,
                 onCompGetRef: (schema: NodeSchema, domElement: HTMLElement | null) => {
-                    reactInstanceCollector.mount(schema.id!, domElement)
-                },
-                customCreateElement: (schema: NodeSchema) => {
-                    // todo
-                    return <div></div>
+                    reactDomCollector.mount(schema.id!, domElement)
                 },
                 customEmptyElement: (schema: NodeSchema) => {
                     if (schema.containerType === 'Page') {

@@ -51,7 +51,7 @@ export interface ComponentSpecRaw {
     },
   },
   // 嵌套的组件规格，通常只有模板才有这个字段
-  // 模板中嵌套的组件的嵌套规则不会被用到
+  // 模板所嵌套的组件的嵌套规则不会被用到
   // 注意：children 中的组件，必须在引擎中注册
   children?: Array<Omit<ComponentSpecRaw,'advanced'> & {
     advanced?: {
