@@ -2,6 +2,7 @@
 import { PageSchema } from 'vitis-lowcode-types'
 import PageRenderer from './page';
 import React from 'react';
+import useLifeCycles from '../hooks/useLifeCycles'
 
 import { PropsContextSpec, PropsContext } from '../context'
 
@@ -12,6 +13,7 @@ export interface Props extends PropsContextSpec {
 export default class Renderer extends React.Component<Props, {}> {
     render() {
         const { schema } = this.props
+        useLifeCycles(schema.lifeCycles)
 
         if (schema.isContainer && schema.containerType === 'Page') {
             return (

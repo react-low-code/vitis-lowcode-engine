@@ -53,28 +53,28 @@ export default function () {
                 content={
                 <div className='components-pane-body' style={{height: height + 'px'}}>
                     <div>
-                        <div>load</div>
+                        <div>应用加载之后</div>
                         {lifeCycles.load !== undefined ? 
                         <MonacoEditor value={lifeCycles.load.value} language="javascript" onBlur={onChange('load')} />: 
                         <Button type="dashed" size="small" onClick={onAddLifeCycle('load')}>添加</Button>
                         }
                     </div>
                     <div>
-                        <div>beforeunload</div>
+                        <div>应用卸载之前</div>
                         {lifeCycles.beforeunload !== undefined ? 
                         <MonacoEditor value={lifeCycles.beforeunload.value} language="javascript" onBlur={onChange('beforeunload')} />: 
                         <Button type="dashed" size="small" onClick={onAddLifeCycle("beforeunload")}>添加</Button>
                         }
                     </div>
                     <div>
-                        <div>unload</div>
+                        <div>应用卸载之后</div>
                         {lifeCycles.unload !== undefined ? 
                         <MonacoEditor value={lifeCycles.unload.value} language="javascript" onBlur={onChange('unload')} />: 
                         <Button type="dashed" size="small" onClick={onAddLifeCycle("unload")}>添加</Button>
                         }
                     </div>
                     <div>
-                        <div>visibilitychange</div>
+                        <div>应用可见性变化时</div>
                         {lifeCycles.visibilitychange !== undefined ? 
                         <MonacoEditor value={lifeCycles.visibilitychange.value} language="javascript" onBlur={onChange('visibilitychange')} />: 
                         <Button type="dashed" size="small" onClick={onAddLifeCycle("visibilitychange")}>添加</Button>
