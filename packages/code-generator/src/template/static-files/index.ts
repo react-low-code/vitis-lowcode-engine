@@ -21,6 +21,7 @@ import useHidden from './src/hooks/useHidden.ts'
 import usePrevVal from './src/hooks/usePrevVal.ts'
 import useSetFormControlVal from './src/hooks/useSetFormControlVal.ts'
 import useSetFormErrors from './src/hooks/useSetFormErrors.ts'
+import useLifeCycles from './src/hooks/useLifeCycles.ts'
 
 import {ResultDir} from '../../types/file'
 import { createResultDir, runFileGenerator } from '../../utils/templateHelper'
@@ -49,6 +50,7 @@ export function generateStaticFiles(root = createResultDir('.')): ResultDir {
     runFileGenerator(root, usePrevVal)
     runFileGenerator(root, useSetFormControlVal)
     runFileGenerator(root, useSetFormErrors)
+    runFileGenerator(root, useLifeCycles)
 
     return root
 }

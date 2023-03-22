@@ -1,3 +1,4 @@
+import { NodeSchema } from 'vitis-lowcode-types'
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
 import { generateTagProps, generateUseDataSource, generateComponentRef } from '../utils/pluginHelper'
 
@@ -24,6 +25,7 @@ export default function plugin(struct: CodeStruct) {
         content: `
         import { GlobalDataContext, ContainerDataContext } from '../../context'
         import useDataSource from '../../hooks/useDataSource'
+        ${schema.lifeCycles ? "import useLifeCycles from '../../hooks/useLifeCycles'": ""}
         ${childrenRef.map(ref => 'import ' + ref.name + ' from "' + ref.path + '"').join('\n')}
         `,
         linkAfter: ChunkName.ImportExternalJSModules
@@ -39,6 +41,19 @@ export default function plugin(struct: CodeStruct) {
         linkAfter: ChunkName.ImportInternalJSModules, 
     })
 
+    function generateLifeCycles(lifeCycles: NodeSchema['lifeCycles']) {
+        if (lifeCycles) {
+            return `useLifeCycles({
+                load: ${lifeCycles.load?.value},
+                unload: ${lifeCycles.unload?.value},
+                visibilitychange: ${lifeCycles.visibilitychange?.value},
+                beforeunload: ${lifeCycles.beforeunload?.value}
+            })`
+        }
+
+        return ''
+    }
+
     struct.chunks.push({
         chunkType: ChunkType.STRING,
         fileType: FileType.TSX,
@@ -46,6 +61,7 @@ export default function plugin(struct: CodeStruct) {
         content: `const [formData, setFormData] = useState({})
         const [formErrors, setFormErrors] = useState({})
         ${generateUseDataSource(schema.extraProps?.dataSource)}
+        ${generateLifeCycles(schema.lifeCycles)}
         `,
         linkAfter: ChunkName.ComponentDefaultExportStart
     })

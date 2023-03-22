@@ -31,6 +31,7 @@ export interface DataGroup {
     containerData: ContainerDataContextSpec['data'],
     formData: GlobalDataContextSpec['formData']
 }
+
 export interface DataSourceConfig {
     url: string;
     params?: object;
@@ -39,8 +40,17 @@ export interface DataSourceConfig {
     responseHandler?: (response: AxiosResponse) => any
     errorHandler?: (reason: any) => void
 }
+
+export interface LifeCycles {
+    beforeunload?: (e: Event) => void;
+    load?: (e: Event) => void;
+    unload?: (e: Event) => void;
+    visibilitychange?: () => void;
+ }
+
 export type DisabledLinkageRule = (pageData: DataGroup['pageData'], containerData: DataGroup['containerData'], formData: DataGroup['formData']) => boolean 
 export type HiddenLinkageRule = (pageData: DataGroup['pageData'], containerData: DataGroup['containerData'], formData: DataGroup['formData']) => boolean 
+export type GetValueLinkageRule = (pageData: DataGroup['pageData'], containerData: DataGroup['containerData'], formData: DataGroup['formData']) => boolean 
 `
-    }]
+}]
 }

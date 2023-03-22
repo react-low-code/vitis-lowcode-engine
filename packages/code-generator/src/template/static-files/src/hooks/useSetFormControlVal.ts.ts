@@ -9,11 +9,11 @@ export default function getFile(): [string[], ResultFile] {
         import { Path } from 'depath'
         import usePrevVal from './usePrevVal'
         import useGetInitVal from './useGetInitVal'
-        import { HiddenLinkageRule } from '../types'
+        import { GetValueLinkageRule } from '../types'
 
         interface Params {
             name?: string;
-            getValue?: HiddenLinkageRule;
+            getValue?: GetValueLinkageRule;
             pathToVal?: string
         }
         
