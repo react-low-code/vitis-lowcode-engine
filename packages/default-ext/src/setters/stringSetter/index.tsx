@@ -4,7 +4,7 @@ import { Input } from 'antd'
 
 export interface Props extends SetterCommonProps {
     // 在这里写设置器特有的props
-    [attr: string]: any;
+    value: string;
 }
 
 
@@ -15,7 +15,7 @@ function StringSetter(props: Props) {
         }
     }
 
-    return <Input value={props.value} onChange={onChange}/>
+    return <Input value={props.value} onChange={onChange} size="small"/>
 }
 
 export default {
