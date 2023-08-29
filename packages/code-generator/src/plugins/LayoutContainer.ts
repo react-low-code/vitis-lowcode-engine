@@ -1,5 +1,5 @@
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
-import { generateTagProps, generateUseDataSource, generateComponentRef } from '../utils/pluginHelper'
+import { generateTagProps, generateUseDataSource, generateComponentPath } from '../utils/pluginHelper'
 
 interface ComponentRef {
     path: string;
@@ -18,7 +18,7 @@ export default function plugin(struct: CodeStruct) {
         name: toLocaleStartUpperCase(schema.componentName)
     }
 
-    const childrenRef = schema.children.map(generateComponentRef).filter(c => !c) as {path: string, name: string, key: string}[]
+    const childrenRef = schema.children.map(generateComponentPath).filter(c => !c) as {path: string, name: string, key: string}[]
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,

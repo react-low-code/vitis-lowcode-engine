@@ -1,14 +1,14 @@
 import { IProjectFixedSlot, BuilderComponentPlugin, CodeStruct, ResultDir, CodeStructInput, IProjectTemplate } from '../types'
 import { insertFile } from '../utils/templateHelper'
-import { generateComponentRef } from '../utils/pluginHelper'
+import { generateComponentPath } from '../utils/pluginHelper'
 import { NodeSchema } from 'vitis-lowcode-types';
 
-export default class ModuleBuilder {
-    plugins: BuilderComponentPlugin[];
-    path: string[];
-    fileName: string;
-    ext: string;
-    dynamicSlots: IProjectTemplate['dynamicSlots'];
+export default class FileBuilder {
+    private plugins: BuilderComponentPlugin[];
+    private path: string[];
+    private fileName: string;
+    private ext: string;
+    private dynamicSlots: IProjectTemplate['dynamicSlots'];
 
     constructor(projectSlot: IProjectFixedSlot, dynamicSlots: IProjectTemplate['dynamicSlots']) {
         this.path = projectSlot.path
@@ -18,7 +18,7 @@ export default class ModuleBuilder {
         this.ext = projectSlot.ext
     }
 
-    generateModule(input: CodeStructInput, projectRoot: ResultDir) {
+    generateFile(input: CodeStructInput, projectRoot: ResultDir) {
         const initCodeStruct: CodeStruct = {
             input,
             chunks: []
@@ -47,8 +47,8 @@ export default class ModuleBuilder {
         return codeContent
     }
 
-    generatePage(input: CodeStructInput, projectRoot: ResultDir) {
-        this.generateModule(input, projectRoot)
+    generateModule(input: CodeStructInput, projectRoot: ResultDir) {
+        this.generateFile(input, projectRoot)
         const { projectName, componentsMap, title, description } = input
         const getPlugins = (schema: NodeSchema) => {
             if (schema.containerType === 'Data') {
@@ -64,17 +64,17 @@ export default class ModuleBuilder {
 
         const traverse = (schemas: NodeSchema[]) => {
             schemas.forEach(child => {
-                const ref = generateComponentRef(child)
+                const ref = generateComponentPath(child)
 
                 if (ref) {
-                    const builder = new ModuleBuilder({
+                    const builder = new FileBuilder({
                         fileName: ref.name,
                         ext: 'tsx',
                         path: this.path.concat(['components']),
                         plugins: getPlugins(child)
                     }, this.dynamicSlots)
 
-                    builder.generateModule({
+                    builder.generateFile({
                         schema: child,
                         projectName,
                         componentsMap,

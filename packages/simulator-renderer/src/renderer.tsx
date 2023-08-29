@@ -15,10 +15,6 @@ const host = getHost()
 class SimulatorRenderer implements SimulatorSpec {
     private isRan: boolean = false
 
-    constructor() {
-        host.connect(this, () => {})
-    }
-
     getClosestNodeIdByLocation = (point: Point): string | undefined => {
         // 第一步：找出包含 point 的全部 dom 节点
         const suitableContainer = new Map<string, DomNode>()
@@ -57,7 +53,7 @@ class SimulatorRenderer implements SimulatorSpec {
     rerender = async () => {
         observerData.components = host.project.designer.componentImplMap,
         observerData.schema = host.project.schema
-        await deferUtil.didRender()
+        await deferUtil.waitMounted()
     }
 
     run() {

@@ -62,12 +62,12 @@ export default class Host implements HostSpec {
         this.frameWindow = frame.contentWindow
     
 
-        const render = await this.createSimulator()
+        this.renderer = await this.createSimulator()
 
         material.off(ASSET_UPDATED, this.onAssetUpdated).on(ASSET_UPDATED, this.onAssetUpdated)
         this.setupEvent()
 
-        render.run()
+        this.renderer.run()
     }
 
     private setupEvent = () => {
@@ -198,7 +198,7 @@ export default class Host implements HostSpec {
         const assetBundles = this.getSimulatorComponentAssets(material.getAll());
         const baseAssets = getBaseAssets()
 
-        // 这个属性在模拟器内部要访问
+        // 这个属性在渲染器环境内部访问
         this.frameWindow!.LCSimulatorHost = this
         let styleTags = ''
         let scriptTags = ''
@@ -242,12 +242,6 @@ export default class Host implements HostSpec {
             this.frameWindow!.addEventListener('load', loaded);
             this.frameWindow!.addEventListener('error', errored);
         });
-    }
-
-    connect = (renderer: SimulatorSpec, effect: (reaction: IReactionPublic) => void) => {
-        this.renderer = renderer
-
-        autorun(effect)
     }
 
     getClosestNodeByLocation = (point: Point) => {

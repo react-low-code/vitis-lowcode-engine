@@ -1,13 +1,13 @@
 import { NodeSchema } from 'vitis-lowcode-types'
 import { CodeStruct, FileType, ChunkType, ChunkName } from '../types'
-import { generateTagProps, generateUseDataSource, generateComponentRef } from '../utils/pluginHelper'
+import { generateTagProps, generateUseDataSource, generateComponentPath } from '../utils/pluginHelper'
 
 export default function plugin(struct: CodeStruct) {
     const input = struct.input
     const schema = input.schema
 
     // 只有布局容器才能作为 page 的 children
-    const childrenRef = schema.children.map(generateComponentRef).filter(c => !!c) as  {path: string, name: string, key: string}[]
+    const childrenRef = schema.children.map(generateComponentPath).filter(c => !!c) as  {path: string, name: string, key: string}[]
 
     struct.chunks.push({
         chunkType: ChunkType.STRING,

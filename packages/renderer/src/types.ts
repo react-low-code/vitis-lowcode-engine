@@ -12,7 +12,7 @@ export interface PropsContextSpec {
     onCompGetRef?: (schema: NodeSchema, domElement: HTMLElement | null) => void;
     rendererMode?: RendererMode;
     customEmptyElement?: (schema: NodeSchema) => React.ReactNode;
-    interceptors?: PageSchema['interceptors']
+    interceptors: PageSchema['interceptors']
 }
 
 export interface GlobalDataContextSpec {

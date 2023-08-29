@@ -52,7 +52,7 @@ const template: IProjectTemplate = {
     }
   },
 
-  generateTemplate(): ResultDir {
+  generateStaticFiles(): ResultDir {
     return generateStaticFiles();
   },
 };

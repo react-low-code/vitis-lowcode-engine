@@ -5,7 +5,8 @@ export { PropsContextSpec, GlobalDataContextSpec, ContainerDataContextSpec }
 
 export const PropsContext = React.createContext<PropsContextSpec>({
     components: new Map(),
-    rendererMode: RendererMode.design
+    rendererMode: RendererMode.design,
+    interceptors: {}
 })
 
 export const GlobalDataContext = React.createContext<GlobalDataContextSpec>({

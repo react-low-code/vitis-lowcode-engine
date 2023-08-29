@@ -2,13 +2,13 @@ import { ResultDir, ChunkType, FileType, ChunkName } from './file'
 import { NpmInfo, NodeSchema } from 'vitis-lowcode-types'
 
 export interface IProjectTemplate {
-    fixedSlots: Record<Modules, IProjectFixedSlot>;
-    dynamicSlots: Record<DynamicModules, {plugins: BuilderComponentPlugin[]}>;
-    generateTemplate: () => ResultDir | Promise<ResultDir>;
+    fixedSlots: Record<FixedSlotsName, IProjectFixedSlot>;
+    dynamicSlots: Record<DynamicSlotsName, {plugins: BuilderComponentPlugin[]}>;
+    generateStaticFiles: () => ResultDir
 }
 
-export type Modules = 'pages' | 'htmlEntry' | 'packageJSON' | 'service'
-export type DynamicModules = 'layoutContainer' | 'dataContainer' | 'UIControl' | 'formControl'  
+export type FixedSlotsName = 'pages' | 'htmlEntry' | 'packageJSON' | 'service'
+export type DynamicSlotsName = 'layoutContainer' | 'dataContainer' | 'UIControl' | 'formControl'  
 export interface IProjectFixedSlot {
     path: string[]; 
     fileName: string;

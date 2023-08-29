@@ -6,7 +6,7 @@ import useLifeCycles from '../hooks/useLifeCycles'
 
 import { PropsContextSpec, PropsContext } from '../context'
 
-export interface Props extends PropsContextSpec {
+export interface Props extends Omit<PropsContextSpec,'interceptors'>{
     schema: PageSchema;
 }
 

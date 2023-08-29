@@ -3,7 +3,7 @@ import { ObservableProjectSpec } from './project'
 import { Point } from 'vitis-lowcode-types'
 
 
-/** 这是模拟器要提供给设计器的方法*/
+/** 这是渲染器环境提供给设计器环境的方法*/
 export interface SimulatorSpec {
     /**
      * 渲染画布
@@ -30,18 +30,8 @@ export interface SimulatorSpec {
     getNodeIdByDOMElem(elem: HTMLElement): string | undefined
 }
 
-/**这是设计器器要给模拟器提供的方法 */
+/**这是设计器环境给渲染器环境提供的方法 */
 export interface HostSpec {
-    /**
-     * 将 SimulatorRenderer 实例传递给 host
-     * @param renderer 
-     * @param effect 
-     * @param options 
-     */
-    connect(
-        renderer: SimulatorSpec, 
-        effect: (reaction: IReactionPublic) => void
-    ): void
     
     /**
      * 设计器环境的 Project 实例

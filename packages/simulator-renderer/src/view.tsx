@@ -7,7 +7,7 @@ import { deferUtil } from './utils'
 
 export default observer((props: Omit<IRendererProps ,'components' | 'schema'>) => {
     useEffect(() => {
-        deferUtil.resolveRender()
+        deferUtil.resolvedRender()
     }, [observerData.schema])
     return <Renderer {...props} {...observerData}/>
 })

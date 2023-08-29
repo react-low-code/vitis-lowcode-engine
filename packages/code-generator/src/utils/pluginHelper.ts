@@ -23,7 +23,7 @@ export function generateUseDataSource(dataSourceConf: DataSourceConfig, pathToVa
     }, ${pathToVal}, ${containerData? containerData: undefined})`
 }
 
-export function generateComponentRef(schema: NodeSchema) {
+export function generateComponentPath(schema: NodeSchema) {
     const id = schema.id!
     let name: string | undefined = undefined
     if (schema.isContainer && schema.containerType === 'Layout') {
