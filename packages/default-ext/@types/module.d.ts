@@ -2,6 +2,7 @@ declare module '*.module.scss' {
   const content: Record<string, string>;
   export default content;
 }
+declare module 'cssjson';
 
 declare interface Window {
   VitisLowCodeEngine: {
