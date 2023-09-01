@@ -23,9 +23,9 @@ export default (props: layoutProps) => {
   return (
     <Collapse defaultActiveKey={['0']}>
       <Panel header="布局" className="layout-style-container" key="0">
-        <Row title={display.title} dataList={display.dataList} styleKey="display" {...props}></Row>
+        {/* <Row title={display.title} dataList={display.dataList} styleKey="display" {...props}></Row> */}
 
-        {styleData['display'] === 'flex' && (
+        {/* {styleData['display'] === 'flex' && (
           <>
             <Row
               title={flexDirection.title}
@@ -52,7 +52,7 @@ export default (props: layoutProps) => {
               {...props}
             />
           </>
-        )}
+        )} */}
 
         <LayoutBox styleData={styleData} onStyleChange={onStyleChange} />
 

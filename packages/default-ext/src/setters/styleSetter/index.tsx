@@ -74,8 +74,9 @@ class StyleSetter extends React.PureComponent<StyleSetterProps> {
       styleData,
     });
     const { onChange } = this.props;
-
-    onChange && onChange(transformCSSPropertiesToString(styleData));
+    const str = transformCSSPropertiesToString(styleData)
+    console.log(str)
+    onChange && onChange(str);
   };
 
   render() {
@@ -99,11 +100,11 @@ class StyleSetter extends React.PureComponent<StyleSetterProps> {
             styleData={styleData}
             {...this.props}
           ></Background>
-          <Position
+          {/* <Position
             onStyleChange={this.onStyleChange}
             styleData={styleData}
             {...this.props}
-          ></Position>
+          ></Position> */}
           <Border onStyleChange={this.onStyleChange} styleData={styleData} {...this.props}></Border>
           {initFlag && (
             <CssCode
