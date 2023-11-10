@@ -1,5 +1,5 @@
 import type EventEmitter from 'eventemitter3';
-import { ElementType } from 'react'
+import type { ElementType } from 'react'
 import { PageSchema, LifeCycles, JSFunction, Interceptors } from './schema'
 
 export interface ProjectSpec extends EventEmitter {

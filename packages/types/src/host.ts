@@ -1,6 +1,5 @@
-import type { IReactionPublic } from 'mobx';
 import { ObservableProjectSpec } from './project'
-import { Point } from 'vitis-lowcode-types'
+import { Point } from './common'
 
 
 /** 这是渲染器环境提供给设计器环境的方法*/

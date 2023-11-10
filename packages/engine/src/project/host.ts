@@ -2,7 +2,6 @@ import { project, material, setters } from "../shell"
 import { DRAG_OVER, ASSET_UPDATED } from '../eventType'
 import type Project from "./index"
 import { HostSpec, SimulatorSpec, ComponentSpecRaw, Point } from 'vitis-lowcode-types'
-import { IReactionPublic, autorun } from 'mobx'
 import { getComponentImplUrl, getBaseAssets, getComponentSetterMap, getComponentImplFromWin } from '../utils'
 import { isDragDataNode } from './dragon'
 import { DragObjectType } from "../types"

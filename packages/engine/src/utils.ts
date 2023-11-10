@@ -15,13 +15,14 @@ export function getComponentSpecUrl(info: NpmInfo) {
 }
 
 export function getBaseAssets() {
+  
   return {
     js: [
       'https://g.alicdn.com/code/lib/react/17.0.2/umd/react.development.js',
       'https://g.alicdn.com/code/lib/react-dom/17.0.2/umd/react-dom.development.js',
-      'http://localhost:5555/js/simulator-renderer.js'
+      'https://unpkg.com/vitis-lowcode-simulator-renderer/dist/js/simulator-renderer.js'
     ],
-    css: ['http://localhost:5555/css/simulator-renderer.css']
+    css: ['https://unpkg.com/vitis-lowcode-simulator-renderer/dist/css/simulator-renderer.css']
   }
 }
 
