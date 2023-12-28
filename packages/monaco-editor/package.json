@@ -21,7 +21,7 @@
       "js-beautify": "^1.14.7"
     },
     "devDependencies": {
-      "build-scripts": "^1.1.1",
+      "build-scripts": "1.1.1",
       "@types/react": "^17.0.14",
       "@types/react-dom": "^17.0.9",
       "@types/js-beautify": "^1.13.3",
