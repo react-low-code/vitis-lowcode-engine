@@ -1,6 +1,6 @@
 {
   "name": "vitis-lowcode-engine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "vitis 低代码引擎",
   "main": "lib/engine-core.js",
   "module": "es/engine-core.js",
