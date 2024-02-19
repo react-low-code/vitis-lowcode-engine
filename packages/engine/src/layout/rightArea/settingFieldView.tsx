@@ -50,9 +50,10 @@ export default observer(function SettingFieldView(props: Props) {
                 onClick: onChangeMenu,
                 activeKey: field.setters[index].name
             }}>
-                <EllipsisOutlined className='field-view-setter-toggle'/>
+                <div className='field-view-setter-toggle'>
+                    <EllipsisOutlined />
+                </div>
             </Dropdown>
-            
             }
         </div>
     )
