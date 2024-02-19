@@ -38,10 +38,7 @@ export interface FieldConfig {
   isExtra?: boolean;
   title?: string;
   fields?: FieldConfig[];
-  setters?: {
-    name: string;
-    props?: SetterConfig['props']
-  }[];
+  setters?: setterConfig[];
   name: string;
   // 如果字段直接位于 props 或 extraProps 下，就不需要配置 parentName，其他情况要配置
   parentName?:string;
@@ -54,8 +51,10 @@ export interface FieldGroupConfig extends FieldConfig {
 
 export interface FieldSingleConfig extends FieldConfig {
   type: 'field';
-  setters: {
-    name: string;
-    props?: SetterConfig['props']
-  }[];
+  setters: setterConfig[];
+}
+
+interface setterConfig {
+  name: string;
+  props?: SetterConfig['props']
 }
