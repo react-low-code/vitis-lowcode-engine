@@ -9,6 +9,7 @@ import SelectSetter from "./selectSetter"
 import BoolSetter from "./boolSetter"
 import TextAreaSetter from './textAreaSetter'
 import NumberSetter from "./numberSetter";
+import DataSourceSetter from './dataSourceSetter'
 
 import { RegisteredSetter } from 'vitis-lowcode-types'
 
@@ -23,5 +24,6 @@ export const defaultSetters: RegisteredSetter[] =  [
     SelectSetter,
     BoolSetter,
     TextAreaSetter,
-    NumberSetter
+    NumberSetter,
+    DataSourceSetter
 ]

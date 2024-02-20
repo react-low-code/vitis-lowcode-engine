@@ -50,7 +50,6 @@ export default function () {
             <Popover 
                 trigger="click"
                 placement="rightTop"
-                
                 content={
                 <div className='components-pane-body' style={{height: height + 'px'}}>
                     <div>
