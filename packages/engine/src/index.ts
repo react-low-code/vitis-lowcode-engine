@@ -3,11 +3,12 @@ import { render } from 'react-dom'
 import { defaultPlugins, defaultSetters } from 'vitis-lowcode-default-ext'
 import { PageSchema } from 'vitis-lowcode-types'
 
-import { plugins, setters, material, project } from './shell'
+import { plugins, setters, material } from './shell'
 import Workbench from './layout/workbench'
 import { observableSkeleton, observableProject } from './shell'
 import { ASSET_UPDATED } from './eventType'
 import { PageComponentsSpec } from './defaultConfig/asset'
+import Root from './root'
 
 
 export { setters, skeleton, plugins, material, project, dragon } from './shell'
@@ -40,11 +41,8 @@ export function init(container?: HTMLElement, options: EngineOptions = {}) {
         document.body.appendChild(container)
     }
     if (options.pageSchema) {
-        project.project.setSchema(options.pageSchema)
+        observableProject.setSchema(options.pageSchema)
     }
     
-    render(createElement(Workbench, {
-        skeleton: observableSkeleton,
-        project: observableProject
-    }),container)
+    render(createElement(Root),container)
 }

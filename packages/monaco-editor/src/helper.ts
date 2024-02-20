@@ -6,6 +6,9 @@ import { js_beautify } from 'js-beautify'
 export interface EditorConfig {
     value: string;
     language: string;
+    options?: {
+        [attr: string]: any
+    }
 }
 
 export function useEditor(config: EditorConfig) {
@@ -25,10 +28,11 @@ export function useEditor(config: EditorConfig) {
         loader.init()
         .then(monaco => {
             if (containerRef.current) {
-                containerRef.current.style.height = '200px'
+                containerRef.current.style.height = config.options?.height || '200px'
                 editor.current = monaco.editor.create(containerRef.current, {
                     value: js_beautify(config.value),
                     language: config.language,
+                    ...config.options
                 })
                 setIsReady(true)
             }

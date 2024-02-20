@@ -8,6 +8,7 @@ declare interface Window {
   VitisLowCodeEngine: {
     ASSET_UPDATED: symbol;
     DRAG_OVER: symbol;
+    SCHEMA_UPDATED: symbol;
     plugins: any;
     material: any;
     setters: any;

@@ -7,6 +7,7 @@ export interface ProjectSpec extends EventEmitter {
     getLifeCycles(): LifeCycles
     getInterceptors(): Interceptors | undefined
     updateInterceptors(name: keyof Interceptors, value: JSFunction): void
+    getSchema(): PageSchema
 }
 
 export interface ObservableProjectSpec {

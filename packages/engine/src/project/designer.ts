@@ -3,7 +3,7 @@ import { ElementType } from 'react'
 import { DesignerSpec } from 'vitis-lowcode-types'
 
 import ComponentSpec from './componentSpec'
-import { innerMaterial } from '../shell'
+import { innerMaterial, project as projectSell } from '../shell'
 import { Dragon, isDragDataNode } from './dragon'
 import Host from './host'
 import Detection from './detection';
@@ -11,6 +11,7 @@ import type Project from './index'
 import Viewport from './viewport'
 import { LocationEvent } from '../types'
 import SettingTopEntry from '../setting/SettingTopEntry'
+import { SCHEMA_UPDATED } from '../eventType'
 
 export default class Designer implements DesignerSpec {
     componentSpecMap: Map<string, ComponentSpec> = new Map()

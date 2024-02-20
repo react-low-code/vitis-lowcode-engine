@@ -3,13 +3,13 @@ import { observableProject as project} from '../../../shell'
 
 import './index.less'
 
-export default class CanvasView extends React.Component<{}, {}> {
+export default class CanvasView extends React.Component{
 
     mountContentFrame = (frame: HTMLIFrameElement | null) => {
         project.designer.host.mountContentFrame(frame)
     }
 
-    render(): React.ReactNode {
+    render() {
         const frameStyle = {}
         return (
             <div className='vitis-canvas-view' ref={project.designer.mountViewport}>
