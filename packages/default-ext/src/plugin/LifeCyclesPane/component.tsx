@@ -6,6 +6,7 @@ import { FormOutlined } from '@ant-design/icons';
 import MonacoEditor from 'vitis-lowcode-monaco-editor'
 
 import './index.less'
+import '../common.less'
 
 export default function () {
     const [active, setActive] = useState<boolean>(false);
@@ -51,7 +52,7 @@ export default function () {
                 trigger="click"
                 placement="rightTop"
                 content={
-                <div className='components-pane-body' style={{height: height + 'px'}}>
+                <div className='pane-body' style={{height: height + 'px'}}>
                     <div>
                         <div>应用加载之后</div>
                         {lifeCycles.load !== undefined ? 

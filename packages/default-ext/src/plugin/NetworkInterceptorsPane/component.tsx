@@ -6,6 +6,8 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import MonacoEditor from 'vitis-lowcode-monaco-editor'
 
 import './index.less'
+import '../common.less'
+
 const defaultConfig = {
     request: {
         commit: `
@@ -98,7 +100,7 @@ export default function () {
                 trigger="click"
                 placement="rightTop"
                 content={
-                <div className='components-pane-body' style={{height: height + 'px'}}>
+                <div className='pane-body' style={{height: height + 'px'}}>
                     <div>
                         <div>请求拦截器</div>
                         {interceptors.request !== undefined ? 

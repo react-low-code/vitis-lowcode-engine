@@ -24,4 +24,8 @@ export default class Project extends EventEmitter implements ProjectSpec {
     getInterceptors(): Interceptors | undefined {
         return this.project.getInterceptors()
     }
+
+    getSchema() {
+        return this.project.schema
+    }
 }

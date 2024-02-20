@@ -5,6 +5,7 @@ import { AppstoreOutlined } from '@ant-design/icons';
 import { DragonSpec } from 'vitis-lowcode-types'
 
 import './index.less'
+import '../common.less'
 
 interface ComponentItem {
     componentName: string;
@@ -138,7 +139,7 @@ export default class ComponentsPane extends React.Component<{},State>{
             <Popover 
                 trigger="click"
                 placement="rightTop"
-                content={<div className='components-pane-body' style={{height: this.state.height + 'px'}}>
+                content={<div className='components-pane-body pane-body' style={{height: this.state.height + 'px'}}>
                 {this.renderComponentGroup('模板', this.state.templates)}
                 {this.renderComponentGroup('布局组件', this.state.layoutComponents)}
                 {this.renderComponentGroup('基础组件', this.state.baseComponents)}
