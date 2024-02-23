@@ -1,4 +1,4 @@
-import { NodeSchema, LayoutSchema } from 'vitis-lowcode-types'
+import { NodeSchema, LayoutSchema,JSFunction,PropValue, JSDataSource } from 'vitis-lowcode-types'
 
 export function isLayoutComponent(schema: NodeSchema): schema is LayoutSchema {
     return schema.isContainer && schema.containerType === 'Layout'
@@ -8,17 +8,12 @@ export function isBUComponent(schema: NodeSchema): schema is NodeSchema {
   return !schema.isContainer
 }
 
-export function transformStringToCSSProperties(str: string) {
-    const result: any = {}
-    str = str.replace(/\S\s/g,'')
-    str.split(';').forEach(item => {
-      const [key, value] = item.split(':')
-      if (key && value) {
-        result[key] = value
-      }
-    })
-    
-    return result as React.CSSProperties
+export function isJSFunction(val: PropValue): val is JSFunction {
+  return !!val && (val as any).type === 'JSFunction'
+}
+
+export function isJSDataSource(val: PropValue):val is JSDataSource {
+  return !!val && (val as any).type === 'DataSource'
 }
 
 export function transformStringToFunction(str: string) {

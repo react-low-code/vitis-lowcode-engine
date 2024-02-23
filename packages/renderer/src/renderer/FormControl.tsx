@@ -7,6 +7,7 @@ import useDisabled from "../hooks/useDisabled";
 import { RendererMode } from '../types'
 import useSetFormControlVal from '../hooks/useSetFormControlVal'
 import useSetFormErrors from '../hooks/useSetFormErrors'
+import { generateAttrs } from '../generateAttr'
 
 interface Props {
     schema: NodeSchema
@@ -24,6 +25,7 @@ function Content(props: Props) {
     
     const Com = propsContext.components.get(props.schema.componentName)
     if (!Com) { return <div>未知的表单组件</div> }
+    const attrs = generateAttrs(props.schema.props)
     
     const value = useSetFormControlVal(props.schema.extraProps, props.schema.props.defaultValue)
     const onChange = (val: any) => {
@@ -33,7 +35,13 @@ function Content(props: Props) {
     }
     return (
         <div>
-            <Com {...props.schema.props} ref={rootRef} value={value} onChange={onChange} disabled={isDisabled}/>
+            <Com 
+                {...attrs} 
+                ref={rootRef} 
+                value={value} 
+                onChange={onChange} 
+                disabled={isDisabled}
+            />
             {error && <div style={{color: 'red', fontSize: '14px'}}>{error}</div>}
         </div>
     )

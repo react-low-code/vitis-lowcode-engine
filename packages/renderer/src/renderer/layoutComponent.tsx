@@ -4,9 +4,9 @@ import useGetDOM from '../hooks/useGetDOM'
 import useDataSource from '../hooks/useDataSource'
 import BaseComponentRenderer from './baseComponentRenderer'
 import { PropsContext, ContainerDataContext, GlobalDataContext } from '../context'
-import { transformStringToCSSProperties } from '../utils'
 import useHidden from '../hooks/useHidden'
 import { RendererMode } from '../types'
+import { generateAttrs } from '../generateAttr'
 
 interface Props {
     schema: LayoutSchema
@@ -21,6 +21,7 @@ function Content(props: Props) {
     if (!Component) { return <div>未知的布局组件</div> }
     const { dataSource, pathToVal } = props.schema.extraProps
     const { data, loading } = useDataSource(dataSource, pathToVal, containerData.data)
+    const attrs = generateAttrs(props.schema.props)
 
     return (
         <ContainerDataContext.Provider 
@@ -30,9 +31,8 @@ function Content(props: Props) {
             }}
         >
             <Component 
-                style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined} 
+                {...attrs}
                 ref={rootRef}
-                {...reset}
             >
                 {!props.schema.children.length ?
                 customEmptyElement && rendererMode === RendererMode.design ? customEmptyElement(props.schema): null

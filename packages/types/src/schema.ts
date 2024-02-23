@@ -73,7 +73,7 @@ export interface NodeSchema {
     lifeCycles?: LifeCycles;
 }
 
-export interface DataSource {
+export type DataSource = {
     url: string;
     params?: object;
     method: "GET" | "POST";
@@ -82,13 +82,13 @@ export interface DataSource {
     errorHandler?: JSFunction
 }
 
-export interface JSFunction {
+export type JSFunction = {
     type: 'JSFunction',
     // 字符串形式的函数
     value: string
 }
 
-export interface LifeCycles {
+export type LifeCycles = {
     load?: JSFunction;
     unload?: JSFunction;
     visibilitychange?: JSFunction;
@@ -96,23 +96,23 @@ export interface LifeCycles {
 }
 
 // 它在设置面板中会运行得到函数的结果
-export interface JSRunFunction {
+export type JSRunFunction = {
     type: 'JSRunFunction',
     // 字符串形式的函数
     value: string
 }
 
-export interface JSDataSource {
+export type JSDataSource = {
     type: 'DataSource',
     value: DataSource
 }
 
-export interface Interceptors {
+export type Interceptors = {
     request?: JSFunction,
     response?: JSFunction
 }
 
-export interface Rule {
+export type Rule = {
     max?: string;
     min?: string;
     required?: boolean;
