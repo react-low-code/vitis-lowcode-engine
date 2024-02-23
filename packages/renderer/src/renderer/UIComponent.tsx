@@ -5,6 +5,7 @@ import { PropsContext, GlobalDataContext, ContainerDataContext } from '../contex
 import useHidden from '../hooks/useHidden'
 import { RendererMode } from '../types'
 import useGetInitVal from '../hooks/useGetInitVal'
+import { generateAttrs } from '../generateAttr'
 
 interface Props {
     schema: NodeSchema
@@ -15,9 +16,10 @@ function Content(props: Props) {
     const context = useContext(PropsContext)
     const Com = context.components.get(props.schema.componentName)
     if (!Com) { return <div>未知的组件</div> }
+    const attrs = generateAttrs(props.schema.props)
     const value = useGetInitVal(props.schema.extraProps, props.schema.props.defaultValue)
     return (
-        <Com {...props.schema.props} ref={rootRef} value={value}/>
+        <Com {...attrs}  ref={rootRef} value={value}/>
     )
 }
 

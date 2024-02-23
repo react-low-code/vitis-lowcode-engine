@@ -4,8 +4,8 @@ import { PropsContext, GlobalDataContext, ContainerDataContext } from '../contex
 import BaseComponentRenderer from './baseComponentRenderer'
 import useGetDOM from '../hooks/useGetDOM'
 import useDataSource from '../hooks/useDataSource'
-import { transformStringToCSSProperties } from '../utils'
 import { Path } from 'depath'
+import {generateAttrs} from '../generateAttr'
 import './page.less'
 
 interface Props {
@@ -18,7 +18,7 @@ export default function PageRenderer(props: Props) {
     const [formData, setFormData] = useState({})
     const [formErrors, setFormErrors] = useState({})
     const { loading, data } = useDataSource(props.schema.extraProps.dataSource)
-    const { style } = props.schema.props
+    const attrs = generateAttrs(props.schema.props)
 
     const updateFormData = (path: string, value: any) => {
         setFormData(Path.setIn(Object.assign({}, formData), path, value))
@@ -42,10 +42,10 @@ export default function PageRenderer(props: Props) {
                 dataLoading: loading
             }}>
                 <div 
+                    {...attrs}
                     data-node-id={props.schema.id} 
                     className="vitis-page-container"
                     ref={rootRef}
-                    style={typeof style === 'string' ? transformStringToCSSProperties(style): undefined}
                 >{
                     !props.schema.children.length ? 
                     propsContext.customEmptyElement ? propsContext.customEmptyElement(props.schema): null: 
