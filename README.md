@@ -7,7 +7,7 @@ yarn setup
 yarn start
 ```
 
-本项目是需要在 [低代码系统](https://github.com/react-low-code/vitis-system) 使用
+本项目需要在 [低代码系统](https://github.com/react-low-code/vitis-system) 使用
 
 ## 写在后面
 
