@@ -12,7 +12,7 @@
     "build": "build-scripts build --skip-demo"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.1",
+    "build-scripts": "1.1.1",
     "@types/node": "^13.7.1",
     "@types/react": "^17.0.14",
     "build-plugin-component": "^0.2.10"
