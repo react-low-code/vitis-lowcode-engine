@@ -86,7 +86,7 @@ export default function () {
                 onOpenChange={onOpenChange}
                 open={active}
             >
-                <FormOutlined className={cn({icon: true, active: active})}/>
+                <FormOutlined style={{fontSize: '20px'}}/>
             </Popover>
         </div>
     )

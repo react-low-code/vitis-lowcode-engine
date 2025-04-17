@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 import type InterProject from '../project';
-import { ProjectSpec, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
+import { ProjectSpec, LifeCycles, JSFunction, Interceptors, NodeSchema } from 'vitis-lowcode-types'
 
 export default class Project extends EventEmitter implements ProjectSpec {
     private readonly project: InterProject
@@ -27,5 +27,9 @@ export default class Project extends EventEmitter implements ProjectSpec {
 
     getSchema() {
         return this.project.schema
+    }
+
+    insertSchema(schemas: NodeSchema[]) {
+        this.project.documentModel.insertSchema(schemas);
     }
 }

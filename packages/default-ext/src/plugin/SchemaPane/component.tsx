@@ -50,7 +50,7 @@ export default function() {
                 onOpenChange={onOpenChange}
                 open={active}
             >
-                    <SnippetsOutlined />
+                    <SnippetsOutlined style={{fontSize: '20px'}}/>
             </Popover>
         </div>
         

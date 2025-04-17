@@ -2,6 +2,7 @@ import { createElement } from 'react'
 import { render } from 'react-dom'
 import { defaultPlugins, defaultSetters } from 'vitis-lowcode-default-ext'
 import { PageSchema } from 'vitis-lowcode-types'
+import { fetchSchema } from './servers/ai';
 
 import { plugins, setters, material } from './shell'
 import Workbench from './layout/workbench'
@@ -43,6 +44,10 @@ export function init(container?: HTMLElement, options: EngineOptions = {}) {
     if (options.pageSchema) {
         observableProject.setSchema(options.pageSchema)
     }
+
+    // fetchSchema().then((schema) => {
+    //     observableProject.documentModel.insertSchema(schema);
+    // })
     
     render(createElement(Root),container)
 }

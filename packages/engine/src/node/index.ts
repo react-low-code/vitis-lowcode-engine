@@ -59,7 +59,7 @@ export default class Node<S extends NodeSchema = NodeSchema> {
         this.isFormControl = !!initSchema.isFormControl
         this.owner = owner
 
-        this.children = initSchema.children.map(child => this.owner.createNode(child, this))
+        this.children = initSchema.children?.map(child => this.owner.createNode(child, this)) || []
         this.props = new Props(this, initSchema.props)
         this.extraProps = new Props(this, initSchema.extraProps)
     }

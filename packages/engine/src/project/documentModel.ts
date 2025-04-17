@@ -1,4 +1,4 @@
-import { PageSchema, NodeSchema, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
+import { PageSchema, NodeSchema, LifeCycles, JSFunction, Interceptors, ContainerSchema } from 'vitis-lowcode-types'
 import { makeAutoObservable } from 'mobx'
 import Node from '../node'
 import type Project from './index'
@@ -70,6 +70,18 @@ export default class DocumentModel {
 
     hoverNode(id?: string) {
         this.hoveredNodeId = id
+    }
+
+    insertSchema(schemas: NodeSchema[], parentNode: Node<NodeSchema> = this.rootNode) {
+        const insert = (schemas: NodeSchema[], parentNode: Node<NodeSchema>) => {
+            schemas.forEach((schema, index) => {
+                const newNode = this.createNode(schema, parentNode);
+                parentNode.inertChildAtIndex(newNode, parentNode.childrenSize + index);
+            });
+        }
+
+        insert(schemas, parentNode)
+        this.project.renderer?.rerender();
     }
 
     updateLifeCycles(name: keyof LifeCycles, value: JSFunction) {

@@ -14,7 +14,6 @@ export default class Host implements HostSpec {
 
     constructor(project: Project) {
         this.project = project
-
     }
 
     onAssetUpdated = async (additionalPackageNames: string[]) => {
@@ -62,6 +61,7 @@ export default class Host implements HostSpec {
     
 
         this.renderer = await this.createSimulator()
+        this.project.setRenderer(this.renderer);
 
         material.off(ASSET_UPDATED, this.onAssetUpdated).on(ASSET_UPDATED, this.onAssetUpdated)
         this.setupEvent()

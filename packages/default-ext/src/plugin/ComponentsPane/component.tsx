@@ -148,7 +148,7 @@ export default class ComponentsPane extends React.Component<{},State>{
                 onOpenChange={this.onOpenChange}
                 open={this.state.active}
             >
-                <AppstoreOutlined className={cn({icon: true, active: this.state.active})}/>
+                <AppstoreOutlined style={{fontSize: '20px'}} />
             </Popover>
         </div>
     }

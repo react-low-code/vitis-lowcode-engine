@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import Designer from './designer';
 import DocumentModel from './documentModel'
-import { PageSchema, ObservableProjectSpec, LifeCycles, JSFunction, Interceptors } from 'vitis-lowcode-types'
+import { PageSchema, ObservableProjectSpec, LifeCycles, JSFunction, Interceptors, SimulatorSpec } from 'vitis-lowcode-types'
 
 const defaultPageSchema: PageSchema = {
     componentName: 'Page',
@@ -75,6 +75,7 @@ const defaultPageSchema: PageSchema = {
 export default class Project  implements ObservableProjectSpec{
     readonly designer = new Designer(this)
     readonly documentModel: DocumentModel
+    renderer: SimulatorSpec
 
     get schema() {
         return this.documentModel.schema as PageSchema
@@ -95,6 +96,10 @@ export default class Project  implements ObservableProjectSpec{
 
     setSchema(schema: PageSchema) {
         this.documentModel.open(schema)
+    }
+
+    setRenderer(renderer: SimulatorSpec) {
+        this.renderer = renderer;
     }
 
     updateLifeCycles = (name: keyof LifeCycles, value: JSFunction) => {

@@ -120,7 +120,7 @@ export default function () {
                 onOpenChange={onOpenChange}
                 open={active}
             >
-                <ClockCircleOutlined className={cn({icon: true, active: active})}/>
+                <ClockCircleOutlined style={{fontSize: '20px'}}/>
             </Popover>
         </div>
     )
